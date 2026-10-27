@@ -3,34 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Car Showcase</title>
-    <!-- Import the model-viewer web component -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <title>Premium Used Cars</title>
+    
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
         body { 
             margin: 0; 
-            padding: 0; 
-            background-color: #1a1a1a; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+            overflow-x: hidden; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0a0a; 
+            color: white; 
+        }
+        
+        /* The 3D canvas stays fixed in the background */
+        #canvas-container { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
             height: 100vh; 
+            z-index: -1; 
         }
-        model-viewer { 
-            width: 100%; 
-            height: 100%; 
+
+        /* Scrollable content sections */
+        .section { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 10%; 
+            opacity: 0; /* Hidden by default, GSAP will fade them in */
         }
+        
+        .left { justify-content: flex-start; }
+        .right { justify-content: flex-end; }
+        
+        .text-box { 
+            max-width: 400px; 
+            background: rgba(0, 0, 0, 0.7); 
+            padding: 40px; 
+            border-radius: 12px; 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 { color: #f39c12; margin-top: 0; font-size: 2.5rem; }
+        p { font-size: 1.1rem; line-height: 1.6; color: #cccccc; }
     </style>
 </head>
 <body>
-    <!-- IMPORTANT: Change 'car-model.glb' to the exact name of your uploaded file -->
-    <model-viewer 
-        src="car-model.glb" 
-        alt="3D Car Model" 
-        auto-rotate 
-        camera-controls 
-        shadow-intensity="1"
-        environment-image="neutral">
-    </model-viewer>
+
+    <div id="canvas-container"></div>
+
+    <!-- Scroll Content -->
+    <div class="section left" id="sec1">
+        <div class="text-box">
+            <h1>Premium Certified</h1>
+            <p>Welcome to our exclusive used car collection. Every vehicle undergoes a rigorous 150-point inspection to ensure absolute reliability.</p>
+        </div>
+    </div>
+    
+    <div class="section right" id="sec2">
+        <div class="text-box">
+            <h1>Flawless Design</h1>
+            <p>Experience the perfect blend of aerodynamics and style. We source only the cleanest, accident-free models for our inventory.</p>
+        </div>
+    </div>
+    
+    <div class="section left" id="sec3">
+        <div class="text-box">
+            <h1>Ready for the Road</h1>
+            <p>Fully serviced, detailed, and ready to be driven home today. Your next great adventure starts right here.</p>
+        </div>
+    </div>
+
+    <!-- Three.js Setup -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Basic Scene Setup
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 6;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+        directionalLight.position.set(5, 10, 5);
+        scene.add(directionalLight);
+
+        let car;
+        const loader = new GLTFLoader();
+        
+        // Load the 3D Model
+        loader.load('car.glb', function(gltf) {
+            car = gltf.scene;
+            
+            // Initial positioning
+            car.position.set(0, -0.5, 0);
+            car.rotation.y = -Math.PI / 6; // Slight angle to start
+            scene.add(car);
+
+            setupScrollAnimations();
+        });
+
+        function setupScrollAnimations() {
+            // Animate HTML text fading in and out
+            gsap.utils.toArray('.section').forEach(section => {
+                gsap.to(section, {
+                    opacity: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 60%",
+                        end: "bottom 40%",
+                        toggleActions: "play reverse play reverse"
+                    }
+                });
+            });
+
+            // Master timeline for the 3D Car
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1 // Creates the smooth linking to scroll
+                }
+            });
+
+            // Transition from Section 1 to Section 2 (Zooms in, moves left, rotates right)
+            tl.to(car.rotation, { y: Math.PI / 2, ease: "power1.inOut" }, 0)
+              .to(camera.position, { z: 3.5, ease: "power1.inOut" }, 0)
+              .to(car.position, { x: -1.5, ease: "power1.inOut" }, 0); 
+
+            // Transition from Section 2 to Section 3 (Zooms out, moves right, rotates left)
+            tl.to(car.rotation, { y: -Math.PI / 4, ease: "power1.inOut" }, 1)
+              .to(camera.position, { z: 5, ease: "power1.inOut" }, 1)
+              .to(car.position, { x: 1.5, ease: "power1.inOut" }, 1); 
+        }
+
+        // Render Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle Window Resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
