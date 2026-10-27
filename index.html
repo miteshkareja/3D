@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoElite | Premium 3D Used Car Showcase</title>
+    <title>AutoElite Mumbai | Premium Pre-Owned Cars</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
@@ -17,10 +17,10 @@
             margin: 0;
             overflow-x: hidden;
             font-family: 'Inter', sans-serif;
-            /* Vibrant Sky Blue & Mint Gradient Background */
-            background: linear-gradient(135deg, #90e0ef 0%, #a2d2ff 50%, #caf0f8 100%);
+            /* Vibrant Colorful Gradient Background (Sunset Theme) */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
             background-attachment: fixed;
-            color: #03045e; /* Deep Navy for high contrast */
+            color: #1a1a1a;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -47,7 +47,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #90e0ef 0%, #a2d2ff 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -57,26 +57,32 @@
         }
 
         .loader {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(0, 119, 182, 0.2);
-            border-top: 3px solid #0077b6;
+            width: 64px;
+            height: 64px;
+            border: 8px solid #253449;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            position: relative;
+            background: repeating-conic-gradient(from 0deg, #253449 0deg 10deg, #f6f8fb 10deg 20deg);
+            box-shadow: inset 0 0 0 5px #7b8da5, 0 12px 30px rgba(27, 45, 69, .18);
+            animation: tireSpin .55s linear infinite;
             margin-bottom: 20px;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .loader::after {
+            content: '';
+            position: absolute;
+            inset: 17px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #ffffff, #a9b8ca 55%, #62738a);
+            border: 3px solid #e7edf5;
         }
-
+        @keyframes tireSpin { to { transform: rotate(360deg); } }
         #loading-screen p {
-            color: #03045e;
+            color: #fff;
             font-size: 14px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 800;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         /* Navigation */
@@ -91,40 +97,46 @@
             align-items: center;
             z-index: 1000;
             transition: all 0.4s ease;
-            background: linear-gradient(to bottom, rgba(144, 224, 239, 0.8), transparent);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
         }
 
         nav.scrolled {
-            background: rgba(162, 210, 255, 0.85);
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 18px 5%;
-            border-bottom: 1px solid rgba(0, 119, 182, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
         .logo {
             font-size: 26px;
             font-weight: 800;
-            color: #03045e;
+            color: #fff;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 12px;
             letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        nav.scrolled .logo {
+            color: #1a1a1a;
+            text-shadow: none;
         }
 
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: #0077b6;
-            color: #caf0f8;
+            background: #fff;
+            color: #ff6b6b;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0, 119, 182, 0.3);
+            box-shadow: 0 4px 10px rgba(255,107,107,0.3);
         }
 
         .nav-links {
@@ -134,13 +146,19 @@
         }
 
         .nav-links a {
-            color: #023e8a;
+            color: #fff;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             position: relative;
             transition: color 0.3s;
             letter-spacing: 0.02em;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        nav.scrolled .nav-links a {
+            color: rgba(0, 0, 0, 0.7);
+            text-shadow: none;
         }
 
         .nav-links a::after {
@@ -150,12 +168,20 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #0077b6;
+            background: #fff;
             transition: width 0.3s;
+        }
+        
+        nav.scrolled .nav-links a::after {
+            background: #ff6b6b;
         }
 
         .nav-links a:hover {
-            color: #03045e;
+            color: #fff;
+        }
+        
+        nav.scrolled .nav-links a:hover {
+            color: #1a1a1a;
         }
 
         .nav-links a:hover::after {
@@ -163,18 +189,19 @@
         }
 
         .nav-cta {
-            background: #0077b6;
-            color: #caf0f8 !important;
+            background: #1a1a1a;
+            color: #fff !important;
             padding: 12px 28px;
             border-radius: 50px;
-            font-weight: 700 !important;
+            font-weight: 600 !important;
             transition: all 0.3s !important;
+            text-shadow: none;
         }
 
         .nav-cta:hover {
-            background: #023e8a;
+            background: #333;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 119, 182, 0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .nav-cta::after {
@@ -186,9 +213,15 @@
             display: none;
             background: none;
             border: none;
-            color: #03045e;
+            color: #fff;
             font-size: 28px;
             cursor: pointer;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        nav.scrolled .mobile-menu-btn {
+            color: #1a1a1a;
+            text-shadow: none;
         }
 
         /* Sections */
@@ -204,13 +237,13 @@
         /* Colorful Glassmorphism Cards */
         .card {
             max-width: 500px;
-            background: rgba(202, 240, 248, 0.4); /* Ice blue glass */
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             padding: 3rem;
             border-radius: 24px;
-            border: 1px solid rgba(0, 119, 182, 0.15);
-            box-shadow: 0 30px 60px -15px rgba(0, 119, 182, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1);
             
             opacity: 0;
             transform: translateY(40px) scale(0.95);
@@ -241,45 +274,45 @@
             margin: 0 0 1rem 0;
             letter-spacing: -0.03em;
             line-height: 1.1;
-            color: #03045e;
+            color: #1a1a1a;
         }
 
         h2 {
             font-size: 2.2rem;
-            font-weight: 800;
+            font-weight: 700;
             margin: 0 0 1.2rem 0;
-            color: #03045e;
+            color: #1a1a1a;
             letter-spacing: -0.02em;
         }
 
         h3 {
             font-size: 1.5rem;
-            font-weight: 800;
-            color: #03045e;
+            font-weight: 700;
+            color: #1a1a1a;
             margin-bottom: 1rem;
         }
 
         p {
             font-size: 1.1rem;
             line-height: 1.7;
-            color: #023e8a;
+            color: #333;
             margin: 0 0 2.5rem 0;
             font-weight: 500;
         }
 
         .badge {
             display: inline-block;
-            background: rgba(0, 119, 182, 0.1);
-            border: 1px solid rgba(0, 119, 182, 0.2);
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 0.4rem 1.2rem;
             border-radius: 30px;
             font-size: 0.75rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #0077b6;
+            color: #d93838;
             margin-bottom: 1.5rem;
             font-weight: 800;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .specs {
@@ -287,8 +320,8 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-bottom: 2.5rem;
-            border-top: 1px solid rgba(0, 119, 182, 0.15);
-            border-bottom: 1px solid rgba(0, 119, 182, 0.15);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             padding: 1.5rem 0;
         }
 
@@ -301,7 +334,7 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: #0077b6;
+            color: #555;
             margin-bottom: 0.4rem;
             font-weight: 700;
         }
@@ -309,15 +342,15 @@
         .spec-value {
             font-size: 1.4rem;
             font-weight: 800;
-            color: #03045e;
+            color: #1a1a1a;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #0077b6;
-            color: #caf0f8;
+            background: #1a1a1a;
+            color: #fff;
             padding: 1rem 2.5rem;
             border-radius: 50px;
             font-weight: 700;
@@ -327,32 +360,31 @@
             cursor: pointer;
             border: none;
             letter-spacing: 0.02em;
-            box-shadow: 0 10px 20px rgba(0, 119, 182, 0.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .btn:hover {
-            background: #023e8a;
+            background: #333;
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0, 119, 182, 0.25);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
         .btn-outline {
-            background: transparent;
-            color: #0077b6;
-            border: 2px solid #0077b6;
+            background: rgba(255, 255, 255, 0.3);
+            color: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.8);
             margin-left: 1rem;
             box-shadow: none;
         }
         
         .btn-outline:hover {
-            background: rgba(0, 119, 182, 0.1);
-            border-color: #023e8a;
-            color: #023e8a;
+            background: rgba(255, 255, 255, 0.6);
+            border-color: #fff;
         }
 
         /* Stats Section */
         .stats-section {
-            background: linear-gradient(to bottom, transparent, rgba(202, 240, 248, 0.2), transparent);
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
         }
 
         .stats-grid {
@@ -367,32 +399,31 @@
         .stat-card {
             text-align: center;
             padding: 3rem 2rem;
-            background: rgba(202, 240, 248, 0.4);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
-            border: 1px solid rgba(0, 119, 182, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0, 119, 182, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .stat-card:hover {
             transform: translateY(-10px);
-            background: rgba(202, 240, 248, 0.6);
-            box-shadow: 0 20px 40px rgba(0, 119, 182, 0.1);
-            border-color: rgba(0, 119, 182, 0.2);
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         .stat-number {
             font-size: 3.5rem;
             font-weight: 800;
-            color: #0077b6;
+            color: #1a1a1a;
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
             font-size: 0.9rem;
-            color: #023e8a;
+            color: #333;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             font-weight: 700;
@@ -409,46 +440,45 @@
         }
 
         .feature-card {
-            background: rgba(202, 240, 248, 0.4);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 119, 182, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 20px;
             padding: 2.5rem;
             transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0, 119, 182, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .feature-card:hover {
             transform: translateY(-8px);
-            background: rgba(202, 240, 248, 0.6);
-            box-shadow: 0 20px 40px rgba(0, 119, 182, 0.1);
-            border-color: rgba(0, 119, 182, 0.2);
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: rgba(0, 119, 182, 0.1);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
             margin-bottom: 1.5rem;
-            color: #0077b6;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .feature-title {
             font-size: 1.3rem;
             font-weight: 800;
-            color: #03045e;
+            color: #1a1a1a;
             margin-bottom: 0.8rem;
         }
 
         .feature-desc {
             font-size: 0.95rem;
-            color: #023e8a;
+            color: #333;
             line-height: 1.6;
             font-weight: 500;
         }
@@ -464,49 +494,39 @@
         }
 
         .car-card {
-            background: rgba(202, 240, 248, 0.4);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 119, 182, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 24px;
             overflow: hidden;
             transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0, 119, 182, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .car-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0, 119, 182, 0.15);
-            background: rgba(202, 240, 248, 0.6);
-            border-color: rgba(0, 119, 182, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .car-image {
             height: 220px;
-            background: linear-gradient(135deg, #00b4d8 0%, #90e0ef 100%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 80px;
             position: relative;
             overflow: hidden;
-        }
-
-        .car-image::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(to top, rgba(202, 240, 248, 0.8), transparent);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
         }
 
         .car-badge {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: #0077b6;
+            background: #1a1a1a;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 11px;
@@ -514,7 +534,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             z-index: 2;
-            color: #caf0f8;
+            color: #fff;
         }
 
         .car-info {
@@ -524,15 +544,15 @@
         .car-name {
             font-size: 1.4rem;
             font-weight: 800;
-            color: #03045e;
+            color: #1a1a1a;
             margin-bottom: 0.5rem;
         }
 
         .car-category {
             font-size: 0.85rem;
-            color: #0077b6;
+            color: #555;
             margin-bottom: 1.5rem;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .car-specs {
@@ -540,7 +560,7 @@
             gap: 1.5rem;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(0, 119, 182, 0.15);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .car-spec {
@@ -550,7 +570,7 @@
 
         .car-spec span:first-child {
             font-size: 0.7rem;
-            color: #0077b6;
+            color: #666;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 4px;
@@ -559,8 +579,8 @@
 
         .car-spec span:last-child {
             font-size: 0.95rem;
-            color: #03045e;
-            font-weight: 800;
+            color: #1a1a1a;
+            font-weight: 700;
         }
 
         .car-price-row {
@@ -572,13 +592,13 @@
         .car-price {
             font-size: 1.6rem;
             font-weight: 800;
-            color: #03045e;
+            color: #1a1a1a;
         }
 
         .car-btn {
             padding: 10px 24px;
-            background: rgba(0, 119, 182, 0.1);
-            color: #0077b6;
+            background: rgba(255, 255, 255, 0.5);
+            color: #1a1a1a;
             border: none;
             border-radius: 25px;
             font-weight: 700;
@@ -588,8 +608,8 @@
         }
 
         .car-btn:hover {
-            background: #0077b6;
-            color: #caf0f8;
+            background: #1a1a1a;
+            color: #fff;
         }
 
         /* Testimonials */
@@ -600,15 +620,15 @@
         }
 
         .testimonial-card {
-            background: rgba(202, 240, 248, 0.4);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 119, 182, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 24px;
             padding: 3rem;
             margin-bottom: 2rem;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0, 119, 182, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .testimonial-card::before {
@@ -617,13 +637,13 @@
             top: 20px;
             left: 30px;
             font-size: 100px;
-            color: rgba(0, 119, 182, 0.1);
+            color: rgba(255, 255, 255, 0.5);
             font-family: serif;
             line-height: 1;
         }
 
         .stars {
-            color: #ffb703; /* Warm yellow contrast */
+            color: #ffb400;
             font-size: 18px;
             margin-bottom: 1.5rem;
             letter-spacing: 4px;
@@ -632,7 +652,7 @@
         .testimonial-text {
             font-size: 1.15rem;
             line-height: 1.8;
-            color: #03045e;
+            color: #1a1a1a;
             margin-bottom: 2rem;
             font-style: italic;
             font-weight: 500;
@@ -648,8 +668,8 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: #0077b6;
-            color: #caf0f8;
+            background: #1a1a1a;
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -658,14 +678,14 @@
         }
 
         .author-info h4 {
-            color: #03045e;
+            color: #1a1a1a;
             font-size: 1rem;
             margin-bottom: 4px;
             font-weight: 800;
         }
 
         .author-info p {
-            color: #0077b6;
+            color: #555;
             font-size: 0.85rem;
             margin: 0;
             font-weight: 600;
@@ -674,7 +694,7 @@
         /* CTA Section */
         .cta-section {
             text-align: center;
-            background: linear-gradient(135deg, rgba(202, 240, 248, 0.2) 0%, rgba(202, 240, 248, 0) 100%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
         }
 
         .cta-buttons {
@@ -686,13 +706,13 @@
 
         /* Footer */
         footer {
-            background: rgba(144, 224, 239, 0.6);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 5rem 8% 2rem;
             position: relative;
             z-index: 10;
-            border-top: 1px solid rgba(0, 119, 182, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .footer-grid {
@@ -706,12 +726,12 @@
         .footer-brand h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: #03045e;
+            color: #1a1a1a;
             font-weight: 800;
         }
 
         .footer-brand p {
-            color: #023e8a;
+            color: #333;
             font-size: 0.95rem;
             line-height: 1.7;
             margin-bottom: 2rem;
@@ -727,24 +747,24 @@
             width: 44px;
             height: 44px;
             border-radius: 12px;
-            background: rgba(0, 119, 182, 0.1);
+            background: rgba(255, 255, 255, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0077b6;
+            color: #1a1a1a;
             text-decoration: none;
             transition: all 0.3s;
             font-size: 18px;
         }
 
         .social-links a:hover {
-            background: #0077b6;
-            color: #caf0f8;
+            background: #1a1a1a;
+            color: #fff;
             transform: translateY(-3px);
         }
 
         .footer-column h4 {
-            color: #03045e;
+            color: #1a1a1a;
             font-size: 1rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
@@ -761,7 +781,7 @@
         }
 
         .footer-links a {
-            color: #023e8a;
+            color: #444;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
@@ -769,12 +789,12 @@
         }
 
         .footer-links a:hover {
-            color: #0077b6;
+            color: #1a1a1a;
         }
 
         .footer-bottom {
             padding-top: 2rem;
-            border-top: 1px solid rgba(0, 119, 182, 0.15);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -783,10 +803,10 @@
         }
 
         .footer-bottom p {
-            color: #0077b6;
+            color: #555;
             font-size: 0.85rem;
             margin: 0;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .footer-bottom-links {
@@ -795,7 +815,7 @@
         }
 
         .footer-bottom-links a {
-            color: #0077b6;
+            color: #555;
             text-decoration: none;
             font-size: 0.85rem;
             transition: color 0.3s;
@@ -803,7 +823,7 @@
         }
 
         .footer-bottom-links a:hover {
-            color: #03045e;
+            color: #1a1a1a;
         }
 
         /* Scroll Indicator */
@@ -817,7 +837,7 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            color: #0077b6;
+            color: rgba(0, 0, 0, 0.5);
             font-size: 0.75rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -829,7 +849,7 @@
         .scroll-indicator .line {
             width: 1px;
             height: 50px;
-            background: linear-gradient(to bottom, #0077b6, transparent);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
             animation: scrollLine 2s infinite cubic-bezier(0.77, 0, 0.175, 1);
         }
 
@@ -856,7 +876,7 @@
             font-size: 1.1rem;
             max-width: 600px;
             margin: 0 auto;
-            color: #023e8a;
+            color: #333;
         }
 
         /* Responsive */
@@ -925,15 +945,48 @@
                 padding: 80px 5%;
             }
         }
+
+
+        /* AutoElite Mumbai refresh: airy luxury palette and clearer hierarchy */
+        :root { --ae-ink:#17263b; --ae-muted:#5f6f82; --ae-blue:#2458a6; --ae-cyan:#4e9ed8; --ae-gold:#d79d43; --ae-paper:#f7faff; }
+        body { background: linear-gradient(135deg,#f9fbff 0%,#edf5ff 38%,#fff5e9 72%,#f4f8ff 100%); color:var(--ae-ink); }
+        #loading-screen { background:linear-gradient(135deg,#f9fbff 0%,#eaf3ff 55%,#fff1df 100%); }
+        #loading-screen p { color:#253449; text-shadow:none; }
+        #navbar { background:rgba(250,252,255,.82); border-bottom:1px solid rgba(38,72,117,.08); backdrop-filter:blur(18px); }
+        #navbar.scrolled { background:rgba(250,252,255,.96); box-shadow:0 10px 35px rgba(32,61,99,.09); }
+        .logo, .nav-links a { color:#20334c; }
+        .logo-icon { background:linear-gradient(135deg,#285ba8,#4aa3d8); box-shadow:0 8px 20px rgba(43,103,173,.22); }
+        .nav-links .nav-cta, .btn { background:linear-gradient(135deg,#2458a6,#398bc5); color:white!important; border:0; box-shadow:0 12px 25px rgba(36,88,166,.18); }
+        .btn:hover, .nav-links .nav-cta:hover { transform:translateY(-2px); box-shadow:0 16px 30px rgba(36,88,166,.25); }
+        .btn-outline { background:rgba(255,255,255,.7)!important; color:#2458a6!important; border:1px solid rgba(36,88,166,.25)!important; box-shadow:none!important; }
+        section { color:#20334c; }
+        section h1, section h2, section h3 { color:#17263b; letter-spacing:-.035em; }
+        section p { color:#5f6f82; }
+        #home { background:radial-gradient(ellipse at 75% 35%,rgba(255,224,186,.54),transparent 38%),linear-gradient(135deg,rgba(247,251,255,.86),rgba(230,241,255,.58)); }
+        #featured, #about, #inventory, .stats-section { background:rgba(255,255,255,.58); }
+        .stats-section, .feature-card, .car-card, .testimonial-card, .spec-card, .about-card { border:1px solid rgba(62,101,151,.11); box-shadow:0 18px 50px rgba(42,72,112,.08); }
+        .feature-card, .car-card, .testimonial-card { background:rgba(255,255,255,.88); border-radius:22px; }
+        .car-badge { background:#e7f2ff; color:#2458a6; }
+        .spec-value, .stat-number { color:#2458a6; }
+        .cta-section { background:linear-gradient(125deg,#dcecff 0%,#f2e9ff 48%,#fff0dc 100%); }
+        footer { background:#eaf1fa; color:#43566f; border-top:1px solid rgba(43,77,120,.1); }
+        footer h3, footer a { color:#20334c; }
+        .scroll-indicator { color:#45617f; }
+        .loading-note { display:none; position:fixed; z-index:9998; left:50%; bottom:22px; transform:translateX(-50%); max-width:min(90vw,520px); padding:12px 16px; border-radius:12px; background:rgba(23,38,59,.92); color:#fff; font-size:13px; line-height:1.45; box-shadow:0 12px 32px rgba(20,38,65,.2); }
+        .loading-note.show { display:block; }
+        @media (max-width:700px) { #home { background:linear-gradient(160deg,rgba(248,251,255,.93),rgba(232,242,255,.8)); } .loader { width:56px;height:56px; } }
+
     </style>
 </head>
 <body>
 
     <!-- Loading Screen -->
     <div id="loading-screen">
-        <div class="loader"></div>
-        <p>Loading Experience</p>
+        <div class="loader" aria-hidden="true"></div>
+        <p>Preparing Your Drive</p>
     </div>
+
+    <div id="loading-note" class="loading-note" role="status" aria-live="polite"></div>
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -961,7 +1014,7 @@
             <div class="card left" data-reveal>
                 <div class="badge">Pre-owned • Certified</div>
                 <h1>Find Your Perfect Drive</h1>
-                <p>Discover a curated collection of premium pre-owned vehicles, each inspected and certified to deliver performance and peace of mind.</p>
+                <p>Discover carefully selected pre-owned cars in Mumbai, inspected for quality, documented for transparency, and ready for your next journey.</p>
                 <div>
                     <a href="#inventory" class="btn">Explore Inventory</a>
                     <a href="#about" class="btn btn-outline">Learn More</a>
@@ -999,7 +1052,7 @@
                 <div class="section-header" data-reveal>
                     <div class="badge">Our Track Record</div>
                     <h2>Trusted by Thousands</h2>
-                    <p>We've helped over 5,000 customers find their perfect vehicle with confidence and transparency.</p>
+                    <p>We make buying and selling pre-owned cars across Mumbai simpler with clear documentation, verified vehicle checks, and personal support.</p>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-card" data-reveal>
@@ -1027,7 +1080,7 @@
             <div class="card left" data-reveal>
                 <div class="badge">Quality Assurance</div>
                 <h2>Exceptional Condition</h2>
-                <p>Every vehicle undergoes a rigorous 150-point inspection by our master technicians. We guarantee the quality, safety, and reliability of every car we sell.</p>
+                <p>Every vehicle is checked for condition, service records, ownership documents, and road-readiness. Our team helps you make an informed decision with confidence.</p>
                 <div class="specs">
                     <div class="spec-item">
                         <span class="spec-label">Warranty</span>
@@ -1263,7 +1316,7 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <h3>🚗 AutoElite</h3>
-                <p>Your trusted destination for premium pre-owned vehicles. We combine cutting-edge technology with exceptional service to deliver an unmatched car buying experience.</p>
+                <p>Your Mumbai destination for quality pre-owned cars. Explore inspected vehicles, transparent paperwork, finance assistance, and convenient test drives across the city.</p>
                 <div class="social-links">
                     <a href="#">📘</a>
                     <a href="#">📷</a>
@@ -1303,7 +1356,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 AutoElite. All rights reserved.</p>
+            <p>&copy; 2026 AutoElite Mumbai. All rights reserved.</p>
             <div class="footer-bottom-links">
                 <a href="#">Privacy</a>
                 <a href="#">Terms</a>
@@ -1317,6 +1370,39 @@
         <span>Scroll</span>
         <div class="line"></div>
     </div>
+
+    <script>
+        // This non-module failsafe runs even if the Three.js CDN or module import fails.
+        (function () {
+            const screen = document.getElementById('loading-screen');
+            const note = document.getElementById('loading-note');
+            let hidden = false;
+            window.__autoEliteHideLoader = function (message) {
+                if (screen && !hidden) {
+                    hidden = true;
+                    screen.style.opacity = '0';
+                    window.setTimeout(() => { screen.style.display = 'none'; }, 450);
+                }
+                if (message && note) {
+                    note.textContent = message;
+                    note.classList.add('show');
+                    window.setTimeout(() => note.classList.remove('show'), 6500);
+                }
+            };
+            // Never let the loader cover the actual website indefinitely.
+            window.setTimeout(() => {
+                if (!hidden) window.__autoEliteHideLoader('The page is ready, but the 3D car is taking too long to load. Check that car.glb is beside this HTML file and run the page with Live Server.');
+            }, 7000);
+            window.addEventListener('error', function (event) {
+                if (event && event.message && /module|three|GLTF|import/i.test(event.message)) {
+                    window.__autoEliteHideLoader('The 3D scene could not start. The website is still available; check your internet connection and browser console.');
+                }
+            });
+            window.addEventListener('unhandledrejection', function () {
+                window.__autoEliteHideLoader('The 3D scene could not start. The website is still available; check your internet connection and browser console.');
+            });
+        })();
+    </script>
 
     <script type="importmap">
         {
@@ -1333,238 +1419,134 @@
 
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
-        
-        // Sky Blue Scene Background
-        scene.background = new THREE.Color(0x90e0ef); 
-        
-        // Light blue fog to blend the ground into the gradient
-        scene.fog = new THREE.FogExp2(0x90e0ef, 0.015); 
+        scene.background = null; // let the light CSS gradient show through
+        scene.fog = new THREE.FogExp2(0xf3f7ff, 0.012);
 
-        // Lower FOV for that compressed "car commercial" look
-        const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0.5, 6); 
+        const camera = new THREE.PerspectiveCamera(34, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 1.25, 11.5);
+        camera.lookAt(0, 0.15, 0);
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.1;
+        renderer.toneMappingExposure = 1.12;
         container.appendChild(renderer.domElement);
 
-        // --- Lighting ---
-        const ambient = new THREE.AmbientLight(0xffffff, 1.2);
-        scene.add(ambient);
+        scene.add(new THREE.HemisphereLight(0xffffff, 0xb8c8dd, 2.0));
+        scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+        const key = new THREE.DirectionalLight(0xffffff, 3.0);
+        key.position.set(5, 9, 7); key.castShadow = true;
+        key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -0.00015; scene.add(key);
+        const rim = new THREE.DirectionalLight(0x9ccfff, 2.2); rim.position.set(-7, 4, -5); scene.add(rim);
+        const warm = new THREE.PointLight(0xffd6a6, 1.2, 35); warm.position.set(3, 2, 5); scene.add(warm);
 
-        // Sky blue and cyan hemisphere light
-        const hemiLight = new THREE.HemisphereLight(0x00b4d8, 0xcaf0f8, 1.5);
-        hemiLight.position.set(0, 20, 0);
-        scene.add(hemiLight);
+        // Soft showroom floor and subtle reflection-style lines
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshStandardMaterial({ color: 0xe7eff9, roughness: 0.38, metalness: 0.08, transparent: true, opacity: 0.78 }));
+        floor.rotation.x = -Math.PI / 2; floor.position.y = -1.0; floor.receiveShadow = true; scene.add(floor);
+        const grid = new THREE.GridHelper(100, 70, 0xa9c3e2, 0xd0deef);
+        grid.position.y = -0.985; grid.material.transparent = true; grid.material.opacity = 0.22; scene.add(grid);
 
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
-        keyLight.position.set(5, 10, 5);
-        keyLight.castShadow = true;
-        keyLight.shadow.mapSize.width = 2048;
-        keyLight.shadow.mapSize.height = 2048;
-        keyLight.shadow.bias = -0.0001;
-        scene.add(keyLight);
-
-        // Vibrant cyan rim light
-        const rimLight = new THREE.DirectionalLight(0x0077b6, 1.5);
-        rimLight.position.set(-5, 5, -5);
-        scene.add(rimLight);
-
-        // Warm yellow/orange fill light (Contrast)
-        const fillLight = new THREE.PointLight(0xffb703, 1.5, 30);
-        fillLight.position.set(0, 2, 4);
-        scene.add(fillLight);
-
-        const spotLight = new THREE.SpotLight(0xffffff, 2.5);
-        spotLight.position.set(0, 12, 0);
-        spotLight.angle = Math.PI / 4;
-        spotLight.penumbra = 0.5;
-        spotLight.decay = 2;
-        spotLight.distance = 40;
-        spotLight.castShadow = true;
-        scene.add(spotLight);
-
-        // --- Environment / Ground ---
-        const groundGeo = new THREE.PlaneGeometry(200, 200);
-        // Light ice blue ground
-        const groundMat = new THREE.MeshStandardMaterial({ 
-            color: 0xcaf0f8, 
-            roughness: 0.3, 
-            metalness: 0.2 
-        });
-        const ground = new THREE.Mesh(groundGeo, groundMat);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -1.0; 
-        ground.receiveShadow = true;
-        scene.add(ground);
-
-        // *** GRID REMOVED HERE ***
-
-        // --- Load Car Model ---
         let carModel = null;
-        const loader = new GLTFLoader();
-        
-        loader.load(
-            'car.glb', 
-            (gltf) => {
-                carModel = gltf.scene;
-                
-                // Scale to fit the frame nicely
-                carModel.scale.set(4.0, 4.0, 4.0);
-                
-                // Keep the car centered
-                carModel.position.set(0, -0.2, 0);
-                carModel.rotation.y = -0.5;
+        let carStartTime = null;
+        let baseScale = 1;
+        let initialX = -10;
+        let loadFailed = false;
+        const gltfLoader = new GLTFLoader();
+        const loadTimer = window.setTimeout(() => {
+            if (!carModel && !loadFailed) {
+                window.__autoEliteHideLoader('The website is ready. The original car.glb has not loaded yet—check the file name and use VS Code Live Server.');
+            }
+        }, 12000);
 
+        gltfLoader.load('car.glb', (gltf) => {
+            try {
+                carModel = gltf.scene;
+                // Fit the supplied model automatically without substituting another car.
+                const initialBox = new THREE.Box3().setFromObject(carModel);
+                const size = initialBox.getSize(new THREE.Vector3());
+                const maxDimension = Math.max(size.x, size.y, size.z) || 1;
+                baseScale = 6.2 / maxDimension;
+                carModel.scale.setScalar(baseScale);
+                carModel.rotation.y = Math.PI / 2; // side-profile orientation; adjust only if the GLB uses another forward axis
+                const scaledBox = new THREE.Box3().setFromObject(carModel);
+                const center = scaledBox.getCenter(new THREE.Vector3());
+                carModel.position.x -= center.x;
+                carModel.position.y -= scaledBox.min.y + 0.96;
+                carModel.position.z -= center.z;
+                carModel.position.x = initialX;
                 carModel.traverse((node) => {
                     if (node.isMesh) {
-                        node.castShadow = true;
-                        node.receiveShadow = true;
-                        if (node.material) {
-                            node.material.envMapIntensity = 1.0;
-                        }
+                        node.castShadow = true; node.receiveShadow = true;
+                        if (node.material && 'envMapIntensity' in node.material) node.material.envMapIntensity = 1.25;
                     }
                 });
-
                 scene.add(carModel);
-                
-                setTimeout(() => {
-                    document.getElementById('loading-screen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('loading-screen').style.display = 'none';
-                    }, 500);
-                }, 500);
-            },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            (error) => {
-                console.error('Error loading car model:', error);
-                createFallbackCar();
+                carStartTime = performance.now();
+                clearTimeout(loadTimer);
+                window.__autoEliteHideLoader();
+            } catch (e) {
+                console.error('Could not prepare original car.glb:', e);
+                loadFailed = true; clearTimeout(loadTimer);
+                window.__autoEliteHideLoader('The original car.glb loaded but could not be displayed. Please check the model export.');
             }
-        );
-
-        function createFallbackCar() {
-            const group = new THREE.Group();
-            const bodyGeo = new THREE.BoxGeometry(2.5, 0.8, 4.5);
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x0077b6, metalness: 0.8, roughness: 0.2 });
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.y = 0.4;
-            body.castShadow = true;
-            body.receiveShadow = true;
-            group.add(body);
-
-            const cabinGeo = new THREE.BoxGeometry(1.8, 0.6, 2.2);
-            const cabinMat = new THREE.MeshStandardMaterial({ color: 0x03045e, metalness: 0.5, roughness: 0.5 });
-            const cabin = new THREE.Mesh(cabinGeo, cabinMat);
-            cabin.position.set(0, 0.9, -0.2);
-            cabin.castShadow = true;
-            cabin.receiveShadow = true;
-            group.add(cabin);
-
-            group.scale.set(2, 2, 2); 
-            group.position.set(0, -0.2, 0);
-            scene.add(group);
-            carModel = group;
-            
-            document.getElementById('loading-screen').style.display = 'none';
-        }
-
-        // --- Scroll Animation Logic ---
-        let scrollProgress = 0;
-        let targetScrollProgress = 0;
-        const lerpFactor = 0.05;
-
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const maxScroll = document.body.scrollHeight - window.innerHeight;
-            targetScrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
-
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+        }, (progress) => {
+            if (progress.lengthComputable && progress.total > 0) {
+                const pct = Math.round(progress.loaded / progress.total * 100);
+                const p = document.querySelector('#loading-screen p');
+                if (p) p.textContent = 'Preparing Your Drive ' + pct + '%';
             }
-
-            const scrollIndicator = document.querySelector('.scroll-indicator');
-            if (window.scrollY > 200) {
-                scrollIndicator.style.opacity = '0';
-            } else {
-                scrollIndicator.style.opacity = '1';
-            }
-
-            document.querySelectorAll('[data-reveal]').forEach((card) => {
-                const rect = card.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                if (rect.top < windowHeight * 0.85 && rect.bottom > 0) {
-                    card.classList.add('reveal');
-                }
-            });
+        }, (error) => {
+            console.error('Error loading original car.glb:', error);
+            loadFailed = true; clearTimeout(loadTimer);
+            window.__autoEliteHideLoader('Could not load car.glb. Keep the original file in the same folder as this HTML and open it with Live Server.');
         });
 
-        window.dispatchEvent(new Event('scroll'));
+        // Navbar, mobile menu and scroll-reveal interactions
+        const navbar = document.getElementById('navbar');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        const menuButton = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuButton && navLinks) menuButton.addEventListener('click', () => navLinks.classList.toggle('active'));
+        if (navLinks) navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('active')));
+        function onScroll() {
+            if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 30);
+            if (scrollIndicator) scrollIndicator.style.opacity = window.scrollY > 200 ? '0' : '1';
+            document.querySelectorAll('[data-reveal]').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add('reveal');
+            });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         });
 
-        // --- Animation Loop ---
         const clock = new THREE.Clock();
-
-        function animate() {
+        const smoothstep = t => t * t * (3 - 2 * t);
+        function animate(now) {
             requestAnimationFrame(animate);
-
-            scrollProgress += (targetScrollProgress - scrollProgress) * lerpFactor;
-
+            const elapsed = carStartTime === null ? 0 : (now - carStartTime) / 1000;
             if (carModel) {
-                // --- CAR ROTATION ---
-                // The car stays centered, just spinning in place
-                const rotationY = -0.5 + (scrollProgress * Math.PI * 3); 
-                carModel.rotation.y = rotationY;
-                
-                // Gentle floating effect
-                carModel.position.y = -0.2 + Math.sin(scrollProgress * Math.PI * 2) * 0.05;
+                // Cinematic left-to-right entrance with a gentle camera push-in.
+                const duration = 5.4;
+                const t = Math.min(elapsed / duration, 1);
+                carModel.position.x = initialX * (1 - smoothstep(t));
+                const zoom = t < 1 ? (0.86 + 0.14 * smoothstep(t)) : (1 + Math.sin(elapsed * 0.45) * 0.006);
+                carModel.scale.setScalar(baseScale * zoom);
+                carModel.position.y = -0.02 + Math.sin(elapsed * 1.15) * 0.018;
+                // Keep the side profile stable; no continuous spinning/orbiting.
             }
-
-            // --- CINEMATIC CAMERA ORBIT ---
-            // Zoom oscillates between 2.5 (super close) and 6.5 (medium)
-            const zoomSine = Math.sin(scrollProgress * Math.PI * 2); 
-            let radius = 4.5 - (zoomSine * 2.0); 
-            
-            // Camera swings around the car
-            const angle = scrollProgress * Math.PI * 1.5;
-            
-            const camX = Math.sin(angle) * radius;
-            const camZ = Math.cos(angle) * radius;
-            
-            // Camera height goes from ground level to slightly above
-            const camY = 0.2 + (Math.sin(scrollProgress * Math.PI) * 2.5);
-            
-            // Smoothly interpolate camera position
-            camera.position.x += (camX - camera.position.x) * 0.05;
-            camera.position.y += (camY - camera.position.y) * 0.05;
-            camera.position.z += (camZ - camera.position.z) * 0.05;
-
-            // Dynamic FOV
-            const targetFov = 25 + (radius * 3.0); 
-            camera.fov += (targetFov - camera.fov) * 0.05;
-            camera.updateProjectionMatrix();
-
-            // ALWAYS LOOK AT THE CAR'S CENTER
-            camera.lookAt(0, 0.1, 0);
-
             renderer.render(scene, camera);
         }
-
-        animate();
+        requestAnimationFrame(animate);
     </script>
 </body>
 </html>
