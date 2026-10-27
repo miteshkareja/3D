@@ -1004,7 +1004,7 @@
         <button class="mobile-menu-btn">☰</button>
     </nav>
 
-    <!-- 3D Canvas -->
+    <!-- Fixed 3D Canvas: the original car.glb animation is driven by scrolling -->
     <div id="canvas-container"></div>
 
     <div class="content">
@@ -1451,9 +1451,9 @@
         grid.position.y = -0.985; grid.material.transparent = true; grid.material.opacity = 0.22; scene.add(grid);
 
         let carModel = null;
-        let carStartTime = null;
         let baseScale = 1;
-        let initialX = -10;
+        let baseY = 0;
+        let initialX = -10.5;
         let loadFailed = false;
         const gltfLoader = new GLTFLoader();
         const loadTimer = window.setTimeout(() => {
@@ -1478,6 +1478,7 @@
                 carModel.position.y -= scaledBox.min.y + 0.96;
                 carModel.position.z -= center.z;
                 carModel.position.x = initialX;
+                baseY = carModel.position.y;
                 carModel.traverse((node) => {
                     if (node.isMesh) {
                         node.castShadow = true; node.receiveShadow = true;
@@ -1485,7 +1486,6 @@
                     }
                 });
                 scene.add(carModel);
-                carStartTime = performance.now();
                 clearTimeout(loadTimer);
                 window.__autoEliteHideLoader();
             } catch (e) {
@@ -1529,21 +1529,38 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         });
 
-        const clock = new THREE.Clock();
-        const smoothstep = t => t * t * (3 - 2 * t);
-        function animate(now) {
+        // Scroll-controlled cinematic sequence:
+        // 1) the car enters from the left, 2) settles in the centre and camera pushes in,
+        // 3) it glides out to the right. Scrolling back reverses the whole sequence.
+        const smoothstep = t => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
+        const lerp = (a, b, t) => a + (b - a) * t;
+        function animate() {
             requestAnimationFrame(animate);
-            const elapsed = carStartTime === null ? 0 : (now - carStartTime) / 1000;
+            const scrollSpan = Math.max(window.innerHeight * 1.45, 1);
+            const progress = Math.max(0, Math.min(1, window.scrollY / scrollSpan));
+
+            // Keep the car hidden to the left before the visitor starts scrolling.
+            const enter = smoothstep(progress / 0.36);
+            const exit = smoothstep((progress - 0.60) / 0.40);
+            const carX = lerp(initialX, 0, enter) + (8.8 * exit);
+            // Camera stays wide on entry, pushes in while the car is centred, then eases back slightly.
+            const pushIn = smoothstep((progress - 0.24) / 0.30);
+            const pullBack = smoothstep((progress - 0.66) / 0.34);
+            const cameraZ = lerp(11.5, 8.6, pushIn) + (1.0 * pullBack);
+            const cameraX = lerp(0, 1.35, exit);
+            const lookAtX = lerp(0, 0.65, exit);
+
             if (carModel) {
-                // Cinematic left-to-right entrance with a gentle camera push-in.
-                const duration = 5.4;
-                const t = Math.min(elapsed / duration, 1);
-                carModel.position.x = initialX * (1 - smoothstep(t));
-                const zoom = t < 1 ? (0.86 + 0.14 * smoothstep(t)) : (1 + Math.sin(elapsed * 0.45) * 0.006);
-                carModel.scale.setScalar(baseScale * zoom);
-                carModel.position.y = -0.02 + Math.sin(elapsed * 1.15) * 0.018;
-                // Keep the side profile stable; no continuous spinning/orbiting.
+                carModel.position.x = carX;
+                // A restrained suspension-like drift adds life without rotating the model.
+                const cinematicFloat = Math.sin(progress * Math.PI * 2) * 0.025 * smoothstep(progress / 0.12) * (1 - exit * 0.6);
+                carModel.position.y = baseY + cinematicFloat;
+                carModel.scale.setScalar(baseScale);
+                // Preserve the model's existing side-on orientation: no spinning or orbiting.
             }
+            camera.position.x += (cameraX - camera.position.x) * 0.075;
+            camera.position.z += (cameraZ - camera.position.z) * 0.075;
+            camera.lookAt(lookAtX, 0.15, 0);
             renderer.render(scene, camera);
         }
         requestAnimationFrame(animate);
