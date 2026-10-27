@@ -17,8 +17,9 @@
             margin: 0;
             overflow-x: hidden;
             font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            color: #fff;
+            /* Colorful warm pastel background */
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: #1a1a1a;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -45,7 +46,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #050505;
+            background: #fdfbfb;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -57,8 +58,8 @@
         .loader {
             width: 60px;
             height: 60px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid #fff;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #ff6b6b;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
@@ -70,10 +71,11 @@
         }
 
         #loading-screen p {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.6);
             font-size: 14px;
             letter-spacing: 2px;
             text-transform: uppercase;
+            font-weight: 600;
         }
 
         /* Navigation */
@@ -88,21 +90,21 @@
             align-items: center;
             z-index: 1000;
             transition: all 0.4s ease;
-            background: linear-gradient(to bottom, rgba(5,5,5,0.8), transparent);
+            background: linear-gradient(to bottom, rgba(253,251,251,0.9), transparent);
         }
 
         nav.scrolled {
-            background: rgba(5, 5, 5, 0.95);
+            background: rgba(253, 251, 251, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 18px 5%;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .logo {
             font-size: 26px;
             font-weight: 800;
-            color: #fff;
+            color: #1a1a1a;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -113,7 +115,8 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #fff;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -128,10 +131,10 @@
         }
 
         .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(0, 0, 0, 0.7);
             text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             position: relative;
             transition: color 0.3s;
             letter-spacing: 0.02em;
@@ -144,12 +147,12 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #fff;
+            background: #ff6b6b;
             transition: width 0.3s;
         }
 
         .nav-links a:hover {
-            color: #fff;
+            color: #1a1a1a;
         }
 
         .nav-links a:hover::after {
@@ -157,8 +160,8 @@
         }
 
         .nav-cta {
-            background: #fff;
-            color: #000 !important;
+            background: #1a1a1a;
+            color: #fff !important;
             padding: 12px 28px;
             border-radius: 50px;
             font-weight: 600 !important;
@@ -166,7 +169,7 @@
         }
 
         .nav-cta:hover {
-            background: #ddd;
+            background: #333;
             transform: translateY(-2px);
         }
 
@@ -179,7 +182,7 @@
             display: none;
             background: none;
             border: none;
-            color: #fff;
+            color: #1a1a1a;
             font-size: 28px;
             cursor: pointer;
         }
@@ -194,15 +197,16 @@
             position: relative;
         }
 
+        /* Colorful Glassmorphism Cards */
         .card {
             max-width: 500px;
-            background: rgba(15, 15, 20, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             padding: 3rem;
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
             
             opacity: 0;
             transform: translateY(40px) scale(0.95);
@@ -229,11 +233,11 @@
 
         h1 {
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin: 0 0 1rem 0;
             letter-spacing: -0.03em;
             line-height: 1.1;
-            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #555 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -241,39 +245,39 @@
 
         h2 {
             font-size: 2.2rem;
-            font-weight: 600;
+            font-weight: 700;
             margin: 0 0 1.2rem 0;
-            color: #f0f0f0;
+            color: #1a1a1a;
             letter-spacing: -0.02em;
         }
 
         h3 {
             font-size: 1.5rem;
-            font-weight: 600;
-            color: #f0f0f0;
+            font-weight: 700;
+            color: #1a1a1a;
             margin-bottom: 1rem;
         }
 
         p {
             font-size: 1.1rem;
             line-height: 1.7;
-            color: #a0a0a0;
+            color: #4a4a4a;
             margin: 0 0 2.5rem 0;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         .badge {
             display: inline-block;
-            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: linear-gradient(90deg, rgba(255,107,107,0.1) 0%, rgba(255,107,107,0.02) 100%);
+            border: 1px solid rgba(255, 107, 107, 0.3);
             padding: 0.4rem 1.2rem;
             border-radius: 30px;
             font-size: 0.75rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #ddd;
+            color: #d93838;
             margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .specs {
@@ -281,8 +285,8 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-bottom: 2.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             padding: 1.5rem 0;
         }
 
@@ -295,23 +299,23 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: #666;
+            color: #888;
             margin-bottom: 0.4rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .spec-value {
             font-size: 1.4rem;
-            font-weight: 600;
-            color: #fff;
+            font-weight: 700;
+            color: #1a1a1a;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #fff;
-            color: #000;
+            background: #1a1a1a;
+            color: #fff;
             padding: 1rem 2.5rem;
             border-radius: 50px;
             font-weight: 600;
@@ -324,26 +328,26 @@
         }
 
         .btn:hover {
-            background: #d0d0d0;
+            background: #333;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
         .btn-outline {
             background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
+            color: #1a1a1a;
+            border: 1px solid rgba(0, 0, 0, 0.2);
             margin-left: 1rem;
         }
         
         .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: #fff;
+            background: rgba(0, 0, 0, 0.05);
+            border-color: #1a1a1a;
         }
 
         /* Stats Section */
         .stats-section {
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.02), transparent);
+            background: linear-gradient(to bottom, transparent, rgba(255,107,107,0.03), transparent);
         }
 
         .stats-grid {
@@ -358,22 +362,23 @@
         .stat-card {
             text-align: center;
             padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
         .stat-card:hover {
             transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
         }
 
         .stat-number {
             font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -382,10 +387,10 @@
 
         .stat-label {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            font-weight: 500;
+            font-weight: 700;
         }
 
         /* Features Grid */
@@ -399,23 +404,24 @@
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             border-radius: 20px;
             padding: 2.5rem;
             transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
         .feature-card:hover {
             transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
         }
 
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+            background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,107,107,0.02) 100%);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -426,15 +432,16 @@
 
         .feature-title {
             font-size: 1.3rem;
-            font-weight: 600;
-            color: #fff;
+            font-weight: 700;
+            color: #1a1a1a;
             margin-bottom: 0.8rem;
         }
 
         .feature-desc {
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: #555;
             line-height: 1.6;
+            font-weight: 400;
         }
 
         /* Cars Showcase */
@@ -448,22 +455,22 @@
         }
 
         .car-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.9);
             border-radius: 24px;
             overflow: hidden;
             transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
         }
 
         .car-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
         }
 
         .car-image {
             height: 220px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -479,22 +486,24 @@
             left: 0;
             width: 100%;
             height: 50%;
-            background: linear-gradient(to top, rgba(5,5,5,0.8), transparent);
+            background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
         }
 
         .car-badge {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             z-index: 2;
+            color: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
         .car-info {
@@ -503,15 +512,16 @@
 
         .car-name {
             font-size: 1.4rem;
-            font-weight: 700;
-            color: #fff;
+            font-weight: 800;
+            color: #1a1a1a;
             margin-bottom: 0.5rem;
         }
 
         .car-category {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             margin-bottom: 1.5rem;
+            font-weight: 500;
         }
 
         .car-specs {
@@ -519,7 +529,7 @@
             gap: 1.5rem;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .car-spec {
@@ -529,16 +539,17 @@
 
         .car-spec span:first-child {
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.4);
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 4px;
+            font-weight: 700;
         }
 
         .car-spec span:last-child {
             font-size: 0.95rem;
-            color: #fff;
-            font-weight: 500;
+            color: #1a1a1a;
+            font-weight: 600;
         }
 
         .car-price-row {
@@ -549,31 +560,25 @@
 
         .car-price {
             font-size: 1.6rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .car-price span {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 400;
+            font-weight: 800;
+            color: #1a1a1a;
         }
 
         .car-btn {
             padding: 10px 24px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
+            background: rgba(0, 0, 0, 0.05);
+            color: #1a1a1a;
             border: none;
             border-radius: 25px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .car-btn:hover {
-            background: #fff;
-            color: #000;
+            background: #1a1a1a;
+            color: #fff;
         }
 
         /* Testimonials */
@@ -584,12 +589,13 @@
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             border-radius: 24px;
             padding: 3rem;
             margin-bottom: 2rem;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
         .testimonial-card::before {
@@ -598,13 +604,13 @@
             top: 20px;
             left: 30px;
             font-size: 100px;
-            color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 107, 107, 0.1);
             font-family: serif;
             line-height: 1;
         }
 
         .stars {
-            color: #ffd700;
+            color: #ff6b6b;
             font-size: 18px;
             margin-bottom: 1.5rem;
             letter-spacing: 4px;
@@ -613,7 +619,7 @@
         .testimonial-text {
             font-size: 1.15rem;
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
+            color: #333;
             margin-bottom: 2rem;
             font-style: italic;
         }
@@ -628,22 +634,24 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 18px;
         }
 
         .author-info h4 {
-            color: #fff;
+            color: #1a1a1a;
             font-size: 1rem;
             margin-bottom: 4px;
+            font-weight: 700;
         }
 
         .author-info p {
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             font-size: 0.85rem;
             margin: 0;
         }
@@ -651,7 +659,7 @@
         /* CTA Section */
         .cta-section {
             text-align: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            background: linear-gradient(135deg, rgba(255,107,107,0.05) 0%, rgba(255,107,107,0.01) 100%);
         }
 
         .cta-buttons {
@@ -663,11 +671,11 @@
 
         /* Footer */
         footer {
-            background: #030303;
+            background: #fff;
             padding: 5rem 8% 2rem;
             position: relative;
             z-index: 10;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .footer-grid {
@@ -681,10 +689,12 @@
         .footer-brand h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
+            color: #1a1a1a;
+            font-weight: 800;
         }
 
         .footer-brand p {
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             font-size: 0.95rem;
             line-height: 1.7;
             margin-bottom: 2rem;
@@ -699,26 +709,26 @@
             width: 44px;
             height: 44px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.04);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: #1a1a1a;
             text-decoration: none;
             transition: all 0.3s;
             font-size: 18px;
         }
 
         .social-links a:hover {
-            background: #fff;
-            color: #000;
+            background: #1a1a1a;
+            color: #fff;
             transform: translateY(-3px);
         }
 
         .footer-column h4 {
-            color: #fff;
+            color: #1a1a1a;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -733,19 +743,20 @@
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
+            font-weight: 500;
         }
 
         .footer-links a:hover {
-            color: #fff;
+            color: #ff6b6b;
         }
 
         .footer-bottom {
             padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -754,7 +765,7 @@
         }
 
         .footer-bottom p {
-            color: rgba(255, 255, 255, 0.4);
+            color: #888;
             font-size: 0.85rem;
             margin: 0;
         }
@@ -765,14 +776,14 @@
         }
 
         .footer-bottom-links a {
-            color: rgba(255, 255, 255, 0.4);
+            color: #888;
             text-decoration: none;
             font-size: 0.85rem;
             transition: color 0.3s;
         }
 
         .footer-bottom-links a:hover {
-            color: #fff;
+            color: #1a1a1a;
         }
 
         /* Scroll Indicator */
@@ -786,18 +797,19 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(0, 0, 0, 0.4);
             font-size: 0.75rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             pointer-events: none;
             transition: opacity 0.3s ease;
+            font-weight: 700;
         }
 
         .scroll-indicator .line {
             width: 1px;
             height: 50px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
             animation: scrollLine 2s infinite cubic-bezier(0.77, 0, 0.175, 1);
         }
 
@@ -1300,8 +1312,11 @@
 
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050505);
-        scene.fog = new THREE.FogExp2(0x050505, 0.015);
+        
+        // Colorful sunset/scene background
+        scene.background = new THREE.Color(0xfdfbfb); 
+        // Light, warm fog to blend the ground
+        scene.fog = new THREE.FogExp2(0xfdfbfb, 0.02); 
 
         // Lower FOV for that compressed "car commercial" look
         const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -1313,22 +1328,26 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
+        renderer.toneMappingExposure = 1.1;
         container.appendChild(renderer.domElement);
 
         // --- Lighting ---
-        const ambient = new THREE.AmbientLight(0x202030, 1.5);
+        const ambient = new THREE.AmbientLight(0xffffff, 1.2);
         scene.add(ambient);
 
-        const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        keyLight.position.set(5, 8, 5);
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xeeeeee, 1.5);
+        hemiLight.position.set(0, 20, 0);
+        scene.add(hemiLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
+        keyLight.position.set(5, 10, 5);
         keyLight.castShadow = true;
         keyLight.shadow.mapSize.width = 2048;
         keyLight.shadow.mapSize.height = 2048;
         keyLight.shadow.bias = -0.0001;
         scene.add(keyLight);
 
-        const rimLight = new THREE.DirectionalLight(0x4466ff, 1.2);
+        const rimLight = new THREE.DirectionalLight(0xe0e0ff, 1.0);
         rimLight.position.set(-5, 5, -5);
         scene.add(rimLight);
 
@@ -1347,10 +1366,11 @@
 
         // --- Environment / Ground ---
         const groundGeo = new THREE.PlaneGeometry(200, 200);
+        // Light, warm ground material (no grid)
         const groundMat = new THREE.MeshStandardMaterial({ 
-            color: 0x0a0a0a, 
-            roughness: 0.3, 
-            metalness: 0.8 
+            color: 0xebedee, 
+            roughness: 0.4, 
+            metalness: 0.1 
         });
         const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI / 2;
@@ -1358,9 +1378,7 @@
         ground.receiveShadow = true;
         scene.add(ground);
 
-        const gridHelper = new THREE.GridHelper(200, 200, 0x444444, 0x111111);
-        gridHelper.position.y = -0.99;
-        scene.add(gridHelper);
+        // *** GRID REMOVED HERE ***
 
         // --- Load Car Model ---
         let carModel = null;
@@ -1409,7 +1427,7 @@
         function createFallbackCar() {
             const group = new THREE.Group();
             const bodyGeo = new THREE.BoxGeometry(2.5, 0.8, 4.5);
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xcc3333, metalness: 0.8, roughness: 0.2 });
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xcc3333, metalness: 0.5, roughness: 0.3 });
             const body = new THREE.Mesh(bodyGeo, bodyMat);
             body.position.y = 0.4;
             body.castShadow = true;
