@@ -17,8 +17,8 @@
             margin: 0;
             overflow-x: hidden;
             font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            color: #fff;
+            background-color: #f4f4f6; /* Light background */
+            color: #111; /* Dark text for light theme */
             -webkit-font-smoothing: antialiased;
         }
 
@@ -45,7 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #050505;
+            background: #f4f4f6;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -57,8 +57,8 @@
         .loader {
             width: 60px;
             height: 60px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid #fff;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #111;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
@@ -70,7 +70,7 @@
         }
 
         #loading-screen p {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.6);
             font-size: 14px;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -88,21 +88,21 @@
             align-items: center;
             z-index: 1000;
             transition: all 0.4s ease;
-            background: linear-gradient(to bottom, rgba(5,5,5,0.8), transparent);
+            background: linear-gradient(to bottom, rgba(244, 244, 246, 0.9), transparent);
         }
 
         nav.scrolled {
-            background: rgba(5, 5, 5, 0.95);
+            background: rgba(244, 244, 246, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 18px 5%;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .logo {
             font-size: 26px;
             font-weight: 800;
-            color: #fff;
+            color: #111;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -113,7 +113,8 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            background: linear-gradient(135deg, #111 0%, #555 100%);
+            color: #fff;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -128,7 +129,7 @@
         }
 
         .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(0, 0, 0, 0.7);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -144,12 +145,12 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #fff;
+            background: #111;
             transition: width 0.3s;
         }
 
         .nav-links a:hover {
-            color: #fff;
+            color: #111;
         }
 
         .nav-links a:hover::after {
@@ -157,8 +158,8 @@
         }
 
         .nav-cta {
-            background: #fff;
-            color: #000 !important;
+            background: #111;
+            color: #fff !important;
             padding: 12px 28px;
             border-radius: 50px;
             font-weight: 600 !important;
@@ -166,7 +167,7 @@
         }
 
         .nav-cta:hover {
-            background: #ddd;
+            background: #333;
             transform: translateY(-2px);
         }
 
@@ -179,7 +180,7 @@
             display: none;
             background: none;
             border: none;
-            color: #fff;
+            color: #111;
             font-size: 28px;
             cursor: pointer;
         }
@@ -194,15 +195,16 @@
             position: relative;
         }
 
+        /* Light Theme Cards */
         .card {
             max-width: 500px;
-            background: rgba(15, 15, 20, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 3rem;
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
             
             opacity: 0;
             transform: translateY(40px) scale(0.95);
@@ -233,7 +235,7 @@
             margin: 0 0 1rem 0;
             letter-spacing: -0.03em;
             line-height: 1.1;
-            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            background: linear-gradient(135deg, #111 0%, #555 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -243,35 +245,35 @@
             font-size: 2.2rem;
             font-weight: 600;
             margin: 0 0 1.2rem 0;
-            color: #f0f0f0;
+            color: #111;
             letter-spacing: -0.02em;
         }
 
         h3 {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #f0f0f0;
+            color: #111;
             margin-bottom: 1rem;
         }
 
         p {
             font-size: 1.1rem;
             line-height: 1.7;
-            color: #a0a0a0;
+            color: #444;
             margin: 0 0 2.5rem 0;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         .badge {
             display: inline-block;
-            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.01) 100%);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             padding: 0.4rem 1.2rem;
             border-radius: 30px;
             font-size: 0.75rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #ddd;
+            color: #333;
             margin-bottom: 1.5rem;
             font-weight: 600;
         }
@@ -281,8 +283,8 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-bottom: 2.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             padding: 1.5rem 0;
         }
 
@@ -303,15 +305,15 @@
         .spec-value {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #fff;
+            color: #111;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #fff;
-            color: #000;
+            background: #111;
+            color: #fff;
             padding: 1rem 2.5rem;
             border-radius: 50px;
             font-weight: 600;
@@ -324,26 +326,26 @@
         }
 
         .btn:hover {
-            background: #d0d0d0;
+            background: #333;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .btn-outline {
             background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
+            color: #111;
+            border: 1px solid rgba(0, 0, 0, 0.2);
             margin-left: 1rem;
         }
         
         .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: #fff;
+            background: rgba(0, 0, 0, 0.05);
+            border-color: #111;
         }
 
         /* Stats Section */
         .stats-section {
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.02), transparent);
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.02), transparent);
         }
 
         .stats-grid {
@@ -358,22 +360,23 @@
         .stat-card {
             text-align: center;
             padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             transition: all 0.4s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
         .stat-number {
             font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            background: linear-gradient(135deg, #111 0%, #555 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -382,10 +385,10 @@
 
         .stat-label {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #555;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Features Grid */
@@ -399,8 +402,8 @@
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 20px;
             padding: 2.5rem;
             transition: all 0.4s ease;
@@ -408,14 +411,15 @@
 
         .feature-card:hover {
             transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
 
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+            background: linear-gradient(135deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.01) 100%);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -427,13 +431,13 @@
         .feature-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #fff;
+            color: #111;
             margin-bottom: 0.8rem;
         }
 
         .feature-desc {
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: #555;
             line-height: 1.6;
         }
 
@@ -448,8 +452,8 @@
         }
 
         .car-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 24px;
             overflow: hidden;
             transition: all 0.4s ease;
@@ -457,13 +461,13 @@
 
         .car-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
         }
 
         .car-image {
             height: 220px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -479,14 +483,14 @@
             left: 0;
             width: 100%;
             height: 50%;
-            background: linear-gradient(to top, rgba(5,5,5,0.8), transparent);
+            background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
         }
 
         .car-badge {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             padding: 6px 14px;
             border-radius: 20px;
@@ -495,6 +499,8 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             z-index: 2;
+            color: #111;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .car-info {
@@ -504,13 +510,13 @@
         .car-name {
             font-size: 1.4rem;
             font-weight: 700;
-            color: #fff;
+            color: #111;
             margin-bottom: 0.5rem;
         }
 
         .car-category {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             margin-bottom: 1.5rem;
         }
 
@@ -519,7 +525,7 @@
             gap: 1.5rem;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .car-spec {
@@ -529,7 +535,7 @@
 
         .car-spec span:first-child {
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.4);
+            color: #777;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 4px;
@@ -537,7 +543,7 @@
 
         .car-spec span:last-child {
             font-size: 0.95rem;
-            color: #fff;
+            color: #111;
             font-weight: 500;
         }
 
@@ -550,19 +556,19 @@
         .car-price {
             font-size: 1.6rem;
             font-weight: 700;
-            color: #fff;
+            color: #111;
         }
 
         .car-price span {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.4);
+            color: #666;
             font-weight: 400;
         }
 
         .car-btn {
             padding: 10px 24px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
+            background: rgba(0, 0, 0, 0.05);
+            color: #111;
             border: none;
             border-radius: 25px;
             font-weight: 600;
@@ -572,8 +578,8 @@
         }
 
         .car-btn:hover {
-            background: #fff;
-            color: #000;
+            background: #111;
+            color: #fff;
         }
 
         /* Testimonials */
@@ -584,8 +590,8 @@
         }
 
         .testimonial-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 24px;
             padding: 3rem;
             margin-bottom: 2rem;
@@ -598,13 +604,13 @@
             top: 20px;
             left: 30px;
             font-size: 100px;
-            color: rgba(255, 255, 255, 0.05);
+            color: rgba(0, 0, 0, 0.04);
             font-family: serif;
             line-height: 1;
         }
 
         .stars {
-            color: #ffd700;
+            color: #ffb400;
             font-size: 18px;
             margin-bottom: 1.5rem;
             letter-spacing: 4px;
@@ -613,7 +619,7 @@
         .testimonial-text {
             font-size: 1.15rem;
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
+            color: #333;
             margin-bottom: 2rem;
             font-style: italic;
         }
@@ -628,7 +634,8 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #111 0%, #555 100%);
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -637,13 +644,13 @@
         }
 
         .author-info h4 {
-            color: #fff;
+            color: #111;
             font-size: 1rem;
             margin-bottom: 4px;
         }
 
         .author-info p {
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             font-size: 0.85rem;
             margin: 0;
         }
@@ -651,7 +658,7 @@
         /* CTA Section */
         .cta-section {
             text-align: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.01) 100%);
         }
 
         .cta-buttons {
@@ -663,11 +670,11 @@
 
         /* Footer */
         footer {
-            background: #030303;
+            background: #fff;
             padding: 5rem 8% 2rem;
             position: relative;
             z-index: 10;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .footer-grid {
@@ -681,10 +688,11 @@
         .footer-brand h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
+            color: #111;
         }
 
         .footer-brand p {
-            color: rgba(255, 255, 255, 0.5);
+            color: #555;
             font-size: 0.95rem;
             line-height: 1.7;
             margin-bottom: 2rem;
@@ -699,24 +707,24 @@
             width: 44px;
             height: 44px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: #111;
             text-decoration: none;
             transition: all 0.3s;
             font-size: 18px;
         }
 
         .social-links a:hover {
-            background: #fff;
-            color: #000;
+            background: #111;
+            color: #fff;
             transform: translateY(-3px);
         }
 
         .footer-column h4 {
-            color: #fff;
+            color: #111;
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
@@ -733,19 +741,19 @@
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.5);
+            color: #666;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
         }
 
         .footer-links a:hover {
-            color: #fff;
+            color: #111;
         }
 
         .footer-bottom {
             padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -754,7 +762,7 @@
         }
 
         .footer-bottom p {
-            color: rgba(255, 255, 255, 0.4);
+            color: #777;
             font-size: 0.85rem;
             margin: 0;
         }
@@ -765,14 +773,14 @@
         }
 
         .footer-bottom-links a {
-            color: rgba(255, 255, 255, 0.4);
+            color: #777;
             text-decoration: none;
             font-size: 0.85rem;
             transition: color 0.3s;
         }
 
         .footer-bottom-links a:hover {
-            color: #fff;
+            color: #111;
         }
 
         /* Scroll Indicator */
@@ -786,7 +794,7 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(0, 0, 0, 0.4);
             font-size: 0.75rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -797,7 +805,7 @@
         .scroll-indicator .line {
             width: 1px;
             height: 50px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
             animation: scrollLine 2s infinite cubic-bezier(0.77, 0, 0.175, 1);
         }
 
@@ -1300,8 +1308,10 @@
 
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050505);
-        scene.fog = new THREE.FogExp2(0x050505, 0.015);
+        
+        // LIGHT THEME SCENE SETUP
+        scene.background = new THREE.Color(0xf4f4f6); // Light grey background matching CSS
+        scene.fog = new THREE.FogExp2(0xf4f4f6, 0.02); // Light fog to blend the ground
 
         // Lower FOV for that compressed "car commercial" look
         const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -1313,31 +1323,36 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
+        renderer.toneMappingExposure = 1.0;
         container.appendChild(renderer.domElement);
 
-        // --- Lighting ---
-        const ambient = new THREE.AmbientLight(0x202030, 1.5);
+        // --- LIGHT THEME LIGHTING SETUP ---
+        // Much brighter ambient and directional lights for a daytime studio look
+        const ambient = new THREE.AmbientLight(0xffffff, 1.2);
         scene.add(ambient);
 
-        const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        keyLight.position.set(5, 8, 5);
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xeeeeee, 1.5);
+        hemiLight.position.set(0, 20, 0);
+        scene.add(hemiLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
+        keyLight.position.set(5, 10, 5);
         keyLight.castShadow = true;
         keyLight.shadow.mapSize.width = 2048;
         keyLight.shadow.mapSize.height = 2048;
         keyLight.shadow.bias = -0.0001;
         scene.add(keyLight);
 
-        const rimLight = new THREE.DirectionalLight(0x4466ff, 1.2);
+        const rimLight = new THREE.DirectionalLight(0xe0e0ff, 1.5);
         rimLight.position.set(-5, 5, -5);
         scene.add(rimLight);
 
-        const fillLight = new THREE.PointLight(0xffaa66, 1.0, 30);
-        fillLight.position.set(0, 2, 4);
+        const fillLight = new THREE.PointLight(0xffffff, 1.0, 30);
+        fillLight.position.set(0, 3, 5);
         scene.add(fillLight);
 
-        const spotLight = new THREE.SpotLight(0xffffff, 2.5);
-        spotLight.position.set(0, 12, 0);
+        const spotLight = new THREE.SpotLight(0xffffff, 2.0);
+        spotLight.position.set(0, 15, 0);
         spotLight.angle = Math.PI / 4;
         spotLight.penumbra = 0.5;
         spotLight.decay = 2;
@@ -1347,19 +1362,20 @@
 
         // --- Environment / Ground ---
         const groundGeo = new THREE.PlaneGeometry(100, 100);
+        // Light grey ground material
         const groundMat = new THREE.MeshStandardMaterial({ 
-            color: 0x0a0a0a, 
-            roughness: 0.3, 
-            metalness: 0.8 
+            color: 0xe8e8ec, 
+            roughness: 0.4, 
+            metalness: 0.1 
         });
         const ground = new THREE.Mesh(groundGeo, groundMat);
         ground.rotation.x = -Math.PI / 2;
-        // Lowered ground slightly to ensure wheels sit perfectly
         ground.position.y = -1.0; 
         ground.receiveShadow = true;
         scene.add(ground);
 
-        const gridHelper = new THREE.GridHelper(100, 100, 0x444444, 0x111111);
+        // Darker grid helper for light theme visibility
+        const gridHelper = new THREE.GridHelper(100, 100, 0xcccccc, 0xdddddd);
         gridHelper.position.y = -0.99;
         scene.add(gridHelper);
 
@@ -1375,7 +1391,7 @@
                 // Keep the scale large
                 carModel.scale.set(4.0, 4.0, 4.0);
                 
-                // RAISED THE CAR: Changed Y from -0.8 to -0.2 to show wheels
+                // Position adjusted
                 carModel.position.set(0, -0.2, 0);
                 
                 carModel.rotation.y = -0.5;
@@ -1412,7 +1428,7 @@
         function createFallbackCar() {
             const group = new THREE.Group();
             const bodyGeo = new THREE.BoxGeometry(2.5, 0.8, 4.5);
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xcc3333, metalness: 0.8, roughness: 0.2 });
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xcc3333, metalness: 0.5, roughness: 0.3 });
             const body = new THREE.Mesh(bodyGeo, bodyMat);
             body.position.y = 0.4;
             body.castShadow = true;
@@ -1445,7 +1461,6 @@
             const maxScroll = document.body.scrollHeight - window.innerHeight;
             targetScrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
 
-            // Navbar scroll effect
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 100) {
                 navbar.classList.add('scrolled');
@@ -1453,7 +1468,6 @@
                 navbar.classList.remove('scrolled');
             }
 
-            // Hide scroll indicator after scrolling
             const scrollIndicator = document.querySelector('.scroll-indicator');
             if (window.scrollY > 200) {
                 scrollIndicator.style.opacity = '0';
@@ -1489,13 +1503,10 @@
             if (carModel) {
                 const rotationY = -0.5 + (scrollProgress * Math.PI * 3); 
                 carModel.rotation.y = rotationY;
-                // Floating effect adjusted
                 carModel.position.y = -0.2 + Math.sin(scrollProgress * Math.PI * 2) * 0.05;
             }
 
             // --- CINEMATIC CAMERA LOGIC ---
-            
-            // Zoom oscillates between 3.5 (super close) and 7 (medium)
             const zoomSine = Math.sin(scrollProgress * Math.PI * 2); 
             let radius = 5.0 - (zoomSine * 2.0); 
             
@@ -1504,19 +1515,16 @@
             const camX = Math.sin(angle) * radius;
             const camZ = Math.cos(angle) * radius;
             
-            // LOWERED CAMERA HEIGHT: Starts at 0.2 (eye level) goes up to 2.5
             const camY = 0.2 + (Math.sin(scrollProgress * Math.PI) * 2.5);
             
             camera.position.x += (camX - camera.position.x) * 0.05;
             camera.position.y += (camY - camera.position.y) * 0.05;
             camera.position.z += (camZ - camera.position.z) * 0.05;
 
-            // Dynamic FOV
             const targetFov = 25 + (radius * 3.0); 
             camera.fov += (targetFov - camera.fov) * 0.05;
             camera.updateProjectionMatrix();
 
-            // Look slightly lower so wheels are centered
             camera.lookAt(0, 0.1, 0);
 
             renderer.render(scene, camera);
