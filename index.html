@@ -1303,6 +1303,7 @@
         scene.background = new THREE.Color(0x050505);
         scene.fog = new THREE.FogExp2(0x050505, 0.015);
 
+        // Lower FOV for that compressed "car commercial" look
         const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0.5, 6); 
 
@@ -1369,7 +1370,11 @@
             'car.glb', 
             (gltf) => {
                 carModel = gltf.scene;
+                
+                // Scale to fit the frame nicely
                 carModel.scale.set(4.0, 4.0, 4.0);
+                
+                // Keep the car centered
                 carModel.position.set(0, -0.2, 0);
                 carModel.rotation.y = -0.5;
 
@@ -1432,12 +1437,6 @@
         let targetScrollProgress = 0;
         const lerpFactor = 0.05;
 
-        // Car movement variables
-        let carX = -15; // Start from left
-        let carZ = 0;
-        let carRotationY = 0;
-        let carDrift = 0;
-
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             const maxScroll = document.body.scrollHeight - window.innerHeight;
@@ -1483,57 +1482,41 @@
             scrollProgress += (targetScrollProgress - scrollProgress) * lerpFactor;
 
             if (carModel) {
-                // Calculate car movement based on scroll progress
-                // Phase 1: Car enters from left (0 - 0.3)
-                // Phase 2: Car drifts and comes towards camera (0.3 - 0.6)
-                // Phase 3: Car turns and exits right (0.6 - 1.0)
+                // --- CAR ROTATION ---
+                // The car stays centered, just spinning in place
+                const rotationY = -0.5 + (scrollProgress * Math.PI * 3); 
+                carModel.rotation.y = rotationY;
                 
-                if (scrollProgress < 0.3) {
-                    // Phase 1: Enter from left
-                    const phase1Progress = scrollProgress / 0.3;
-                    carX = -15 + (phase1Progress * 15); // Move from -15 to 0
-                    carZ = 0;
-                    carRotationY = -0.5 + (phase1Progress * 0.5); // Slight rotation
-                    carDrift = 0;
-                } else if (scrollProgress < 0.6) {
-                    // Phase 2: Drift towards camera
-                    const phase2Progress = (scrollProgress - 0.3) / 0.3;
-                    carX = 0 + (phase2Progress * 3); // Slight right drift
-                    carZ = 0 + (phase2Progress * 5); // Come towards camera
-                    carRotationY = phase2Progress * 0.8; // Turn to show side
-                    carDrift = Math.sin(phase2Progress * Math.PI) * 0.5; // Slight drift effect
-                } else {
-                    // Phase 3: Turn and exit right
-                    const phase3Progress = (scrollProgress - 0.6) / 0.4;
-                    carX = 3 + (phase3Progress * 15); // Move to right
-                    carZ = 5 - (phase3Progress * 3); // Move away slightly
-                    carRotationY = 0.8 + (phase3Progress * Math.PI); // Complete turn
-                    carDrift = 0;
-                }
-
-                // Apply car position
-                carModel.position.x = carX;
-                carModel.position.z = carZ;
-                carModel.position.y = -0.2 + Math.sin(scrollProgress * Math.PI * 2) * 0.05 + carDrift;
-                carModel.rotation.y = carRotationY;
-
-                // Camera follows car
-                const cameraOffsetX = carX * 0.5;
-                const cameraOffsetZ = carZ * 0.3 + 5;
-                
-                camera.position.x += (cameraOffsetX - camera.position.x) * 0.05;
-                camera.position.y += (0.5 + Math.sin(scrollProgress * Math.PI) * 1.5 - camera.position.y) * 0.05;
-                camera.position.z += (cameraOffsetZ - camera.position.z) * 0.05;
-
-                // Dynamic FOV based on car distance
-                const carDistance = Math.sqrt(carX * carX + carZ * carZ);
-                const targetFov = 25 + (carDistance * 2);
-                camera.fov += (targetFov - camera.fov) * 0.05;
-                camera.updateProjectionMatrix();
-
-                // Look at car
-                camera.lookAt(carX * 0.3, 0.1, carZ * 0.3);
+                // Gentle floating effect
+                carModel.position.y = -0.2 + Math.sin(scrollProgress * Math.PI * 2) * 0.05;
             }
+
+            // --- CINEMATIC CAMERA ORBIT ---
+            // Zoom oscillates between 2.5 (super close) and 6.5 (medium)
+            const zoomSine = Math.sin(scrollProgress * Math.PI * 2); 
+            let radius = 4.5 - (zoomSine * 2.0); 
+            
+            // Camera swings around the car
+            const angle = scrollProgress * Math.PI * 1.5;
+            
+            const camX = Math.sin(angle) * radius;
+            const camZ = Math.cos(angle) * radius;
+            
+            // Camera height goes from ground level to slightly above
+            const camY = 0.2 + (Math.sin(scrollProgress * Math.PI) * 2.5);
+            
+            // Smoothly interpolate camera position
+            camera.position.x += (camX - camera.position.x) * 0.05;
+            camera.position.y += (camY - camera.position.y) * 0.05;
+            camera.position.z += (camZ - camera.position.z) * 0.05;
+
+            // Dynamic FOV
+            const targetFov = 25 + (radius * 3.0); 
+            camera.fov += (targetFov - camera.fov) * 0.05;
+            camera.updateProjectionMatrix();
+
+            // ALWAYS LOOK AT THE CAR'S CENTER
+            camera.lookAt(0, 0.1, 0);
 
             renderer.render(scene, camera);
         }
