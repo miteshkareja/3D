@@ -22,6 +22,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* 3D Canvas fixed background */
         #canvas-container {
             position: fixed;
             top: 0;
@@ -174,7 +175,6 @@
             display: none;
         }
 
-        /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -184,52 +184,59 @@
             cursor: pointer;
         }
 
-        /* Sections */
+        /* --- Split Screen Sections --- */
         section {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 100px 8%;
+            padding: 120px 8%;
             box-sizing: border-box;
             position: relative;
         }
 
-        .card {
-            max-width: 500px;
-            background: rgba(15, 15, 20, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 3rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        /* The text container block */
+        .text-block {
+            width: 45%;
+            max-width: 550px;
+            /* Add a subtle text shadow so text stays readable if the car passes behind it */
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
             
             opacity: 0;
-            transform: translateY(40px) scale(0.95);
+            transform: translateY(40px);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .card.reveal {
+        .text-block.reveal {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
-        .card.left {
+        /* Positioning text to the left or right */
+        .text-block.left {
             margin-right: auto;
         }
 
-        .card.right {
+        .text-block.right {
             margin-left: auto;
+            text-align: right; /* Align text right for better aesthetics */
         }
 
-        .card.center {
-            margin: 0 auto;
-            text-align: center;
+        /* Keep buttons left-aligned even if text is right-aligned */
+        .text-block.right .button-group {
+            justify-content: flex-end;
+        }
+
+        /* Fix for overlapping buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
         h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 800;
             margin: 0 0 1rem 0;
             letter-spacing: -0.03em;
             line-height: 1.1;
@@ -240,25 +247,26 @@
         }
 
         h2 {
-            font-size: 2.2rem;
-            font-weight: 600;
+            font-size: 3rem;
+            font-weight: 700;
             margin: 0 0 1.2rem 0;
-            color: #f0f0f0;
+            color: #fff;
             letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
         h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            color: #f0f0f0;
+            color: #fff;
             margin-bottom: 1rem;
         }
 
         p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             line-height: 1.7;
-            color: #a0a0a0;
-            margin: 0 0 2.5rem 0;
+            color: #b0b0b0;
+            margin: 0 0 2rem 0;
             font-weight: 300;
         }
 
@@ -276,14 +284,18 @@
             font-weight: 600;
         }
 
+        /* Specs Layout */
         .specs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             padding: 1.5rem 0;
+        }
+
+        .text-block.right .specs {
+            justify-content: flex-end;
         }
 
         .spec-item {
@@ -292,20 +304,21 @@
         }
 
         .spec-label {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: #666;
+            color: #888;
             margin-bottom: 0.4rem;
             font-weight: 600;
         }
 
         .spec-value {
-            font-size: 1.4rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #fff;
         }
 
+        /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -321,6 +334,7 @@
             cursor: pointer;
             border: none;
             letter-spacing: 0.02em;
+            white-space: nowrap; /* Prevents text wrapping in buttons */
         }
 
         .btn:hover {
@@ -333,446 +347,11 @@
             background: transparent;
             color: #fff;
             border: 1px solid rgba(255,255,255,0.3);
-            margin-left: 1rem;
         }
         
         .btn-outline:hover {
             background: rgba(255,255,255,0.1);
             border-color: #fff;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.02), transparent);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.4s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 0.8rem;
-        }
-
-        .feature-desc {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
-        }
-
-        /* Cars Showcase */
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .car-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .car-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .car-image {
-            height: 220px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .car-image::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(to top, rgba(5,5,5,0.8), transparent);
-        }
-
-        .car-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            z-index: 2;
-        }
-
-        .car-info {
-            padding: 2rem;
-        }
-
-        .car-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-
-        .car-category {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 1.5rem;
-        }
-
-        .car-specs {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .car-spec {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .car-spec span:first-child {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 4px;
-        }
-
-        .car-spec span:last-child {
-            font-size: 0.95rem;
-            color: #fff;
-            font-weight: 500;
-        }
-
-        .car-price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .car-price {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .car-price span {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 400;
-        }
-
-        .car-btn {
-            padding: 10px 24px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .car-btn:hover {
-            background: #fff;
-            color: #000;
-        }
-
-        /* Testimonials */
-        .testimonials-container {
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            padding: 3rem;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            font-size: 100px;
-            color: rgba(255, 255, 255, 0.05);
-            font-family: serif;
-            line-height: 1;
-        }
-
-        .stars {
-            color: #ffd700;
-            font-size: 18px;
-            margin-bottom: 1.5rem;
-            letter-spacing: 4px;
-        }
-
-        .testimonial-text {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-        }
-
-        .author-info h4 {
-            color: #fff;
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .author-info p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.85rem;
-            margin: 0;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            text-align: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Footer */
-        footer {
-            background: #030303;
-            padding: 5rem 8% 2rem;
-            position: relative;
-            z-index: 10;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 4rem;
-            max-width: 1400px;
-            margin: 0 auto 4rem;
-        }
-
-        .footer-brand h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 18px;
-        }
-
-        .social-links a:hover {
-            background: #fff;
-            color: #000;
-            transform: translateY(-3px);
-        }
-
-        .footer-column h4 {
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #fff;
-        }
-
-        .footer-bottom {
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .footer-bottom p {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.85rem;
-            margin: 0;
-        }
-
-        .footer-bottom-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-bottom-links a {
-            color: rgba(255, 255, 255, 0.4);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.3s;
-        }
-
-        .footer-bottom-links a:hover {
-            color: #fff;
         }
 
         /* Scroll Indicator */
@@ -808,89 +387,45 @@
             100% { transform: scaleY(0); transform-origin: bottom; }
         }
 
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-            width: 100%;
-        }
-
-        .section-header h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
         /* Responsive */
         @media (max-width: 1024px) {
-            .stats-grid,
-            .features-grid,
-            .cars-grid {
-                grid-template-columns: repeat(2, 1fr);
+            section {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 100px 5%;
             }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 3rem;
+            .text-block {
+                width: 100%;
+                text-align: center;
+                background: rgba(5,5,5,0.7); /* Add slight background back on mobile for readability */
+                padding: 2rem;
+                border-radius: 20px;
+                backdrop-filter: blur(10px);
             }
+            .text-block.right {
+                text-align: center;
+            }
+            .text-block.right .specs, .text-block.right .button-group {
+                justify-content: center;
+            }
+            .specs {
+                justify-content: center;
+            }
+            .button-group {
+                justify-content: center;
+            }
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.2rem; }
         }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
-            h2 { font-size: 1.8rem; }
-            .section-header h2 { font-size: 2.2rem; }
-            
-            .card { 
-                padding: 2rem; 
-                width: 100%; 
-            }
-            
-            .specs { 
-                grid-template-columns: 1fr 1fr; 
-            }
-            
-            .btn { 
-                width: 100%; 
-                margin-bottom: 1rem; 
-            }
-            
-            .btn-outline { 
-                margin-left: 0; 
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .stats-grid,
-            .features-grid,
-            .cars-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            section {
-                padding: 80px 5%;
-            }
+            h2 { font-size: 2rem; }
+            .btn { width: 100%; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .specs { flex-direction: column; gap: 1rem; border: none; }
         }
     </style>
 </head>
@@ -911,8 +446,7 @@
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#featured">Featured</a></li>
-            <li><a href="#inventory">Inventory</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="#about">Quality</a></li>
             <li><a href="#contact" class="nav-cta">Get Started</a></li>
         </ul>
         <button class="mobile-menu-btn">☰</button>
@@ -923,24 +457,24 @@
 
     <div class="content">
         
-        <!-- Hero Section -->
+        <!-- Section 1 (Text Left, Car Right) -->
         <section id="home">
-            <div class="card left" data-reveal>
+            <div class="text-block left" data-reveal>
                 <div class="badge">Pre-owned • Certified</div>
                 <h1>Find Your Perfect Drive</h1>
                 <p>Discover a curated collection of premium pre-owned vehicles, each inspected and certified to deliver performance and peace of mind.</p>
-                <div>
-                    <a href="#inventory" class="btn">Explore Inventory</a>
+                <div class="button-group">
+                    <a href="#featured" class="btn">Explore Inventory</a>
                     <a href="#about" class="btn btn-outline">Learn More</a>
                 </div>
             </div>
         </section>
 
-        <!-- Featured Car Section -->
+        <!-- Section 2 (Text Right, Car Left) -->
         <section id="featured">
-            <div class="card right" data-reveal>
+            <div class="text-block right" data-reveal>
                 <div class="badge">Featured Vehicle</div>
-                <h2>2021 Porsche 911 Carrera</h2>
+                <h2>2021 Porsche 911</h2>
                 <p>Only 12,400 miles. Single owner, full service history. Finished in GT Silver Metallic with a black leather interior. Experience the thrill of precision engineering.</p>
                 <div class="specs">
                     <div class="spec-item">
@@ -956,42 +490,15 @@
                         <span class="spec-value">379 hp</span>
                     </div>
                 </div>
-                <a href="#" class="btn">View Details</a>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="stats-section">
-            <div style="width: 100%; max-width: 1200px; margin: 0 auto;">
-                <div class="section-header" data-reveal>
-                    <div class="badge">Our Track Record</div>
-                    <h2>Trusted by Thousands</h2>
-                    <p>We've helped over 5,000 customers find their perfect vehicle with confidence and transparency.</p>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card" data-reveal>
-                        <div class="stat-number" data-target="5000">0</div>
-                        <div class="stat-label">Cars Sold</div>
-                    </div>
-                    <div class="stat-card" data-reveal>
-                        <div class="stat-number" data-target="98">0</div>
-                        <div class="stat-label">% Satisfaction</div>
-                    </div>
-                    <div class="stat-card" data-reveal>
-                        <div class="stat-number" data-target="15">0</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                    <div class="stat-card" data-reveal>
-                        <div class="stat-number" data-target="50">0</div>
-                        <div class="stat-label">Brands Available</div>
-                    </div>
+                <div class="button-group">
+                    <a href="#" class="btn">View Details</a>
                 </div>
             </div>
         </section>
 
-        <!-- Quality Section -->
+        <!-- Section 3 (Text Left, Car Right) -->
         <section id="about">
-            <div class="card left" data-reveal>
+            <div class="text-block left" data-reveal>
                 <div class="badge">Quality Assurance</div>
                 <h2>Exceptional Condition</h2>
                 <p>Every vehicle undergoes a rigorous 150-point inspection by our master technicians. We guarantee the quality, safety, and reliability of every car we sell.</p>
@@ -1009,153 +516,15 @@
                         <span class="spec-value">None</span>
                     </div>
                 </div>
-                <a href="#" class="btn">Read Our Process</a>
+                <div class="button-group">
+                    <a href="#" class="btn">Read Our Process</a>
+                </div>
             </div>
         </section>
 
-        <!-- Features Grid -->
+        <!-- Section 4 (Text Right, Car Left) -->
         <section>
-            <div style="width: 100%; max-width: 1300px; margin: 0 auto;">
-                <div class="section-header" data-reveal>
-                    <div class="badge">Why Choose Us</div>
-                    <h2>The AutoElite Advantage</h2>
-                    <p>Experience car buying like never before with our premium services and customer-first approach.</p>
-                </div>
-                <div class="features-grid">
-                    <div class="feature-card" data-reveal>
-                        <div class="feature-icon">🔍</div>
-                        <h3 class="feature-title">150-Point Inspection</h3>
-                        <p class="feature-desc">Every vehicle is thoroughly inspected by certified technicians to ensure it meets our high standards.</p>
-                    </div>
-                    <div class="feature-card" data-reveal>
-                        <div class="feature-icon">🛡️</div>
-                        <h3 class="feature-title">Extended Warranty</h3>
-                        <p class="feature-desc">Drive with confidence knowing your vehicle is protected with our comprehensive warranty coverage.</p>
-                    </div>
-                    <div class="feature-card" data-reveal>
-                        <div class="feature-icon">💰</div>
-                        <h3 class="feature-title">Best Price Guarantee</h3>
-                        <p class="feature-desc">We offer competitive pricing and will match any verified offer from a competitor.</p>
-                    </div>
-                    <div class="feature-card" data-reveal>
-                        <div class="feature-icon">🚗</div>
-                        <h3 class="feature-title">Test Drive at Home</h3>
-                        <p class="feature-desc">Can't come to us? We'll bring the car to you for a convenient at-home test drive.</p>
-                    </div>
-                    <div class="feature-card" data-reveal>
-                        <div class="feature-icon">📋</div>
-                        <h3 class="feature-title">Full History Report</h3>
-                        <p class="feature-desc">Complete transparency with detailed vehicle history reports for every car in our inventory.</p>
-                    </div>
-                    <div class="feature-card" data-reveal>
-                        <div class="feature-icon">🔄</div>
-                        <h3 class="feature-title">7-Day Return</h3>
-                        <p class="feature-desc">Not satisfied? Return the vehicle within 7 days for a full refund, no questions asked.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Inventory Section -->
-        <section id="inventory">
-            <div style="width: 100%; max-width: 1400px; margin: 0 auto;">
-                <div class="section-header" data-reveal>
-                    <div class="badge">Available Now</div>
-                    <h2>Featured Inventory</h2>
-                    <p>Hand-picked vehicles that have passed our rigorous inspection process and are ready for their new home.</p>
-                </div>
-                <div class="cars-grid">
-                    <div class="car-card" data-reveal>
-                        <div class="car-image">
-                            <span class="car-badge">Certified</span>
-                            🚗
-                        </div>
-                        <div class="car-info">
-                            <h3 class="car-name">BMW 3 Series</h3>
-                            <p class="car-category">Luxury Sedan</p>
-                            <div class="car-specs">
-                                <div class="car-spec">
-                                    <span>Year</span>
-                                    <span>2021</span>
-                                </div>
-                                <div class="car-spec">
-                                    <span>Mileage</span>
-                                    <span>25k mi</span>
-                                </div>
-                                <div class="car-spec">
-                                    <span>Transmission</span>
-                                    <span>Automatic</span>
-                                </div>
-                            </div>
-                            <div class="car-price-row">
-                                <div class="car-price">$28,500</div>
-                                <button class="car-btn">View Details</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="car-card" data-reveal>
-                        <div class="car-image">
-                            <span class="car-badge">Low Miles</span>
-                            🚙
-                        </div>
-                        <div class="car-info">
-                            <h3 class="car-name">Audi A4</h3>
-                            <p class="car-category">Premium Sedan</p>
-                            <div class="car-specs">
-                                <div class="car-spec">
-                                    <span>Year</span>
-                                    <span>2022</span>
-                                </div>
-                                <div class="car-spec">
-                                    <span>Mileage</span>
-                                    <span>18k mi</span>
-                                </div>
-                                <div class="car-spec">
-                                    <span>Transmission</span>
-                                    <span>Automatic</span>
-                                </div>
-                            </div>
-                            <div class="car-price-row">
-                                <div class="car-price">$32,000</div>
-                                <button class="car-btn">View Details</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="car-card" data-reveal>
-                        <div class="car-image">
-                            <span class="car-badge">Featured</span>
-                            🏎️
-                        </div>
-                        <div class="car-info">
-                            <h3 class="car-name">Mercedes C-Class</h3>
-                            <p class="car-category">Luxury Coupe</p>
-                            <div class="car-specs">
-                                <div class="car-spec">
-                                    <span>Year</span>
-                                    <span>2021</span>
-                                </div>
-                                <div class="car-spec">
-                                    <span>Mileage</span>
-                                    <span>22k mi</span>
-                                </div>
-                                <div class="car-spec">
-                                    <span>Transmission</span>
-                                    <span>Automatic</span>
-                                </div>
-                            </div>
-                            <div class="car-price-row">
-                                <div class="car-price">$35,500</div>
-                                <button class="car-btn">View Details</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Financing Section -->
-        <section>
-            <div class="card right" data-reveal>
+            <div class="text-block right" data-reveal>
                 <div class="badge">Flexible Financing</div>
                 <h2>Drive It Home Today</h2>
                 <p>We offer competitive financing rates tailored to your budget. Get pre-approved in minutes with no impact on your credit score.</p>
@@ -1168,55 +537,20 @@
                         <span class="spec-label">Terms</span>
                         <span class="spec-value">Up to 72mo</span>
                     </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Trade-in</span>
-                        <span class="spec-value">Accepted</span>
-                    </div>
                 </div>
-                <a href="#" class="btn">Get Pre-Approved</a>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section>
-            <div class="testimonials-container">
-                <div class="section-header" data-reveal>
-                    <div class="badge">Testimonials</div>
-                    <h2>What Our Customers Say</h2>
-                    <p>Don't just take our word for it. Here's what our satisfied customers have to say about their experience.</p>
-                </div>
-                <div class="testimonial-card" data-reveal>
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"Best car buying experience ever! The team was professional, transparent, and helped me find the perfect car within my budget. The 3D viewing experience online made it so easy to explore the vehicle before even visiting."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JS</div>
-                        <div class="author-info">
-                            <h4>John Smith</h4>
-                            <p>Purchased BMW 3 Series</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card" data-reveal>
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"I was skeptical about buying a used car online, but AutoElite exceeded all my expectations. The inspection report was thorough, the price was fair, and the delivery was seamless. Highly recommended!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MJ</div>
-                        <div class="author-info">
-                            <h4>Maria Johnson</h4>
-                            <p>Purchased Audi A4</p>
-                        </div>
-                    </div>
+                <div class="button-group">
+                    <a href="#" class="btn">Get Pre-Approved</a>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="cta-section" id="contact">
-            <div class="card center" data-reveal style="max-width: 700px;">
+        <!-- Section 5 (Text Center, Car Center) -->
+        <section id="contact">
+            <div class="text-block" data-reveal style="margin: 0 auto; text-align: center; width: 100%; max-width: 800px;">
                 <div class="badge">Get Started</div>
                 <h2>Ready to Experience It?</h2>
-                <p>Take the first step toward owning a premium pre-owned vehicle. Our team is ready to help you find the perfect match. Schedule a test drive or get pre-approved today.</p>
-                <div class="cta-buttons">
+                <p>Take the first step toward owning a premium pre-owned vehicle. Our team is ready to help you find the perfect match.</p>
+                <div class="button-group" style="justify-content: center;">
                     <a href="#" class="btn">Schedule Test Drive</a>
                     <a href="#" class="btn btn-outline">Contact Us</a>
                 </div>
@@ -1224,60 +558,6 @@
         </section>
 
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3>🚗 AutoElite</h3>
-                <p>Your trusted destination for premium pre-owned vehicles. We combine cutting-edge technology with exceptional service to deliver an unmatched car buying experience.</p>
-                <div class="social-links">
-                    <a href="#">📘</a>
-                    <a href="#">📷</a>
-                    <a href="#">🐦</a>
-                    <a href="#">📧</a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#featured">Featured Cars</a></li>
-                    <li><a href="#inventory">Inventory</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Services</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Financing</a></li>
-                    <li><a href="#">Trade-In</a></li>
-                    <li><a href="#">Warranty</a></li>
-                    <li><a href="#">Insurance</a></li>
-                    <li><a href="#">Maintenance</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Support</h4>
-                <ul class="footer-links">
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 AutoElite. All rights reserved.</p>
-            <div class="footer-bottom-links">
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">Sitemap</a>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scroll Indicator -->
     <div class="scroll-indicator">
@@ -1303,8 +583,7 @@
         scene.background = new THREE.Color(0x050505);
         scene.fog = new THREE.FogExp2(0x050505, 0.015);
 
-        // Lower FOV for that compressed "car commercial" look
-        const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0.5, 6); 
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
@@ -1336,16 +615,7 @@
         fillLight.position.set(0, 2, 4);
         scene.add(fillLight);
 
-        const spotLight = new THREE.SpotLight(0xffffff, 2.5);
-        spotLight.position.set(0, 12, 0);
-        spotLight.angle = Math.PI / 4;
-        spotLight.penumbra = 0.5;
-        spotLight.decay = 2;
-        spotLight.distance = 40;
-        spotLight.castShadow = true;
-        scene.add(spotLight);
-
-        // --- Environment / Ground ---
+        // --- Ground ---
         const groundGeo = new THREE.PlaneGeometry(200, 200);
         const groundMat = new THREE.MeshStandardMaterial({ 
             color: 0x0a0a0a, 
@@ -1371,10 +641,7 @@
             (gltf) => {
                 carModel = gltf.scene;
                 
-                // Scale to fit the frame nicely
                 carModel.scale.set(4.0, 4.0, 4.0);
-                
-                // Keep the car centered
                 carModel.position.set(0, -0.2, 0);
                 carModel.rotation.y = -0.5;
 
@@ -1437,10 +704,28 @@
         let targetScrollProgress = 0;
         const lerpFactor = 0.05;
 
+        // Variables for dynamic car positioning
+        let targetCarX = 1.5; // Start on the right
+        let currentCarX = 1.5;
+
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             const maxScroll = document.body.scrollHeight - window.innerHeight;
             targetScrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
+
+            // Determine Car Position based on scroll progress
+            // 5 sections roughly map to: 0-0.2, 0.2-0.4, 0.4-0.6, 0.6-0.8, 0.8-1.0
+            if (targetScrollProgress < 0.15) {
+                targetCarX = 1.5; // Section 1: Car Right
+            } else if (targetScrollProgress < 0.35) {
+                targetCarX = -1.5; // Section 2: Car Left
+            } else if (targetScrollProgress < 0.55) {
+                targetCarX = 1.5; // Section 3: Car Right
+            } else if (targetScrollProgress < 0.75) {
+                targetCarX = -1.5; // Section 4: Car Left
+            } else {
+                targetCarX = 0; // Section 5: Car Center
+            }
 
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 100) {
@@ -1480,10 +765,15 @@
             requestAnimationFrame(animate);
 
             scrollProgress += (targetScrollProgress - scrollProgress) * lerpFactor;
+            
+            // Smoothly move the car left and right
+            currentCarX += (targetCarX - currentCarX) * 0.05;
 
             if (carModel) {
-                // --- CAR ROTATION ---
-                // The car stays centered, just spinning in place
+                // Apply the moving X position
+                carModel.position.x = currentCarX;
+                
+                // Continuous rotation based on scroll
                 const rotationY = -0.5 + (scrollProgress * Math.PI * 3); 
                 carModel.rotation.y = rotationY;
                 
@@ -1492,31 +782,29 @@
             }
 
             // --- CINEMATIC CAMERA ORBIT ---
-            // Zoom oscillates between 2.5 (super close) and 6.5 (medium)
+            // Camera orbits and follows the car's X position so it stays in frame
             const zoomSine = Math.sin(scrollProgress * Math.PI * 2); 
-            let radius = 4.5 - (zoomSine * 2.0); 
+            let radius = 5.0 - (zoomSine * 1.5); // Slightly zoomed out so car doesn't clip text
             
-            // Camera swings around the car
             const angle = scrollProgress * Math.PI * 1.5;
             
+            // Camera base position
             const camX = Math.sin(angle) * radius;
             const camZ = Math.cos(angle) * radius;
-            
-            // Camera height goes from ground level to slightly above
             const camY = 0.2 + (Math.sin(scrollProgress * Math.PI) * 2.5);
             
-            // Smoothly interpolate camera position
-            camera.position.x += (camX - camera.position.x) * 0.05;
+            // Interpolate camera position AND follow the car's X offset
+            camera.position.x += ((camX + currentCarX * 0.6) - camera.position.x) * 0.05;
             camera.position.y += (camY - camera.position.y) * 0.05;
             camera.position.z += (camZ - camera.position.z) * 0.05;
 
-            // Dynamic FOV
-            const targetFov = 25 + (radius * 3.0); 
+            // Dynamic FOV based on distance
+            const targetFov = 28 + (radius * 2.5); 
             camera.fov += (targetFov - camera.fov) * 0.05;
             camera.updateProjectionMatrix();
 
-            // ALWAYS LOOK AT THE CAR'S CENTER
-            camera.lookAt(0, 0.1, 0);
+            // Look at the car's current position
+            camera.lookAt(currentCarX * 0.6, 0.1, 0);
 
             renderer.render(scene, camera);
         }
