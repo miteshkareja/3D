@@ -3,343 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Used Car Showcase | Advanced Scroll</title>
+    <title>Premium Used Cars</title>
+    
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-
-        body {
-            margin: 0;
-            overflow-x: hidden;
-            font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            color: #fff;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Canvas fixed background */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Overlay content */
-        .content {
-            position: relative;
-            z-index: 10;
-            pointer-events: auto;
-        }
-
-        section {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 8%;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        /* Card Styling */
-        .card {
-            max-width: 500px;
-            background: rgba(15, 15, 20, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 3rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            
-            /* Animation initial state */
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Reveal class added via JS */
-        .card.reveal {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .card.left {
-            margin-right: auto;
-        }
-
-        .card.right {
-            margin-left: auto;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin: 0 0 1rem 0;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        h2 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin: 0 0 1.2rem 0;
-            color: #f0f0f0;
-            letter-spacing: -0.02em;
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #a0a0a0;
-            margin: 0 0 2.5rem 0;
-            font-weight: 300;
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.4rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #ddd;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .specs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 1.5rem 0;
-        }
-
-        .spec-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .spec-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #666;
-            margin-bottom: 0.4rem;
-            font-weight: 600;
-        }
-
-        .spec-value {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #fff;
-            color: #000;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            letter-spacing: 0.02em;
-        }
-
-        .btn:hover {
-            background: #d0d0d0;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
-            margin-left: 1rem;
+        body { 
+            margin: 0; 
+            overflow-x: hidden; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0a0a; 
+            color: white; 
         }
         
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: #fff;
+        /* The 3D canvas stays fixed in the background */
+        #canvas-container { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            z-index: -1; 
         }
 
-        .scroll-indicator {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+        /* Scrollable content sections */
+        .section { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 8%; 
+            opacity: 0; /* Hidden by default, GSAP will fade them in */
         }
-
-        .scroll-indicator .line {
-            width: 1px;
-            height: 50px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
-            animation: scrollLine 2s infinite cubic-bezier(0.77, 0, 0.175, 1);
+        
+        .left { justify-content: flex-start; }
+        .right { justify-content: flex-end; }
+        
+        /* INCREASED CONTENT SIZES HERE */
+        .text-box { 
+            max-width: 600px; /* Made the box wider */
+            background: rgba(0, 0, 0, 0.7); 
+            padding: 50px; /* More padding */
+            border-radius: 16px; 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        @keyframes scrollLine {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            50.1% { transform: scaleY(1); transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
+        
+        h1 { 
+            color: #f39c12; 
+            margin-top: 0; 
+            font-size: 3.5rem; /* Much larger headline */
+            margin-bottom: 20px;
         }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 1.8rem; }
-            .card { padding: 2rem; width: 100%; }
-            .specs { grid-template-columns: 1fr 1fr; }
-            .btn { width: 100%; margin-bottom: 1rem; }
-            .btn-outline { margin-left: 0; }
+        
+        p { 
+            font-size: 1.4rem; /* Larger paragraph text */
+            line-height: 1.6; 
+            color: #cccccc; 
         }
     </style>
 </head>
 <body>
 
-    <!-- 3D Canvas -->
     <div id="canvas-container"></div>
 
     <!-- Scroll Content -->
-    <div class="content">
-        
-        <!-- Section 1: Intro -->
-        <section>
-            <div class="card left" data-reveal>
-                <div class="badge">Pre-owned • Certified</div>
-                <h1>Find Your Perfect Drive</h1>
-                <p>Discover a curated collection of premium pre-owned vehicles, each inspected and certified to deliver performance and peace of mind.</p>
-                <div>
-                    <a href="#" class="btn">Explore Inventory</a>
-                    <a href="#" class="btn btn-outline">Learn More</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: The Reveal / Zoom In -->
-        <section>
-            <div class="card right" data-reveal>
-                <div class="badge">Featured Vehicle</div>
-                <h2>2021 Porsche 911 Carrera</h2>
-                <p>Only 12,400 miles. Single owner, full service history. Finished in GT Silver Metallic with a black leather interior. Experience the thrill of precision engineering.</p>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">Mileage</span>
-                        <span class="spec-value">12,400 mi</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Engine</span>
-                        <span class="spec-value">3.0L Twin</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Power</span>
-                        <span class="spec-value">379 hp</span>
-                    </div>
-                </div>
-                <a href="#" class="btn">View Details</a>
-            </div>
-        </section>
-
-        <!-- Section 3: Condition / Zoom Out & Rotate -->
-        <section>
-            <div class="card left" data-reveal>
-                <div class="badge">Quality Assurance</div>
-                <h2>Exceptional Condition</h2>
-                <p>Every vehicle undergoes a rigorous 150-point inspection by our master technicians. We guarantee the quality, safety, and reliability of every car we sell.</p>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">Warranty</span>
-                        <span class="spec-value">2 yr / 24k mi</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Owners</span>
-                        <span class="spec-value">1</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Accidents</span>
-                        <span class="spec-value">None</span>
-                    </div>
-                </div>
-                <a href="#" class="btn">Read Our Process</a>
-            </div>
-        </section>
-
-        <!-- Section 4: Financing / Top Down View -->
-        <section>
-            <div class="card right" data-reveal>
-                <div class="badge">Flexible Financing</div>
-                <h2>Drive It Home Today</h2>
-                <p>We offer competitive financing rates tailored to your budget. Get pre-approved in minutes with no impact on your credit score.</p>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">APR From</span>
-                        <span class="spec-value">2.9%</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Terms</span>
-                        <span class="spec-value">Up to 72mo</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Trade-in</span>
-                        <span class="spec-value">Accepted</span>
-                    </div>
-                </div>
-                <a href="#" class="btn">Get Pre-Approved</a>
-            </div>
-        </section>
-
-        <!-- Section 5: Final CTA -->
-        <section>
-            <div class="card left" data-reveal style="text-align: center; max-width: 600px; margin: 0 auto;">
-                <h2>Ready to Experience It?</h2>
-                <p>Take the first step toward owning a premium pre-owned vehicle. Our team is ready to help you find the perfect match.</p>
-                <a href="#" class="btn">Schedule Test Drive</a>
-            </div>
-        </section>
-
+    <div class="section left" id="sec1">
+        <div class="text-box">
+            <h1>Premium Certified</h1>
+            <p>Welcome to our exclusive used car collection. Every vehicle undergoes a rigorous 150-point inspection to ensure absolute reliability.</p>
+        </div>
+    </div>
+    
+    <div class="section right" id="sec2">
+        <div class="text-box">
+            <h1>Flawless Design</h1>
+            <p>Experience the perfect blend of aerodynamics and style. We source only the cleanest, accident-free models for our inventory.</p>
+        </div>
+    </div>
+    
+    <div class="section left" id="sec3">
+        <div class="text-box">
+            <h1>Ready for the Road</h1>
+            <p>Fully serviced, detailed, and ready to be driven home today. Your next great adventure starts right here.</p>
+        </div>
     </div>
 
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator">
-        <span>Scroll</span>
-        <div class="line"></div>
-    </div>
-
-    <!-- Three.js and Loader -->
+    <!-- Three.js Setup -->
     <script type="importmap">
         {
             "imports": {
-                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+                "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
             }
         }
     </script>
@@ -348,235 +104,96 @@
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-        // --- Setup Scene ---
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Basic Scene Setup
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050505);
         
-        // Fog for depth blending
-        scene.fog = new THREE.FogExp2(0x050505, 0.02);
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 6;
 
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 2, 8); // Starting position further back
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.0;
+        renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        // --- Lighting ---
-        const ambient = new THREE.AmbientLight(0x202030, 1.5);
-        scene.add(ambient);
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+        directionalLight.position.set(5, 10, 5);
+        scene.add(directionalLight);
 
-        // Key Light
-        const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        keyLight.position.set(5, 10, 5);
-        keyLight.castShadow = true;
-        keyLight.shadow.mapSize.width = 2048;
-        keyLight.shadow.mapSize.height = 2048;
-        keyLight.shadow.bias = -0.0001;
-        scene.add(keyLight);
-
-        // Rim Light (Blueish for tech feel)
-        const rimLight = new THREE.DirectionalLight(0x4466ff, 1.0);
-        rimLight.position.set(-5, 5, -5);
-        scene.add(rimLight);
-
-        // Fill Light (Warm)
-        const fillLight = new THREE.PointLight(0xffaa66, 0.8, 30);
-        fillLight.position.set(0, 3, 5);
-        scene.add(fillLight);
-
-        // Top Spotlight for dramatic effect
-        const spotLight = new THREE.SpotLight(0xffffff, 2);
-        spotLight.position.set(0, 15, 0);
-        spotLight.angle = Math.PI / 4;
-        spotLight.penumbra = 0.5;
-        spotLight.decay = 2;
-        spotLight.distance = 40;
-        spotLight.castShadow = true;
-        scene.add(spotLight);
-
-        // --- Environment / Ground ---
-        const groundGeo = new THREE.PlaneGeometry(100, 100);
-        const groundMat = new THREE.MeshStandardMaterial({ 
-            color: 0x0a0a0a, 
-            roughness: 0.4, 
-            metalness: 0.8 
-        });
-        const ground = new THREE.Mesh(groundGeo, groundMat);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -0.8;
-        ground.receiveShadow = true;
-        scene.add(ground);
-
-        // Grid Helper
-        const gridHelper = new THREE.GridHelper(100, 100, 0x333333, 0x111111);
-        gridHelper.position.y = -0.79;
-        scene.add(gridHelper);
-
-        // --- Load Car Model ---
-        let carModel = null;
+        let car;
         const loader = new GLTFLoader();
         
-        // NOTE: Ensure 'car.glb' is in the same directory as this HTML file
-        loader.load(
-            'car.glb', 
-            (gltf) => {
-                carModel = gltf.scene;
-                
-                // Initial setup
-                carModel.scale.set(1.5, 1.5, 1.5);
-                carModel.position.set(0, -0.5, 0);
-                carModel.rotation.y = -0.8; // Start facing slightly away
+        // Load the 3D Model
+        loader.load('car.glb', function(gltf) {
+            car = gltf.scene;
+            
+            // --- SCALED THE CAR UP HERE ---
+            // If it is still too small, change these 8s to 10s or 12s. 
+            // If it is too big, change them to 5s.
+            car.scale.set(8, 8, 8); 
+            
+            // Initial positioning
+            car.position.set(0, -1, 0); // Dropped it slightly lower on the screen
+            car.rotation.y = -Math.PI / 6; 
+            scene.add(car);
 
-                carModel.traverse((node) => {
-                    if (node.isMesh) {
-                        node.castShadow = true;
-                        node.receiveShadow = true;
-                        // Enhance materials if needed
-                        if (node.material) {
-                            node.material.envMapIntensity = 1.0;
-                        }
-                    }
-                });
-
-                scene.add(carModel);
-            },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            (error) => {
-                console.error('Error loading car model:', error);
-                // Fallback placeholder
-                createFallbackCar();
-            }
-        );
-
-        function createFallbackCar() {
-            const group = new THREE.Group();
-            const bodyGeo = new THREE.BoxGeometry(2.5, 0.8, 4.5);
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xcc3333, metalness: 0.8, roughness: 0.2 });
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.y = 0.4;
-            body.castShadow = true;
-            body.receiveShadow = true;
-            group.add(body);
-
-            const cabinGeo = new THREE.BoxGeometry(1.8, 0.6, 2.2);
-            const cabinMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.5, roughness: 0.5 });
-            const cabin = new THREE.Mesh(cabinGeo, cabinMat);
-            cabin.position.set(0, 0.9, -0.2);
-            cabin.castShadow = true;
-            cabin.receiveShadow = true;
-            group.add(cabin);
-
-            group.position.set(0, -0.5, 0);
-            scene.add(group);
-            carModel = group;
-        }
-
-        // --- Scroll Animation Logic ---
-        let scrollProgress = 0;
-        let targetScrollProgress = 0;
-        const lerpFactor = 0.05; // Smoothing factor
-
-        // Update target on scroll
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const maxScroll = document.body.scrollHeight - window.innerHeight;
-            targetScrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
-
-            // Card Reveal Logic
-            document.querySelectorAll('[data-reveal]').forEach((card) => {
-                const rect = card.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                // Reveal when card enters top 80% of viewport
-                if (rect.top < windowHeight * 0.85 && rect.bottom > 0) {
-                    card.classList.add('reveal');
-                } else {
-                    // Optional: Remove reveal when scrolled out to re-animate
-                    // card.classList.remove('reveal'); 
-                }
-            });
+            setupScrollAnimations();
         });
 
-        // Initial call to reveal cards on load
-        window.dispatchEvent(new Event('scroll'));
+        function setupScrollAnimations() {
+            // Animate HTML text fading in and out
+            gsap.utils.toArray('.section').forEach(section => {
+                gsap.to(section, {
+                    opacity: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 60%",
+                        end: "bottom 40%",
+                        toggleActions: "play reverse play reverse"
+                    }
+                });
+            });
 
-        // Handle Resize
+            // Master timeline for the 3D Car
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1 // Creates the smooth linking to scroll
+                }
+            });
+
+            // Transition from Section 1 to Section 2 (Zooms in, moves left, rotates right)
+            tl.to(car.rotation, { y: Math.PI / 2, ease: "power1.inOut" }, 0)
+              .to(camera.position, { z: 4, ease: "power1.inOut" }, 0)
+              .to(car.position, { x: -2.5, ease: "power1.inOut" }, 0); // Moved further left for the big car
+
+            // Transition from Section 2 to Section 3 (Zooms out, moves right, rotates left)
+            tl.to(car.rotation, { y: -Math.PI / 4, ease: "power1.inOut" }, 1)
+              .to(camera.position, { z: 7, ease: "power1.inOut" }, 1)
+              .to(car.position, { x: 2.5, ease: "power1.inOut" }, 1); // Moved further right for the big car
+        }
+
+        // Render Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle Window Resizing
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
-
-        // --- Animation Loop ---
-        const clock = new THREE.Clock();
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            const delta = clock.getDelta();
-            // Smooth scroll progress
-            scrollProgress += (targetScrollProgress - scrollProgress) * lerpFactor;
-
-            // --- Camera & Car Animation Based on Scroll ---
-            
-            if (carModel) {
-                // 1. Car Rotation: Spin continuously based on scroll
-                // We add a sine wave for a slight wobble effect
-                const rotationY = -0.8 + (scrollProgress * Math.PI * 4); // 2 full rotations
-                carModel.rotation.y = rotationY;
-
-                // 2. Car subtle floating/bobbing
-                carModel.position.y = -0.5 + Math.sin(scrollProgress * Math.PI * 2) * 0.1;
-            }
-
-            // 3. Camera Zoom & Direction Logic
-            // We map scrollProgress (0 to 1) to camera positions and FOV
-            
-            // Zoom effect: Move camera closer (zoom in) then further (zoom out) then close again
-            // Using a sine wave to create a dynamic "breathing" zoom
-            const zoomSine = Math.sin(scrollProgress * Math.PI * 2); 
-            
-            // Base radius, modified by sine wave
-            let radius = 7 - (zoomSine * 3); // Varies between 4 and 10
-            
-            // Camera angle: Rotate around the car
-            // Starts at angle 0, swings to the side, then back
-            const angle = scrollProgress * Math.PI * 1.5;
-            
-            // Calculate camera position
-            const camX = Math.sin(angle) * radius;
-            const camZ = Math.cos(angle) * radius;
-            
-            // Height changes based on scroll (higher for top-down views, lower for ground level)
-            // Map scroll to a height curve
-            const camY = 1.5 + (Math.sin(scrollProgress * Math.PI) * 3);
-            
-            // Smoothly interpolate camera position towards target
-            camera.position.x += (camX - camera.position.x) * 0.05;
-            camera.position.y += (camY - camera.position.y) * 0.05;
-            camera.position.z += (camZ - camera.position.z) * 0.05;
-
-            // Dynamic Field of View (FOV) for zoom effect
-            // Zooms in when radius is small
-            const targetFov = 35 + (radius * 2.5); // Wider FOV when far, narrow when close
-            camera.fov += (targetFov - camera.fov) * 0.05;
-            camera.updateProjectionMatrix();
-
-            // Always look at the car
-            camera.lookAt(0, 0.5, 0);
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
     </script>
 </body>
 </html>
