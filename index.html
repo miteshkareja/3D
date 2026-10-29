@@ -1,812 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoElite | Premium 3D Used Car Showcase</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#dbeeff" />
+  <meta name="description" content="AutoElite — premium pre-owned cars and a new perspective on the way you drive." />
+  <title>AutoElite — The Art of the Drive | Cinematic 3D Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #09223f;
+      --ink-soft: #42607e;
+      --blue: #235bed;
+      --blue-dark: #112f73;
+      --mist: #eef6ff;
+      --line: rgba(13, 57, 113, .13);
+      --accent: #eaf947;
+      --white: #fff;
+      --page-pad: clamp(22px, 5.5vw, 96px);
+      --progress: 0;
+    }
+    *,*::before,*::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; overflow-x: hidden; font-family: 'DM Sans',sans-serif; color: var(--ink); background: #f8fbff; -webkit-font-smoothing: antialiased; }
+    button,a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    a { color: inherit; }
+    ::selection { background: #b3d1ff; color: #09223f; }
+    :focus-visible { outline: 3px solid #2762ec; outline-offset: 4px; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* The GLB is rendered only in this sticky cinematic scene, not a substitute image. */
+    .cinema { position: relative; height: 510vh; height: 510svh; isolation: isolate; }
+    .cinema-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; width: 100%; overflow: hidden;
+      background: radial-gradient(ellipse at 70% 42%, #f1fbff 0%, transparent 43%), linear-gradient(117deg, #e7f5ff 2%, #b7dcff 50%, #68aef0 100%); }
+    .cinema-sticky::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 8;
+      background: linear-gradient(180deg, rgba(255,255,255,.42) 0%, transparent 22%, transparent 72%, rgba(5,44,91,.11) 100%); }
+    .cinema-noise { position: absolute; z-index: 1; inset: 0; pointer-events: none; opacity: .25;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E"); }
+    .cinema-orb { position: absolute; border-radius: 50%; filter: blur(4px); pointer-events:none; z-index: 0; }
+    .orb-one { width: 55vw; aspect-ratio: 1; left: -17vw; top: -26vw; border: 1px solid rgba(255,255,255,.55); box-shadow: inset 0 0 110px rgba(255,255,255,.18); }
+    .orb-two { width: 35vw; aspect-ratio: 1; right: -9vw; bottom: -21vw; border: 1px solid rgba(255,255,255,.65); }
+    .cinema-grid { position: absolute; z-index: 1; inset: 48% -20% -40%; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.3) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.3) 1px,transparent 1px);
+      background-size: 72px 72px; transform: perspective(640px) rotateX(66deg); transform-origin: center top; opacity: .47; mask-image: linear-gradient(transparent,black 38%,transparent 100%); }
+    .ambient-spot { position: absolute; z-index: 0; width: 44vw; height: 44vw; border-radius: 100%; left: 45%; top: 23%; pointer-events:none;
+      background: radial-gradient(circle,rgba(255,255,255,.48),transparent 65%); transform: translate(calc(var(--mouse-x,0)*1px),calc(var(--mouse-y,0)*1px)); }
+    .car-shadow { position: absolute; z-index: 2; width: min(54vw,810px); height: clamp(24px,3.8vh,60px); border-radius: 50%; left: 50%; top: 78%;
+      background: radial-gradient(ellipse,rgba(5,38,78,.28) 0%,rgba(16,77,137,.1) 53%,transparent 75%); filter: blur(13px); opacity: var(--shadow-opacity,.1);
+      transform: translateX(calc(-50% + var(--car-shadow-x,0px))) scale(var(--shadow-scale,.7)); pointer-events:none; }
+    #canvas-container { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    #canvas-container canvas { display:block; width: 100%; height:100%; }
+    .speed-lines { z-index: 3; position: absolute; inset: 39% 0 11%; pointer-events: none; opacity: var(--speed,.0); overflow: hidden; }
+    .speed-lines i { display:block; position:absolute; height: 1px; background: linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent); transform: translateX(calc(var(--line-shift,0)*1px)); }
+    .speed-lines i:nth-child(1) { left:5%; top:12%; width:18%; }
+    .speed-lines i:nth-child(2) { right:9%; top:33%; width:27%; }
+    .speed-lines i:nth-child(3) { left:17%; top:68%; width:22%; }
+    .speed-lines i:nth-child(4) { right:11%; top:87%; width:19%; }
+    .cinema-edge { position:absolute; z-index:10; left:var(--page-pad); right:var(--page-pad); bottom: 32px; display:flex; align-items:end; justify-content: space-between; pointer-events:none; }
+    .scroll-invite { display:flex; align-items:center; gap:13px; font-size:10px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; transition:opacity .3s ease; opacity: var(--scroll-invite-opacity,1); }
+    .scroll-mouse { width: 23px; height:36px; border:1.5px solid rgba(4,38,77,.6); border-radius:15px; display:flex; justify-content:center; padding-top:8px; }
+    .scroll-mouse:before { content:''; width:3px; height:8px; background:var(--ink); border-radius:10px; animation: scrollNib 1.8s ease-in-out infinite; }
+    @keyframes scrollNib { 0%,100% { transform:translateY(0);opacity:.4;} 55% {transform:translateY(8px);opacity:1;} }
+    .frame-count { font: 700 11px 'Manrope',sans-serif; letter-spacing:.14em; }
+    .frame-count strong { font-size: 21px; letter-spacing:-.04em; }
+    .frame-count span { opacity:.5; }
+    .scene-rail { position:absolute; z-index:12; right:var(--page-pad); top:50%; transform: translateY(-50%); display:flex; align-items:center; gap:17px; }
+    .rail-track { height:154px; width:2px; background:rgba(9,34,63,.2); position:relative; overflow:hidden; }
+    .rail-fill { display:block; position:absolute; top:0; left:0; width:100%; height:calc(var(--progress)*100%); background:var(--blue-dark); }
+    .rail-text { writing-mode: vertical-rl; font-size:10px; letter-spacing:.21em; font-weight:800; text-transform:uppercase; }
+    .cinema-copy { position:absolute; z-index:7; inset:0; pointer-events:none; }
+    .scene-copy { position:absolute; left:var(--page-pad); top:20%; width:min(590px,55vw); opacity:0; transform:translateY(28px); will-change: transform,opacity; pointer-events:none; }
+    .scene-copy.active { pointer-events:auto; }
+    .eyebrow { font-size:11px; letter-spacing:.19em; text-transform:uppercase; font-weight:800; display:flex; align-items:center; gap:12px; margin:0 0 22px; color:var(--blue-dark); }
+    .eyebrow::before {content:'';width:27px;height:2px;background:currentColor;}
+    h1,h2,h3,p { margin-top:0; }
+    .scene-copy h1,.scene-copy h2 { font-family: 'Manrope',sans-serif; letter-spacing:-.075em; font-weight:800; line-height:.99; margin:0 0 21px; }
+    .scene-copy h1 { font-size: clamp(47px,7.6vw,120px); }
+    .scene-copy h2 { font-size: clamp(47px,7vw,112px); }
+    .scene-copy h1 em,.scene-copy h2 em { color:var(--blue); font-style:normal; }
+    .scene-copy .lead { max-width:450px; font-size:clamp(14px,1.25vw,19px); line-height:1.67; color:var(--ink-soft); margin-bottom:24px; }
+    .scene-copy.copy-center { width:min(940px,78vw); left:50%; text-align:center; transform:translate(-50%,28px); top:13%; }
+    .copy-center .eyebrow { justify-content:center; }
+    .copy-center .lead { margin-left:auto; margin-right:auto; }
+    .scene-copy.copy-right { left:auto; right: max(10%,var(--page-pad)); text-align:right; width:min(530px,48vw); top:17%; }
+    .copy-right .eyebrow { justify-content:flex-end; }
+    .copy-right .eyebrow::before { display:none; }
+    .copy-right .lead { margin-left:auto; }
+    .cta-row { display:flex; gap:13px; align-items:center; flex-wrap:wrap; }
+    .copy-center .cta-row { justify-content:center; }
+    .copy-right .cta-row { justify-content:flex-end; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:16px; text-decoration:none; border-radius:100px; min-height:51px; padding:14px 22px; font-weight:800; font-size:12px; letter-spacing:.01em; border:1px solid transparent; cursor:pointer; transition:transform .25s,background .25s,box-shadow .25s; }
+    .button:hover { transform:translateY(-3px); }
+    .button-dark { background:var(--ink); color:white; box-shadow:0 10px 30px rgba(0,42,93,.12); }
+    .button-dark:hover { background:#2259cb; box-shadow:0 18px 34px rgba(19,59,113,.23); }
+    .button-light { background:rgba(255,255,255,.58); border-color:rgba(9,34,63,.2); color:var(--ink); }
+    .button-light:hover {background:white;}
+    .button .arrow { font-size:20px; line-height:0; font-weight:400; }
+    .floating-spec { position:absolute; right: calc(var(--page-pad) + 58px); bottom: 85px; z-index:7; display:flex; gap:26px; align-items:center;
+      border:1px solid rgba(255,255,255,.8); padding: 15px 20px; background:rgba(242,249,255,.44); backdrop-filter:blur(15px); border-radius:14px; opacity:var(--spec-opacity,0); pointer-events:none; }
+    .floating-spec div { display:flex; flex-direction:column; gap:5px; }
+    .floating-spec small { font-size:9px; font-weight:800; letter-spacing:.14em; color:#477299; text-transform:uppercase; }
+    .floating-spec strong {font:800 13px 'Manrope',sans-serif;}
+    .corner-label { position:absolute; left:var(--page-pad); top:116px; z-index:6; font-size:10px; font-weight:800; letter-spacing:.18em; color:#417198; }
+    .cinema-bottom-line { position:absolute; bottom:0; height:3px; background:var(--blue); width:calc(var(--progress)*100%); z-index:11; box-shadow:0 -1px 13px rgba(35,91,237,.35); }
 
-        body {
-            margin: 0;
-            overflow-x: hidden;
-            font-family: 'Inter', sans-serif;
-            /* Blue-only animated gradient for perfect Yellow Car contrast */
-            background: linear-gradient(135deg, #00BFFF 0%, #1E90FF 40%, #4682B4 80%, #0a192f 100%);
-            background-size: 300% 300%;
-            animation: gradientBG 15s ease infinite;
-            color: #000000; /* Pure Black Text */
-            -webkit-font-smoothing: antialiased;
-        }
+    /* Header */
+    .header { position:fixed; z-index:100; top:0; left:0; right:0; height:90px; padding:0 var(--page-pad); display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid transparent; transition:background .3s,height .3s,border .3s,box-shadow .3s; }
+    .header.scrolled { height:73px; background:rgba(247,251,255,.9); border-bottom-color:var(--line); backdrop-filter:blur(22px); box-shadow:0 7px 34px rgba(17,57,96,.05); }
+    .brand { display:flex; align-items:center; gap:11px; color:var(--ink); text-decoration:none; font:800 24px 'Manrope',sans-serif; letter-spacing:-.07em; }
+    .brand-mark { width:34px; height:34px; background:var(--ink); border-radius:12px; color:white; display:grid; place-items:center; font-size:19px; transform:rotate(-8deg); }
+    .brand-mark span {transform:rotate(8deg);}
+    .nav-links { list-style:none; padding:0; margin:0; display:flex; align-items:center; gap:clamp(24px,3.2vw,52px); }
+    .nav-links a { text-decoration:none; font-size:12px; font-weight:800; transition:color .2s; }
+    .nav-links a:hover {color:var(--blue);}
+    .nav-links a.nav-contact { background:var(--ink); color:white; padding:14px 23px; border-radius:30px; }
+    .nav-links a.nav-contact:hover { background:var(--blue); }
+    .menu-toggle { display:none; width:43px; height:43px; border:1px solid var(--line); border-radius:13px; background:rgba(255,255,255,.7); cursor:pointer; color:var(--ink); font-size:23px; }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    /* Below-fold content */
+    main { position:relative; z-index:15; background:#f8fbff; }
+    .ribbon { background:var(--ink); color:#f3f8ff; overflow:hidden; display:flex; align-items:center; min-height:65px; white-space:nowrap; }
+    .ribbon-inner {display:flex; gap:36px; width:max-content; animation:marquee 23s linear infinite; font-size:11px; font-weight:800; letter-spacing:.21em; text-transform:uppercase;}
+    .ribbon-inner b {color:#b5e5fd; font-size:18px; vertical-align:middle; margin-left:36px;}
+    @keyframes marquee {to{transform:translateX(-50%);}}
+    .section-shell { padding:clamp(82px,9vw,145px) var(--page-pad); }
+    .section-label { color:var(--blue); font-size:11px; font-weight:800; letter-spacing:.19em; text-transform:uppercase; display:block; margin-bottom:22px; }
+    .section-h { font:800 clamp(40px,5.6vw,77px)/1.05 'Manrope',sans-serif; letter-spacing:-.075em; margin:0 0 24px; max-width:780px; }
+    .muted {color:#536d88; line-height:1.8; font-size:15px;}
+    .section-intro { display:flex; justify-content:space-between; align-items:end; gap:28px; margin-bottom:45px; }
+    .section-intro > p { max-width:420px; margin-bottom:7px; }
+    .cars-layout { display:grid; grid-template-columns:1.25fr .75fr; gap:22px; }
+    .featured-card { min-height:550px; border-radius:30px; padding:clamp(30px,4vw,65px); overflow:hidden; position:relative; background:linear-gradient(147deg,#c3e8ff 0%,#85bdff 64%,#548fed 100%); }
+    .featured-card::before { content:''; width:670px; height:670px; position:absolute; border-radius:50%; border:1px solid rgba(255,255,255,.55); right:-200px; top:-190px; box-shadow:0 0 0 80px rgba(255,255,255,.07),0 0 0 165px rgba(255,255,255,.05); }
+    .featured-card::after { content:'A'; font:800 clamp(220px,26vw,430px)/1 'Manrope',sans-serif; position:absolute; right:1%; bottom:-13%; color:rgba(255,255,255,.18); letter-spacing:-.1em; }
+    .featured-card > * {position:relative; z-index:1;}
+    .feature-pill { display:inline-flex; align-items:center; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.9); border-radius:40px; padding:9px 15px; color:#184278; font:800 10px 'Manrope',sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+    .featured-card h3 { font:800 clamp(39px,5vw,74px)/1.02 'Manrope',sans-serif; letter-spacing:-.07em; margin:36px 0 17px; max-width:530px; }
+    .featured-card p { max-width:440px; color:#184b7a; line-height:1.8; font-size:15px; }
+    .featured-card .button {margin-top:12px;}
+    .feature-stats { margin-top:45px; display:flex; gap:clamp(20px,3vw,56px); border-top:1px solid rgba(10,51,103,.18); padding-top:26px; }
+    .feature-stats div { display:grid; gap:8px; }
+    .feature-stats span { font-size:10px; letter-spacing:.1em; font-weight:800; color:#34638e; text-transform:uppercase; }
+    .feature-stats strong { font:800 clamp(15px,1.8vw,22px) 'Manrope',sans-serif; }
+    .side-card {border:1px solid var(--line); border-radius:30px; padding:clamp(30px,4vw,52px); display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(160deg,#fff,#e9f4ff); }
+    .side-card .side-no { font:800 clamp(72px,10vw,140px) 'Manrope',sans-serif; letter-spacing:-.1em; line-height:1; color:#bfdcff; }
+    .side-card h3 { font:800 clamp(27px,3vw,42px)/1.12 'Manrope',sans-serif; letter-spacing:-.06em; margin:0 0 12px; }
+    .side-card p {font-size:14px;color:#587188;line-height:1.8;max-width:340px;}
+    .text-link {font-size:12px;font-weight:800;text-decoration:none; border-bottom:1px solid currentColor; padding-bottom:7px; width:max-content;}
+    .benefit-section { background:var(--ink); color:white; }
+    .benefit-section .section-label {color:#8dbaff;}
+    .benefit-section .section-h {max-width:900px;}
+    .benefit-grid {margin-top:65px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+    .benefit-card {min-height:325px;padding:37px;display:flex; flex-direction:column;justify-content:space-between;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);border-radius:22px;transition:transform .3s,background .3s;}
+    .benefit-card:hover {background:rgba(255,255,255,.1);transform:translateY(-5px);}
+    .benefit-icon {font:800 29px 'Manrope',sans-serif;color:#bad7ff;}
+    .benefit-card h3 {font:800 25px 'Manrope',sans-serif;letter-spacing:-.05em;margin:0 0 10px;}
+    .benefit-card p {font-size:14px;line-height:1.8;color:#b6c8dc;margin:0;}
+    .quality-row {display:grid;grid-template-columns:1fr 1fr;gap:clamp(45px,7vw,125px);align-items:center;}
+    .quality-art {min-height:530px;border-radius:30px;background:linear-gradient(135deg,#d8edff,#accdfe);position:relative;overflow:hidden;display:grid;place-items:center;}
+    .quality-art::after {content:'';position:absolute;inset:auto -15% -40% -15%;aspect-ratio:1;border:90px solid rgba(255,255,255,.25);border-radius:50%;}
+    .quality-circle { position:relative; z-index:2; width:min(75%,330px); aspect-ratio:1; border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,.8); box-shadow:0 0 0 22px rgba(255,255,255,.19),0 0 0 46px rgba(255,255,255,.11); background:rgba(255,255,255,.35); }
+    .quality-circle strong {font:800 clamp(85px,12vw,160px)/1 'Manrope',sans-serif;letter-spacing:-.09em;}
+    .quality-circle span {font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.15em;}
+    .stat-columns {display:flex;gap:30px; margin-top:33px;padding-top:26px;border-top:1px solid var(--line);flex-wrap:wrap;}
+    .stat-columns > div {display:grid;gap:8px;}
+    .stat-columns small {font-size:10px;letter-spacing:.13em;font-weight:800;color:#7089a1;text-transform:uppercase;}
+    .stat-columns strong {font:800 18px 'Manrope',sans-serif;}
+    .finance {padding:clamp(90px,10vw,150px) var(--page-pad);background:linear-gradient(125deg,#d9edff 0%,#e8f5ff 47%,#f4faff 100%);}
+    .finance-inner {display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;}
+    .finance-panel {margin-left:auto; max-width:500px; padding:clamp(30px,5vw,62px);border-radius:28px;border:1px solid #fff;background:rgba(255,255,255,.63);box-shadow:0 20px 70px rgba(35,91,170,.08);}
+    .finance-panel .finance-value { font:800 clamp(50px,7vw,90px)/1 'Manrope',sans-serif;letter-spacing:-.09em;margin-bottom:20px; }
+    .finance-panel > p {font-size:14px;line-height:1.8;color:#526b85;}
+    .finance-panel .button {margin-top:18px;}
+    .contact {background:#f8fbff;text-align:center; padding:clamp(95px,12vw,170px) var(--page-pad);}
+    .contact .section-h {margin:0 auto 25px;max-width:850px;}
+    .contact .muted {margin:0 auto 30px;max-width:550px;}
+    .contact .cta-row {justify-content:center;}
+    .contact-orbit {margin:0 auto 35px; width:70px;height:70px;border-radius:50%;display:grid;place-items:center;border:1px solid #96c6ff;background:#dfedff;color:#235bed;font-size:30px;}
+    footer {background:#09223f;color:#eaf4ff;padding:50px var(--page-pad) 34px;}
+    .footer-top {display:flex;align-items:center;justify-content:space-between;gap:28px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.2);}
+    footer .brand {color:white;}
+    footer .brand-mark {background:#fff;color:#0e2e54;}
+    .footer-links {display:flex;flex-wrap:wrap;gap:25px;}
+    .footer-links a {font-size:12px;text-decoration:none;color:#d0e0ef;font-weight:700;}
+    .footer-bottom {display:flex;justify-content:space-between;gap:20px;padding-top:30px;color:#a1bad3;font-size:11px;}
+    .reveal {opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+    .reveal.visible {opacity:1;transform:translateY(0);}
 
-        /* 3D Canvas fixed background - Transparent to show the CSS gradient */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
+    /* Loader always exits; failed GLB shows diagnosis instead of a fake vehicle. */
+    .loading-screen {position:fixed; z-index:9999; inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#d9edff;transition:opacity .55s,visibility .55s;}
+    .loading-screen.done {opacity:0;visibility:hidden;pointer-events:none;}
+    .loading-wheel {height:78px;width:78px;border:7px solid #123e74;box-shadow:inset 0 0 0 3px #d9edff, inset 0 0 0 17px #183c69; border-radius:50%;animation:wheelSpin 1s linear infinite;position:relative;}
+    .loading-wheel::before,.loading-wheel::after {content:'';position:absolute;left:50%;top:50%;background:#d9edff;transform:translate(-50%,-50%);}
+    .loading-wheel::before {width:40px;height:6px;}.loading-wheel::after {width:6px;height:40px;}
+    @keyframes wheelSpin {to{transform:rotate(360deg);}}
+    .loading-screen p {font:800 11px 'Manrope',sans-serif;letter-spacing:.23em;text-transform:uppercase;margin:23px 0 0;}
+    .loading-sub {font:600 11px 'DM Sans',sans-serif;opacity:.62;margin-top:9px;}
+    .model-notice {position:fixed;z-index:160;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);max-width:min(570px,calc(100vw - 26px));padding:13px 18px;border-radius:15px;
+      background:#102d4e;color:white;font-size:12px;line-height:1.5;box-shadow:0 15px 35px rgba(9,34,63,.23);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;}
+    .model-notice.show {opacity:1;transform:translateX(-50%) translateY(0);}
 
-        .content {
-            position: relative;
-            z-index: 10;
-            pointer-events: auto;
-        }
-
-        /* Loading Screen */
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #1E90FF;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 9999;
-            transition: opacity 0.5s;
-        }
-
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(0, 0, 0, 0.1);
-            border-top: 3px solid #000;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        #loading-screen p {
-            color: #000;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            transition: all 0.4s ease;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
-        }
-
-        nav.scrolled {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 18px 5%;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            color: #000;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: -0.02em;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: #000;
-            color: #fff;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 45px;
-        }
-
-        .nav-links a {
-            color: #000;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 800;
-            position: relative;
-            transition: color 0.3s;
-            letter-spacing: 0.02em;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #000;
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #000;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            background: #000;
-            color: #fff !important;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 800 !important;
-            transition: all 0.3s !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .nav-cta:hover {
-            background: #333;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-cta::after {
-            display: none;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: #000;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-        /* --- Split Screen Sections --- */
-        section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 8%;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        /* The text container block */
-        .text-block {
-            width: 48%;
-            max-width: 600px;
-            padding: 3rem;
-            /* Slightly more opaque white glass to ensure black text pops against deep blues */
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .text-block.reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Positioning text to the left or right */
-        .text-block.left {
-            margin-right: auto;
-        }
-
-        .text-block.right {
-            margin-left: auto;
-            text-align: right; 
-        }
-
-        .text-block.right .button-group {
-            justify-content: flex-end;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin: 0 0 1rem 0;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            color: #000;
-        }
-
-        h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin: 0 0 1.2rem 0;
-            color: #000;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-
-        p {
-            font-size: 1.15rem;
-            line-height: 1.7;
-            color: #000; /* Pure black */
-            margin: 0 0 2rem 0;
-            font-weight: 600;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #fff;
-            border: 1px solid #000;
-            padding: 0.5rem 1.4rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #000;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        /* Specs Layout */
-        .specs {
-            display: flex;
-            gap: 2.5rem;
-            margin-bottom: 2rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-            padding: 1.5rem 0;
-        }
-
-        .text-block.right .specs {
-            justify-content: flex-end;
-        }
-
-        .spec-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .spec-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #000;
-            margin-bottom: 0.4rem;
-            font-weight: 800;
-        }
-
-        .spec-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #000;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-            color: #fff;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid #000;
-            letter-spacing: 0.02em;
-            white-space: nowrap;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn:hover {
-            background: #333;
-            border-color: #333;
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #000;
-            border: 2px solid #000;
-            box-shadow: none;
-        }
-        
-        .btn-outline:hover {
-            background: #000;
-            color: #fff;
-        }
-
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            color: #000;
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            font-weight: 800;
-        }
-
-        .scroll-indicator .line {
-            width: 2px;
-            height: 50px;
-            background: linear-gradient(to bottom, #000, transparent);
-            animation: scrollLine 2s infinite cubic-bezier(0.77, 0, 0.175, 1);
-        }
-
-        @keyframes scrollLine {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            50.1% { transform: scaleY(1); transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            section {
-                flex-direction: column;
-                justify-content: center;
-                text-align: center;
-                padding: 100px 5%;
-            }
-            .text-block {
-                width: 100%;
-                text-align: center;
-                padding: 2.5rem;
-            }
-            .text-block.right {
-                text-align: center;
-            }
-            .text-block.right .specs, .text-block.right .button-group {
-                justify-content: center;
-            }
-            .specs {
-                justify-content: center;
-            }
-            .button-group {
-                justify-content: center;
-            }
-            h1 { font-size: 3rem; }
-            h2 { font-size: 2.2rem; }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            .btn { width: 100%; }
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
-            .specs { flex-direction: column; gap: 1rem; border: none; padding: 0; }
-            .text-block { background: rgba(255, 255, 255, 0.85); }
-        }
-    </style>
+    @media (max-width:1024px) {
+      .scene-copy { top:18%; width:min(510px,68vw); }
+      .scene-copy.copy-right {width:60vw;}
+      .floating-spec {bottom:95px;right:var(--page-pad);}
+      .cars-layout {grid-template-columns:1fr .8fr;}
+      .featured-card {min-height:510px;}
+      .scene-rail {right:22px;}
+    }
+    @media (max-width:760px) {
+      :root {--page-pad:22px;}
+      .cinema {height:460vh;height:460svh;}
+      .header {height:72px;}
+      .header.scrolled {height:65px;}
+      .brand {font-size:22px;}
+      .menu-toggle {display:grid;place-items:center;}
+      .nav-links {display:none;position:absolute;top:calc(100% + 3px);left:12px;right:12px;flex-direction:column;align-items:stretch;gap:0;padding:12px;background:rgba(248,252,255,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 50px rgba(9,34,63,.14);backdrop-filter:blur(20px);}
+      .nav-links.open {display:flex;}
+      .nav-links a {display:block;padding:14px 12px;font-size:14px;}
+      .nav-links a.nav-contact {text-align:center;margin-top:5px;}
+      .corner-label {top:100px;font-size:9px;}
+      .scene-copy,.scene-copy.copy-right,.scene-copy.copy-center {left:var(--page-pad);right:var(--page-pad);top:17%;width:auto;text-align:left;}
+      .scene-copy h1,.scene-copy h2 {font-size:clamp(43px,11.1vw,82px); max-width:550px;}
+      .scene-copy .lead {font-size:13px;line-height:1.6;max-width:390px;}
+      .scene-copy .eyebrow {font-size:9px;margin-bottom:16px;justify-content:flex-start;}
+      .scene-copy.copy-center {transform:translateY(28px);}
+      .copy-center .eyebrow {justify-content:flex-start;}
+      .copy-center .lead {margin-left:0;margin-right:0;}
+      .copy-right .eyebrow {justify-content:flex-start;}
+      .copy-right .eyebrow::before {display:block;}
+      .copy-right .lead {margin-left:0;}
+      .copy-right .cta-row,.copy-center .cta-row {justify-content:flex-start;}
+      .button {min-height:46px;padding:12px 17px;font-size:11px;}
+      .scene-rail {right:16px;top:57%;gap:9px;}
+      .rail-track {height:85px;}
+      .rail-text {font-size:8px;}
+      .cinema-edge {bottom:22px;}
+      .scroll-invite {font-size:9px;}
+      .floating-spec {left:22px;right:auto;bottom:85px;gap:16px;padding:12px 14px;}
+      .floating-spec small {font-size:8px;}
+      .floating-spec strong {font-size:10px;}
+      .car-shadow {width:78vw;top:72%;}
+      .cinema-grid {inset:49% -40% -25%;}
+      .section-shell {padding:80px var(--page-pad);}
+      .section-intro {display:block;margin-bottom:30px;}
+      .section-h {font-size:clamp(36px,9vw,58px);}
+      .cars-layout,.quality-row,.finance-inner {grid-template-columns:1fr;}
+      .featured-card {min-height:480px;}
+      .feature-stats {gap:18px;flex-wrap:wrap;}
+      .side-card {min-height:330px;}
+      .benefit-grid {grid-template-columns:1fr;gap:12px;}
+      .benefit-card {min-height:240px;}
+      .quality-art {min-height:390px;order:-1;}
+      .quality-circle {width:220px;}
+      .quality-circle strong {font-size:100px;}
+      .finance-panel {max-width:none;margin:0;}
+      .footer-top,.footer-bottom {flex-direction:column;align-items:flex-start;}
+    }
+    @media (max-width:380px) {
+      .scene-copy,.scene-copy.copy-right,.scene-copy.copy-center {top:16%;}
+      .scene-copy h1,.scene-copy h2 {font-size:42px;}
+      .scene-copy .lead {font-size:12px;}
+      .floating-spec {bottom:70px;}
+      .cta-row {gap:7px;}
+      .button {padding:11px 13px;}
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {scroll-behavior:auto;}
+      .ribbon-inner,.scroll-mouse::before,.loading-wheel {animation:none;}
+      .reveal {transition:none;opacity:1;transform:none;}
+    }
+  </style>
 </head>
 <body>
+  <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
+    <div class="loading-wheel" aria-hidden="true"></div>
+    <p>Preparing your drive</p>
+    <span class="loading-sub">Loading original 3D car</span>
+  </div>
+  <div id="model-notice" class="model-notice" role="status" aria-live="polite"></div>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loader"></div>
-        <p>Loading Experience</p>
-    </div>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <a href="#" class="logo">
-            <div class="logo-icon">🚗</div>
-            AutoElite
-        </a>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#featured">Featured</a></li>
-            <li><a href="#about">Quality</a></li>
-            <li><a href="#contact" class="nav-cta">Get Started</a></li>
-        </ul>
-        <button class="mobile-menu-btn">☰</button>
+  <header id="navbar" class="header">
+    <a href="#home" class="brand" aria-label="AutoElite home"><span class="brand-mark"><span>A</span></span>AutoElite<span style="color:#2863e5">.</span></a>
+    <button id="menu-toggle" class="menu-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Open menu">☰</button>
+    <nav aria-label="Primary navigation">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#featured">Featured</a></li>
+        <li><a href="#about">Quality</a></li>
+        <li><a href="#finance">Financing</a></li>
+        <li><a href="#contact" class="nav-contact">Get Started ↗</a></li>
+      </ul>
     </nav>
+  </header>
 
-    <!-- 3D Canvas (Transparent background) -->
-    <div id="canvas-container"></div>
+  <!-- 510vh scroll track, 100svh sticky camera: scrolling controls every frame. -->
+  <div class="cinema" id="home" aria-label="Cinematic 3D car showcase">
+    <div class="cinema-sticky" id="cinema-stage">
+      <div class="cinema-noise" aria-hidden="true"></div>
+      <div class="cinema-orb orb-one" aria-hidden="true"></div>
+      <div class="cinema-orb orb-two" aria-hidden="true"></div>
+      <div class="cinema-grid" aria-hidden="true"></div>
+      <div class="ambient-spot" aria-hidden="true"></div>
+      <div class="car-shadow" aria-hidden="true"></div>
+      <div class="speed-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div id="canvas-container" aria-label="3D model of vehicle"></div>
 
-    <div class="content">
-        
-        <!-- Section 1 (Text Left, Car Right) -->
-        <section id="home">
-            <div class="text-block left" data-reveal>
-                <div class="badge">Pre-owned • Certified</div>
-                <h1>Find Your Perfect Drive</h1>
-                <p>Discover a curated collection of premium pre-owned vehicles, each inspected and certified to deliver performance and peace of mind.</p>
-                <div class="button-group">
-                    <a href="#featured" class="btn">Explore Inventory</a>
-                    <a href="#about" class="btn btn-outline">Learn More</a>
-                </div>
-            </div>
-        </section>
+      <div class="corner-label">AUTOELITE / MOTION STUDIO / 001</div>
+      <div class="cinema-copy">
+        <div class="scene-copy" data-scene="0">
+          <div class="eyebrow">Pre-owned. Reimagined.</div>
+          <h1>Find your<br /><em>perfect</em><br />drive.</h1>
+          <p class="lead">Discover a curated collection of premium pre-owned vehicles, inspected for the confidence to go further.</p>
+          <div class="cta-row">
+            <a class="button button-dark" href="#featured">Explore collection <span class="arrow">↗</span></a>
+            <a class="button button-light" href="#about">The AutoElite promise <span class="arrow">→</span></a>
+          </div>
+        </div>
+        <div class="scene-copy" data-scene="1">
+          <div class="eyebrow">01 / First impression</div>
+          <h2>Form meets<br /><em>freedom.</em></h2>
+          <p class="lead">One beautiful drive can change how you see the road. Explore every detail, from a new perspective.</p>
+        </div>
+        <div class="scene-copy copy-center" data-scene="2">
+          <div class="eyebrow">02 / The closer look</div>
+          <h2>Every curve.<br /><em>In focus.</em></h2>
+          <p class="lead">Get closer. See the design, the finish, and the things that make a car worth choosing.</p>
+        </div>
+        <div class="scene-copy copy-right" data-scene="3">
+          <div class="eyebrow">03 / Total confidence</div>
+          <h2>Quality you<br /><em>can feel.</em></h2>
+          <p class="lead">Thoughtfully selected cars. Transparent histories. A buying journey built around you.</p>
+        </div>
+        <div class="scene-copy" data-scene="4">
+          <div class="eyebrow">04 / Your move</div>
+          <h2>Make the<br /><em>next move.</em></h2>
+          <p class="lead">The road is calling. Discover your next car with AutoElite.</p>
+          <div class="cta-row"><a class="button button-dark" href="#contact">Book a test drive <span class="arrow">↗</span></a></div>
+        </div>
+      </div>
 
-        <!-- Section 2 (Text Right, Car Left) -->
-        <section id="featured">
-            <div class="text-block right" data-reveal>
-                <div class="badge">Featured Vehicle</div>
-                <h2>2021 Porsche 911</h2>
-                <p>Only 12,400 miles. Single owner, full service history. Finished in GT Silver Metallic with a black leather interior. Experience the thrill of precision engineering.</p>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">Mileage</span>
-                        <span class="spec-value">12,400 mi</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Engine</span>
-                        <span class="spec-value">3.0L Twin</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Power</span>
-                        <span class="spec-value">379 hp</span>
-                    </div>
-                </div>
-                <div class="button-group">
-                    <a href="#" class="btn">View Details</a>
-                </div>
-            </div>
-        </section>
+      <div class="floating-spec" id="floating-spec" aria-hidden="true">
+        <div><small>Perspective</small><strong>Side profile</strong></div>
+        <div><small>Experience</small><strong>3D / Realtime</strong></div>
+        <div><small>Control</small><strong>Scroll to explore</strong></div>
+      </div>
+      <div class="scene-rail" aria-hidden="true"><span class="rail-track"><span class="rail-fill"></span></span><span class="rail-text">The journey</span></div>
+      <div class="cinema-edge" aria-hidden="true">
+        <div class="scroll-invite"><span class="scroll-mouse"></span> Scroll to drive the story</div>
+        <div class="frame-count"><strong id="chapter-count">01</strong> <span>/ 05</span></div>
+      </div>
+      <div class="cinema-bottom-line" aria-hidden="true"></div>
+    </div>
+  </div>
 
-        <!-- Section 3 (Text Left, Car Right) -->
-        <section id="about">
-            <div class="text-block left" data-reveal>
-                <div class="badge">Quality Assurance</div>
-                <h2>Exceptional Condition</h2>
-                <p>Every vehicle undergoes a rigorous 150-point inspection by our master technicians. We guarantee the quality, safety, and reliability of every car we sell.</p>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">Warranty</span>
-                        <span class="spec-value">2 yr / 24k mi</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Owners</span>
-                        <span class="spec-value">1</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Accidents</span>
-                        <span class="spec-value">None</span>
-                    </div>
-                </div>
-                <div class="button-group">
-                    <a href="#" class="btn">Read Our Process</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4 (Text Right, Car Left) -->
-        <section>
-            <div class="text-block right" data-reveal>
-                <div class="badge">Flexible Financing</div>
-                <h2>Drive It Home Today</h2>
-                <p>We offer competitive financing rates tailored to your budget. Get pre-approved in minutes with no impact on your credit score.</p>
-                <div class="specs">
-                    <div class="spec-item">
-                        <span class="spec-label">APR From</span>
-                        <span class="spec-value">2.9%</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Terms</span>
-                        <span class="spec-value">Up to 72mo</span>
-                    </div>
-                </div>
-                <div class="button-group">
-                    <a href="#" class="btn">Get Pre-Approved</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 5 (Text Center, Car Center) -->
-        <section id="contact">
-            <div class="text-block" data-reveal style="margin: 0 auto; text-align: center; width: 100%; max-width: 800px;">
-                <div class="badge">Get Started</div>
-                <h2>Ready to Experience It?</h2>
-                <p>Take the first step toward owning a premium pre-owned vehicle. Our team is ready to help you find the perfect match.</p>
-                <div class="button-group" style="justify-content: center;">
-                    <a href="#" class="btn">Schedule Test Drive</a>
-                    <a href="#" class="btn btn-outline">Contact Us</a>
-                </div>
-            </div>
-        </section>
-
+  <main>
+    <div class="ribbon" aria-label="AutoElite promises">
+      <div class="ribbon-inner" aria-hidden="true">
+        <span>PRE-OWNED · REDEFINED <b>✳</b></span><span>CAREFULLY CURATED <b>✳</b></span><span>QUALITY FIRST <b>✳</b></span><span>THE DRIVE BEGINS HERE <b>✳</b></span>
+        <span>PRE-OWNED · REDEFINED <b>✳</b></span><span>CAREFULLY CURATED <b>✳</b></span><span>QUALITY FIRST <b>✳</b></span><span>THE DRIVE BEGINS HERE <b>✳</b></span>
+      </div>
     </div>
 
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator">
-        <span>Scroll</span>
-        <div class="line"></div>
-    </div>
+    <section id="featured" class="section-shell">
+      <div class="section-intro reveal">
+        <div><span class="section-label">01 / Curated collection</span><h2 class="section-h">More than a car.<br />A feeling.</h2></div>
+        <p class="muted">Explore a considered collection of pre-owned vehicles with a focus on design, performance and peace of mind.</p>
+      </div>
+      <div class="cars-layout">
+        <article class="featured-card reveal">
+          <span class="feature-pill">Featured vehicle</span>
+          <h3>2021<br />Porsche 911.</h3>
+          <p>Only 12,400 miles. Single owner, full service history. Finished in GT Silver Metallic with a black leather interior. Experience the thrill of precision engineering.</p>
+          <a href="#contact" class="button button-dark">Enquire about this car <span class="arrow">↗</span></a>
+          <div class="feature-stats">
+            <div><span>Mileage</span><strong>12,400 mi</strong></div>
+            <div><span>Engine</span><strong>3.0L Twin</strong></div>
+            <div><span>Power</span><strong>379 hp</strong></div>
+          </div>
+        </article>
+        <aside class="side-card reveal">
+          <span class="feature-pill" style="width:max-content">AutoElite difference</span>
+          <span class="side-no">01</span>
+          <div><h3>A smarter way<br />to find your fit.</h3><p>From first look to final key, our team is here to make every part of the experience feel effortless.</p>
+            <a href="#about" class="text-link">Discover our process ↗</a></div>
+        </aside>
+      </div>
+    </section>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-            }
+    <section class="section-shell benefit-section">
+      <span class="section-label reveal">Why AutoElite</span>
+      <h2 class="section-h reveal">Confidence is the<br />real luxury.</h2>
+      <div class="benefit-grid">
+        <article class="benefit-card reveal"><span class="benefit-icon">01 /</span><div><h3>Detailed inspections</h3><p>Get a clearer view of a car's condition before making your next move.</p></div></article>
+        <article class="benefit-card reveal"><span class="benefit-icon">02 /</span><div><h3>Transparent journeys</h3><p>Understand service history, ownership details, and the information that matters.</p></div></article>
+        <article class="benefit-card reveal"><span class="benefit-icon">03 /</span><div><h3>Personal assistance</h3><p>Help with viewings, documentation, and finding the right vehicle for your needs.</p></div></article>
+      </div>
+    </section>
+
+    <section id="about" class="section-shell">
+      <div class="quality-row">
+        <div class="reveal">
+          <span class="section-label">02 / Quality assurance</span>
+          <h2 class="section-h">Exceptional<br />condition.<br />No shortcuts.</h2>
+          <p class="muted">Every vehicle undergoes a rigorous 150-point inspection by our master technicians. We focus on the quality, safety, and reliability of every car we sell.</p>
+          <div class="stat-columns"><div><small>Inspection</small><strong>150 points</strong></div><div><small>Priority</small><strong>Quality first</strong></div><div><small>Support</small><strong>Personal</strong></div></div>
+          <a href="#contact" class="button button-dark" style="margin-top:35px">Ask about our process <span class="arrow">↗</span></a>
+        </div>
+        <div class="quality-art reveal" aria-label="150-point inspection graphic"><div class="quality-circle"><strong>150</strong><span>Point inspection</span></div></div>
+      </div>
+    </section>
+
+    <section id="finance" class="finance">
+      <div class="finance-inner">
+        <div class="reveal"><span class="section-label">03 / Flexible financing</span><h2 class="section-h">A premium drive.<br />A practical plan.</h2>
+          <p class="muted" style="max-width:480px">Explore financing options tailored to your budget, with guidance to help you choose the right next step.</p>
+          <a href="#contact" class="button button-dark">Explore finance options <span class="arrow">↗</span></a></div>
+        <div class="finance-panel reveal"><span class="section-label">Your journey, your terms</span><div class="finance-value">Let's<br />talk.</div>
+          <p>Finance availability, rates and terms depend on lender approval and individual eligibility. Our team can help you explore the available options.</p>
+          <a href="#contact" class="button button-light">Get in touch <span class="arrow">→</span></a></div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="contact-orbit reveal" aria-hidden="true">↗</div>
+      <span class="section-label reveal">04 / Get started</span>
+      <h2 class="section-h reveal">Your next chapter<br />starts behind the wheel.</h2>
+      <p class="muted reveal">Take the first step toward owning a premium pre-owned vehicle. Our team is ready to help you find the perfect match.</p>
+      <div class="cta-row reveal"><a href="mailto:hello@autoelite.example?subject=Test%20drive%20enquiry" class="button button-dark">Schedule a test drive <span class="arrow">↗</span></a><a href="mailto:hello@autoelite.example?subject=Car%20enquiry" class="button button-light">Contact us <span class="arrow">→</span></a></div>
+      <p style="color:#7790a7;font-size:11px;margin-top:20px">Demo contact address — replace with your real business email before publishing.</p>
+    </section>
+  </main>
+  <footer><div class="footer-top"><a class="brand" href="#home"><span class="brand-mark"><span>A</span></span>AutoElite<span style="color:#7cb4ff">.</span></a>
+      <div class="footer-links"><a href="#featured">Featured</a><a href="#about">Quality</a><a href="#finance">Finance</a><a href="#contact">Contact</a></div></div>
+    <div class="footer-bottom"><span>© 2026 AutoElite. Designed for the journey ahead.</span><span>Premium pre-owned experiences</span></div>
+  </footer>
+
+  <!-- THREE.js is the only external JavaScript dependency. Place your real car.glb beside this HTML. -->
+  <script type="importmap">{
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+    }
+  }</script>
+
+  <!-- Non-module fallback: even offline / CDN failures never trap visitors behind a loader. -->
+  <script>
+    (function () {
+      const splash = document.getElementById('loading-screen');
+      const notice = document.getElementById('model-notice');
+      let finished = false;
+      window.finishLoading = function (message) {
+        if (finished) return;
+        finished = true;
+        splash.classList.add('done');
+        if (message) {
+          notice.textContent = message;
+          notice.classList.add('show');
+          setTimeout(() => notice.classList.remove('show'), 12000);
         }
-    </script>
+      };
+      setTimeout(() => window.finishLoading('3D preview could not load. Check that car.glb is in the same folder and open the site through Live Server.'), 9000);
+      const toggle = document.getElementById('menu-toggle');
+      const links = document.getElementById('nav-links');
+      toggle.addEventListener('click', () => {
+        const isOpen = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+        toggle.textContent = isOpen ? '✕' : '☰';
+      });
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.textContent = '☰';
+      }));
+      const navbar = document.getElementById('navbar');
+      const observer = new IntersectionObserver(entries => entries.forEach(e => {
+        if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      }), {threshold: .1});
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 60), {passive: true});
+      navbar.classList.toggle('scrolled', scrollY > 60);
+    })();
+  </script>
 
-    <script type="module">
-        import * as THREE from 'three';
-        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        
-        // NO BACKGROUND SET ON SCENE -> CSS Gradient shows through!
-        
-        // Very light fog to blend the shadow ground into the gradient
-        scene.fog = new THREE.FogExp2(0x00BFFF, 0.01);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hero = document.getElementById('home');
+    const stage = document.getElementById('cinema-stage');
+    const holder = document.getElementById('canvas-container');
+    const copies = [...document.querySelectorAll('[data-scene]')];
+    const chapterCount = document.getElementById('chapter-count');
+    const rootStyle = stage.style;
+    let scene, camera, renderer, rig, glbObject;
+    let carWidth = 0, modelHeight = 1, visible = true;
+    let aspect = 1, worldW = 9, worldH = 6.4, modelReady = false;
+    let actual = 0, target = 0, lastTime = 0, lastWidth = 0, lastHeight = 0;
+    let smoothedX = 0, smoothedY = 0, mouseX = 0, mouseY = 0;
 
-        const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0.5, 6); 
+    // The source GLB is the ONLY vehicle model. Change this if your vehicle uses a special axis.
+    // auto: detects whether its longest horizontal side is X or Z, then presents that side to camera.
+    const MODEL_ORIENTATION = 'auto'; // options: 'auto', 'x', 'z'
+    const MODEL_EXTRA_YAW = 0;       // set to Math.PI if you need to reverse nose direction
 
-        // ALPHA: TRUE IS CRUCIAL HERE
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2; 
-        container.appendChild(renderer.domElement);
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const mix = (a, b, t) => a + (b-a)*t;
+    const ease = t => t*t*(3-2*t);
+    const smoothRange = (a,b,x) => b <= a ? Number(x >= b) : ease(clamp((x-a)/(b-a),0,1));
+    const triangleWindow = (a,b,c,d,x) => smoothRange(a,b,x)*(1-smoothRange(c,d,x));
 
-        // --- Lighting for Colorful Scene ---
-        const ambient = new THREE.AmbientLight(0xffffff, 1.5);
-        scene.add(ambient);
-
-        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x1E90FF, 1.0);
-        hemiLight.position.set(0, 20, 0);
-        scene.add(hemiLight);
-
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
-        keyLight.position.set(5, 8, 5);
-        keyLight.castShadow = true;
-        keyLight.shadow.mapSize.width = 2048;
-        keyLight.shadow.mapSize.height = 2048;
-        keyLight.shadow.bias = -0.0001;
-        scene.add(keyLight);
-
-        const rimLight = new THREE.DirectionalLight(0x00BFFF, 1.5); // Cyan rim light
-        rimLight.position.set(-5, 5, -5);
-        scene.add(rimLight);
-
-        const fillLight = new THREE.PointLight(0xffffff, 1.0, 30);
-        fillLight.position.set(0, 2, 4);
-        scene.add(fillLight);
-
-        // --- Ground (Shadow Only) ---
-        // Using ShadowMaterial so the floor is invisible, but catches the car's shadow on top of the CSS gradient
-        const groundGeo = new THREE.PlaneGeometry(200, 200);
-        const groundMat = new THREE.ShadowMaterial({ opacity: 0.3 });
-        const ground = new THREE.Mesh(groundGeo, groundMat);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -1.0; 
-        ground.receiveShadow = true;
-        scene.add(ground);
-
-        // --- Load Car Model ---
-        let carModel = null;
-        const loader = new GLTFLoader();
-        
-        loader.load(
-            'car.glb', 
-            (gltf) => {
-                carModel = gltf.scene;
-                
-                carModel.scale.set(4.0, 4.0, 4.0);
-                carModel.position.set(0, -0.2, 0);
-                carModel.rotation.y = -0.5;
-
-                carModel.traverse((node) => {
-                    if (node.isMesh) {
-                        node.castShadow = true;
-                        node.receiveShadow = true;
-                        if (node.material) {
-                            node.material.envMapIntensity = 1.0;
-                        }
-                    }
-                });
-
-                scene.add(carModel);
-                
-                setTimeout(() => {
-                    document.getElementById('loading-screen').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('loading-screen').style.display = 'none';
-                    }, 500);
-                }, 500);
-            },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            (error) => {
-                console.error('Error loading car model:', error);
-                createFallbackCar();
-            }
-        );
-
-        function createFallbackCar() {
-            const group = new THREE.Group();
-            const bodyGeo = new THREE.BoxGeometry(2.5, 0.8, 4.5);
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.6, roughness: 0.2 }); // Yellow fallback
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.y = 0.4;
-            body.castShadow = true;
-            body.receiveShadow = true;
-            group.add(body);
-
-            const cabinGeo = new THREE.BoxGeometry(1.8, 0.6, 2.2);
-            const cabinMat = new THREE.MeshStandardMaterial({ color: 0x000000, metalness: 0.5, roughness: 0.5 });
-            const cabin = new THREE.Mesh(cabinGeo, cabinMat);
-            cabin.position.set(0, 0.9, -0.2);
-            cabin.castShadow = true;
-            cabin.receiveShadow = true;
-            group.add(cabin);
-
-            group.scale.set(2, 2, 2); 
-            group.position.set(0, -0.2, 0);
-            scene.add(group);
-            carModel = group;
-            
-            document.getElementById('loading-screen').style.display = 'none';
+    // Positions are fractions of the viewport width. Camera has no orbit: car stays straight.
+    // Timeline: outside LEFT → arrives CENTRE → zoom IN → zoom OUT + slide → outside RIGHT.
+    const KEYS = [
+      {p:0,    x:-1.25, y:-.77, z:.83, yaw: 0},
+      {p:.065, x:-1.00, y:-.77, z:.85, yaw: 0},
+      {p:.23,  x: .02,  y:-.88, z:1.00, yaw: 0},
+      {p:.355, x: .04,  y:-.93, z:1.12, yaw: 0},
+      {p:.49,  x: 0,    y:-.94, z:1.48, yaw: -.018},
+      {p:.60,  x: .01,  y:-.90, z:1.58, yaw: -.018},
+      {p:.72,  x: .28,  y:-.87, z:1.22, yaw: 0},
+      {p:.84,  x: .69,  y:-.78, z:.98, yaw: 0},
+      {p:1,    x:1.30, y:-.77, z:.78, yaw: 0}
+    ];
+    function sample(p) {
+      for(let i=1;i<KEYS.length;i++) {
+        const A=KEYS[i-1],B=KEYS[i];
+        if(p<=B.p) {
+          const t=ease(clamp((p-A.p)/(B.p-A.p),0,1));
+          return {x:mix(A.x,B.x,t), y:mix(A.y,B.y,t), z:mix(A.z,B.z,t), yaw:mix(A.yaw,B.yaw,t)};
         }
-
-        // --- Scroll Animation Logic ---
-        let scrollProgress = 0;
-        let targetScrollProgress = 0;
-        const lerpFactor = 0.05;
-
-        let targetCarX = 1.5; 
-        let currentCarX = 1.5;
-
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const maxScroll = document.body.scrollHeight - window.innerHeight;
-            targetScrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
-
-            if (targetScrollProgress < 0.15) {
-                targetCarX = 1.5; 
-            } else if (targetScrollProgress < 0.35) {
-                targetCarX = -1.5; 
-            } else if (targetScrollProgress < 0.55) {
-                targetCarX = 1.5; 
-            } else if (targetScrollProgress < 0.75) {
-                targetCarX = -1.5; 
-            } else {
-                targetCarX = 0; 
-            }
-
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-
-            const scrollIndicator = document.querySelector('.scroll-indicator');
-            if (window.scrollY > 200) {
-                scrollIndicator.style.opacity = '0';
-            } else {
-                scrollIndicator.style.opacity = '1';
-            }
-
-            document.querySelectorAll('[data-reveal]').forEach((card) => {
-                const rect = card.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                if (rect.top < windowHeight * 0.85 && rect.bottom > 0) {
-                    card.classList.add('reveal');
-                }
-            });
+      }
+      return KEYS[KEYS.length-1];
+    }
+    function resize() {
+      const w=holder.clientWidth || innerWidth, h=holder.clientHeight || innerHeight;
+      if(!renderer || (w===lastWidth && h===lastHeight)) return;
+      lastWidth=w;lastHeight=h; aspect=w/h;
+      // On mobile use a wider effective camera height so the zoom has breathing room.
+      worldH=aspect < .78 ? 7.4 : 6.4;
+      worldW=worldH*aspect;
+      camera.left=-worldW/2;camera.right=worldW/2;camera.top=worldH/2;camera.bottom=-worldH/2;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1,1.75));
+      renderer.setSize(w,h,false);
+      if(glbObject) fitCarToScreen();
+    }
+    function fitCarToScreen() {
+      if(!glbObject) return;
+      const intrinsicWidth=Math.max(glbObject.userData.intrinsicWidth || 1,.001);
+      const fraction=aspect<.78?.84:.65;
+      const fit=(worldW*fraction)/intrinsicWidth;
+      glbObject.userData.fitScale=fit;
+      glbObject.scale.setScalar(fit);
+    }
+    function progressFromScroll() {
+      const rect=hero.getBoundingClientRect();
+      return clamp(-rect.top / Math.max(1,hero.offsetHeight-innerHeight),0,1);
+    }
+    const textWindows=[
+      [0,0,.045,.18],
+      [.13,.205,.285,.39],
+      [.35,.42,.53,.66],
+      [.60,.675,.755,.855],
+      [.82,.895,.985,1.06]
+    ];
+    function updateUI(p) {
+      rootStyle.setProperty('--progress',p.toFixed(4));
+      rootStyle.setProperty('--spec-opacity',triangleWindow(.19,.27,.49,.60,p).toFixed(3));
+      rootStyle.setProperty('--scroll-invite-opacity',(1-smoothRange(.035,.16,p)).toFixed(3));
+      const speed=Math.max(triangleWindow(.045,.09,.18,.27,p),triangleWindow(.77,.83,.94,1,p))*.78;
+      rootStyle.setProperty('--speed',speed.toFixed(3));
+      rootStyle.setProperty('--line-shift',((p-.5)*110).toFixed(1));
+      let active=0, best=0;
+      copies.forEach((el,i)=>{
+        const [a,b,c,d]=textWindows[i];
+        const alpha=triangleWindow(a,b,c,d,p);
+        if(alpha>best){best=alpha;active=i;}
+        el.style.opacity=alpha.toFixed(3);
+        const offset=(1-alpha)*25;
+        el.style.transform=el.classList.contains('copy-center') && innerWidth>760
+          ? `translate(-50%, ${offset.toFixed(1)}px)` : `translateY(${offset.toFixed(1)}px)`;
+        el.classList.toggle('active',alpha>.55);
+        el.setAttribute('aria-hidden',String(alpha<.55));
+      });
+      chapterCount.textContent=String(active+1).padStart(2,'0');
+    }
+    function updateModel(p,dt) {
+      if(!modelReady || !rig) return;
+      const k=reducedMotion ? {x:0,y:-.92,z:1,yaw:0} : sample(p);
+      rig.position.set(k.x*worldW,k.y,0);
+      const targetSize = glbObject.userData.fitScale || 1;
+      // Whole GLB moves together; only tiny yaw (<1.1°) at macro shot for reflection.
+      glbObject.scale.setScalar(targetSize*k.z);
+      glbObject.rotation.y=(glbObject.userData.sideYaw || 0)+k.yaw;
+      // Subtle camera translation during macro shot, never a car-spinning orbit.
+      const macro=triangleWindow(.37,.45,.59,.68,p);
+      camera.position.x=macro*worldW*.018;
+      camera.position.y=macro*.12;
+      camera.lookAt(macro*worldW*.018,macro*.12,0);
+      // Shadow is CSS so the colorful backdrop remains transparent.
+      const shadowX=k.x*holder.clientWidth;
+      rootStyle.setProperty('--car-shadow-x', `${shadowX.toFixed(1)}px`);
+      rootStyle.setProperty('--shadow-opacity',String(clamp((p-.02)*9,0,.68)));
+      rootStyle.setProperty('--shadow-scale',(k.z*.85).toFixed(3));
+    }
+    try {
+      scene=new THREE.Scene();
+      camera=new THREE.OrthographicCamera(-5,5,3,-3,.1,150);
+      camera.position.set(0,0,25);camera.lookAt(0,0,0);
+      renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
+      renderer.setClearColor(0xffffff,0);
+      renderer.outputColorSpace=THREE.SRGBColorSpace;
+      renderer.toneMapping=THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure=1.16;
+      holder.appendChild(renderer.domElement);
+      // Balanced lights: preserve the yellow/real source color instead of darkening it.
+      scene.add(new THREE.AmbientLight(0xffffff,1.55));
+      scene.add(new THREE.HemisphereLight(0xe7f7ff,0xb5c9df,2));
+      const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(-5,10,10);scene.add(key);
+      const fill=new THREE.DirectionalLight(0xffffff,1.6);fill.position.set(9,4,4);scene.add(fill);
+      const rim=new THREE.DirectionalLight(0xd0e9ff,1.1);rim.position.set(2,5,-10);scene.add(rim);
+      rig=new THREE.Group();scene.add(rig);
+      resize();
+      const gltfLoader=new GLTFLoader();
+      gltfLoader.load('car.glb', (gltf)=>{
+        const car=gltf.scene;
+        const rawBox=new THREE.Box3().setFromObject(car);
+        const rawSize=rawBox.getSize(new THREE.Vector3());
+        if(!Number.isFinite(rawSize.x)||Math.max(rawSize.x,rawSize.y,rawSize.z)<.000001) throw new Error('GLB has invalid bounds');
+        let sideYaw=0;
+        if(MODEL_ORIENTATION==='z' || (MODEL_ORIENTATION==='auto' && rawSize.z>rawSize.x)) sideYaw=Math.PI/2;
+        sideYaw+=MODEL_EXTRA_YAW;
+        car.rotation.y=sideYaw;
+        // Frame car so its real geometry (not its GLB's arbitrary pivot) is centered.
+        car.updateMatrixWorld(true);
+        const oriented=new THREE.Box3().setFromObject(car);
+        const center=oriented.getCenter(new THREE.Vector3());
+        const pivot=new THREE.Group();
+        pivot.add(car);
+        car.position.sub(center);
+        car.traverse(node => {
+          if(node.isMesh){
+            node.frustumCulled=false;
+            // Leave original GLB materials/textures unchanged.
+          }
         });
-
-        window.dispatchEvent(new Event('scroll'));
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // --- Animation Loop ---
-        const clock = new THREE.Clock();
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            scrollProgress += (targetScrollProgress - scrollProgress) * lerpFactor;
-            currentCarX += (targetCarX - currentCarX) * 0.05;
-
-            if (carModel) {
-                carModel.position.x = currentCarX;
-                const rotationY = -0.5 + (scrollProgress * Math.PI * 3); 
-                carModel.rotation.y = rotationY;
-                carModel.position.y = -0.2 + Math.sin(scrollProgress * Math.PI * 2) * 0.05;
-            }
-
-            const zoomSine = Math.sin(scrollProgress * Math.PI * 2); 
-            let radius = 5.0 - (zoomSine * 1.5); 
-            
-            const angle = scrollProgress * Math.PI * 1.5;
-            
-            const camX = Math.sin(angle) * radius;
-            const camZ = Math.cos(angle) * radius;
-            const camY = 0.2 + (Math.sin(scrollProgress * Math.PI) * 2.5);
-            
-            camera.position.x += ((camX + currentCarX * 0.6) - camera.position.x) * 0.05;
-            camera.position.y += (camY - camera.position.y) * 0.05;
-            camera.position.z += (camZ - camera.position.z) * 0.05;
-
-            const targetFov = 28 + (radius * 2.5); 
-            camera.fov += (targetFov - camera.fov) * 0.05;
-            camera.updateProjectionMatrix();
-
-            camera.lookAt(currentCarX * 0.6, 0.1, 0);
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-    </script>
+        rig.add(pivot);
+        glbObject=pivot;
+        const sizedBox=new THREE.Box3().setFromObject(pivot);
+        const sized=sizedBox.getSize(new THREE.Vector3());
+        const fraction=aspect<.78?.84:.65;
+        const fit=(worldW*fraction)/Math.max(sized.x,.001);
+        glbObject.userData.intrinsicWidth=Math.max(sized.x,.001);
+        glbObject.userData.fitScale=fit;
+        glbObject.userData.sideYaw=0;
+        glbObject.scale.setScalar(fit);
+        modelReady=true;
+        window.finishLoading();
+      }, undefined, (error)=>{
+        console.error('Original GLB failed to load:',error);
+        window.finishLoading('Unable to load car.glb. Keep it beside this HTML and run the folder using VS Code Live Server.');
+      });
+    } catch(error) {
+      console.error('3D initialization failed:',error);
+      window.finishLoading('3D is unavailable in this browser. The rest of the website remains accessible.');
+    }
+    function tick(t) {
+      requestAnimationFrame(tick);
+      const dt=Math.min(.05,(t-lastTime)/1000||.016);lastTime=t;
+      target=progressFromScroll();
+      actual += (target-actual)*(reducedMotion?1:1-Math.exp(-dt*8.5));
+      updateUI(actual);
+      if(!renderer || !scene) return;
+      // Render only while the sticky scene can be seen.
+      const r=hero.getBoundingClientRect();
+      const show=r.bottom>0 && r.top<innerHeight;
+      if(!show) return;
+      resize();
+      smoothedX+=(mouseX-smoothedX)*Math.min(1,dt*2.5);
+      smoothedY+=(mouseY-smoothedY)*Math.min(1,dt*2.5);
+      rootStyle.setProperty('--mouse-x',(smoothedX*16).toFixed(1));
+      rootStyle.setProperty('--mouse-y',(smoothedY*16).toFixed(1));
+      updateModel(actual,dt);
+      renderer.render(scene,camera);
+    }
+    window.addEventListener('pointermove',e=>{if(e.pointerType==='mouse') {mouseX=e.clientX/innerWidth-.5;mouseY=e.clientY/innerHeight-.5;}},{passive:true});
+    window.addEventListener('resize',resize,{passive:true});
+    updateUI(0);requestAnimationFrame(tick);
+  </script>
 </body>
 </html>
