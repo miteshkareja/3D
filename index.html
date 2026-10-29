@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#dbeeff" />
   <meta name="description" content="AutoElite — premium pre-owned cars and a new perspective on the way you drive." />
-  <title>AutoElite — 360° Drift Cinematic | Premium Pre-Owned Cars</title>
+  <title>AutoElite — Director’s Cut | Cinematic Pre-Owned Cars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -318,9 +318,141 @@
       .ribbon-inner,.scroll-mouse::before,.loading-wheel {animation:none;}
       .reveal {transition:none;opacity:1;transform:none;}
     }
-  </style>
+  
+/* === DIRECTOR'S CUT OVERRIDES === */
+/* AUTOELITE / DIRECTOR'S CUT · visual refresh */
+:root { --electric:#255aff; --lime:#e5fc66; --glass:rgba(244,250,255,.62); }
+body {background:#d7eaff;}
+.world-backdrop {position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at calc(65% + var(--ambient-x,0px)) calc(45% + var(--ambient-y,0px)),rgba(255,255,255,.92),transparent 46%),linear-gradient(140deg,#f4faff 0%,#c8e4ff 42%,#90c9fa 100%);transition:background-color .7s;}
+.world-backdrop::before {content:'';position:absolute;inset:-20%;background:radial-gradient(circle at 20% 23%,rgba(87,152,255,.25),transparent 37%),radial-gradient(circle at 80% 75%,rgba(235,252,163,.22),transparent 36%);transform:translate3d(var(--atmo-x,0px),var(--atmo-y,0px),0);}
+.world-backdrop::after {content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.13) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.13) 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(180deg,transparent 0%,#000 100%);opacity:.3;}
+#canvas-container {z-index:6;}
+#canvas-container canvas {filter:drop-shadow(0 18px 30px rgba(8,40,80,.10));}
+.header {background:rgba(242,249,255,.68)!important;backdrop-filter:blur(22px);border-bottom:1px solid rgba(255,255,255,.65);}
+.cinema {height:570svh;height:570vh;}
+.cinema-sticky {background:transparent;}
+.cinema-grid {opacity:.17;}
+.cinema-orb {opacity:.45;}
+.cinema-copy {z-index:9;}
+.scene-copy h1 {font-size:clamp(56px,8vw,131px);}
+.scene-copy h2 {font-size:clamp(47px,7vw,108px);}
+.scene-copy .lead {font-weight:500;}
+.corner-label {z-index:12;letter-spacing:.24em;font-size:9px;}
+.scene-rail {z-index:18;}
+.cinema-edge {z-index:15;}
+.floating-spec {z-index:15;}
+.scene-copy .eyebrow {letter-spacing:.28em;}
+.cinema-bottom-line {height:2px;background:#225aff;}
+.hero-arch {position:absolute;z-index:10;bottom:2%;left:-5%;width:110%;height:clamp(150px,21vw,315px);pointer-events:none;overflow:visible;transform:rotate(-3deg);filter:drop-shadow(0 11px 17px rgba(14,42,94,.14));opacity:var(--arch-alpha,.98);}
+.hero-arch .arch-band {fill:none;stroke:#082748;stroke-width:61;stroke-linecap:round;}
+.hero-arch .arch-stripe {fill:none;stroke:#4a85ff;stroke-width:2;stroke-linecap:round;opacity:.85;}
+.hero-arch text {font:800 21px 'Manrope',sans-serif;letter-spacing:6px;fill:#eef8ff;}
+.arc-orbit {position:absolute;right:-10vw;top:11%;width:58vw;height:58vw;max-height:90vh;border:1px solid rgba(255,255,255,.44);border-radius:100%;transform:translate(var(--orb-x,0px),var(--orb-y,0px)) rotate(var(--orb-rotation,0deg));opacity:.62;pointer-events:none;}
+.arc-orbit::before {content:'';position:absolute;inset:17%;border:1px dashed rgba(255,255,255,.55);border-radius:100%;}
+.arc-orbit::after {content:'';position:absolute;left:50%;top:-6px;width:12px;height:12px;border:3px solid #fff;background:#255aff;border-radius:50%;}
+.cinema-corner-index {position:absolute;right:var(--page-pad);top:124px;z-index:12;display:flex;align-items:center;gap:10px;font:800 10px 'Manrope',sans-serif;letter-spacing:.12em;color:#1c5bb5;}
+.cinema-corner-index i {display:block;height:6px;width:6px;background:#245cda;border-radius:50%;box-shadow:0 0 0 5px rgba(37,90,255,.14);}
+.routed-cursor {position:fixed;z-index:100;pointer-events:none;left:0;top:0;width:30px;height:30px;border:1px solid rgba(18,61,117,.65);border-radius:50%;transform:translate(calc(var(--pointer-x,-100px) - 50%),calc(var(--pointer-y,-100px) - 50%));opacity:var(--cursor-opacity,0);mix-blend-mode:multiply;transition:opacity .2s;}
+.routed-cursor::before {content:'';position:absolute;left:50%;top:50%;width:4px;height:4px;background:#1747b5;border-radius:50%;transform:translate(-50%,-50%);}
+.motion-hud {z-index:21;border:1px solid rgba(15,57,110,.12);padding:11px 15px;border-radius:100px;background:rgba(241,248,255,.72);backdrop-filter:blur(14px);letter-spacing:.12em;}
+.motion-degree {display:none!important;}
+.drift-caption {z-index:21;}
+.drift-caption strong {letter-spacing:.09em;font-size:12px;}
+.drift-smoke {filter:blur(16px);}
+.speed-lines {opacity:var(--speed,.0);}
+.world-speed {opacity:var(--world-speed,0);}
+.world-speed::before,.world-speed::after {background:repeating-linear-gradient(166deg,transparent 0 40px,rgba(255,255,255,.42) 41px 42px,transparent 44px 108px);}
+/* Multiple independently scrolling typographic ribbons. */
+.ribbon {min-height:72px;position:relative;z-index:13;background:#09274a;}
+.ribbon .ribbon-inner {animation-duration:26s;color:#eaf6ff;}
+.ribbon-lime {background:#e5fc66;color:#082848;transform:rotate(-2deg) scale(1.02);margin:-2px 0 -1px;z-index:14;}
+.ribbon-lime .ribbon-inner {font-size:13px;animation-duration:21s;animation-direction:reverse;color:#082848;}
+.ribbon-lime .ribbon-inner b {color:#2459d5;}
+.ribbon-blue {background:#2861f5;color:white;transform:rotate(2deg) scale(1.02);z-index:14;}
+.ribbon-blue .ribbon-inner {animation-duration:31s;}
+.ribbon-blue .ribbon-inner b {color:#e5fc66;}
+.ribbon-mini {min-height:49px;background:#d8ecff;z-index:12;color:#103d6c;}
+.ribbon-mini .ribbon-inner {font-size:10px;color:#103d6c;animation-duration:35s;}
+.ribbon-mini .ribbon-inner b {color:#2459d5;}
+/* Full-width, true Bezier curve ribbons; text follows the path. */
+.curve-banner {position:relative;height:clamp(200px,28vw,400px);z-index:13;margin:0;pointer-events:none;overflow:hidden;transform:translateZ(0);}
+.curve-banner svg {position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 12px 25px rgba(4,31,74,.12));}
+.curve-banner .band {fill:none;stroke:#255cfc;stroke-width:72;stroke-linecap:round;}
+.curve-banner .hairline {fill:none;stroke:#a7d4ff;stroke-width:2;}
+.curve-banner text {font:800 22px 'Manrope',sans-serif;letter-spacing:5px;fill:#fff;}
+.curve-banner.curve-light .band {stroke:#e5fc66;}
+.curve-banner.curve-light text {fill:#082c55;}
+.curve-banner.curve-light .hairline {stroke:#b8d343;}
+/* Cinematic breathing room between story sections: car has space for a visible camera move. */
+.drive-interlude {position:relative;z-index:8;height:162vh;height:162svh;pointer-events:none;}
+.interlude-sticky {position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(110px,13vh,155px) var(--page-pad) 60px;overflow:hidden;}
+.interlude-index {display:flex;gap:12px;align-items:center;font:800 11px 'Manrope',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#2456bd;}
+.interlude-index::before {content:'';width:45px;height:2px;background:currentColor;}
+.interlude-title {font:800 clamp(55px,9.1vw,155px)/.88 'Manrope',sans-serif;letter-spacing:-.085em;margin:18px 0 0;max-width:1040px;color:#102a49;text-shadow:0 10px 50px rgba(255,255,255,.25);}
+.interlude-title em {font-style:normal;color:#255ff9;}
+.interlude-title .outline {color:transparent;-webkit-text-stroke:1.5px #164889;}
+.interlude-foot {margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:9px;text-align:right;max-width:390px;font:700 12px 'Manrope',sans-serif;color:#1d538e;letter-spacing:.14em;line-height:1.5;text-transform:uppercase;}
+.interlude-foot::before {content:'↗';font-size:35px;line-height:1;}
+.interlude-swoosh {position:absolute;left:-10%;right:-10%;bottom:11%;height:clamp(155px,22vw,340px);z-index:1;pointer-events:none;filter:drop-shadow(0 12px 15px rgba(8,40,77,.15));transform:rotate(-5deg);}
+.interlude-swoosh svg {width:100%;height:100%;overflow:visible;}
+.interlude-swoosh .band {fill:none;stroke:#092d50;stroke-width:64;stroke-linecap:round;}
+.interlude-swoosh text {font:800 19px 'Manrope',sans-serif;fill:#e5fc66;letter-spacing:5px;}
+.interlude-night .interlude-title {color:#0d2c55;}
+.interlude-night .interlude-title em {color:#2563f8;}
+.interlude-night .interlude-swoosh .band {stroke:#255ff3;}
+.interlude-night .interlude-swoosh text {fill:white;}
+/* Let the car be seen in the background on every section; content remains readable. */
+#featured {background:linear-gradient(115deg,rgba(248,252,255,.86),rgba(234,246,255,.13));min-height:110vh;}
+.featured-card {background:linear-gradient(145deg,rgba(218,240,255,.90),rgba(119,176,252,.56));backdrop-filter:blur(9px);}
+.side-card {background:linear-gradient(155deg,rgba(255,255,255,.83),rgba(238,248,255,.69));backdrop-filter:blur(10px);}
+#benefits {min-height:105vh;background:linear-gradient(125deg,rgba(8,29,63,.96),rgba(9,34,63,.80) 63%,rgba(14,52,96,.59));}
+#about {min-height:105vh;background:linear-gradient(120deg,rgba(249,252,255,.88),rgba(229,246,255,.16));}
+.quality-art {background:linear-gradient(138deg,rgba(207,233,255,.70),rgba(153,198,248,.55));backdrop-filter:blur(8px);}
+.finance {min-height:100vh;background:linear-gradient(140deg,rgba(227,243,255,.86),rgba(207,231,255,.24));}
+.finance-panel {background:rgba(255,255,255,.66);backdrop-filter:blur(12px);}
+.contact {min-height:97vh;background:linear-gradient(140deg,rgba(247,251,255,.72),rgba(226,241,255,.25));}
+footer {z-index:13;background:#082545;}
+/* Title-sized editorial number indicators */
+.big-ghost-number {font:800 clamp(115px,25vw,440px)/1 'Manrope',sans-serif;position:absolute;bottom:-10%;right:-4%;color:rgba(255,255,255,.10);letter-spacing:-.1em;z-index:0;pointer-events:none;}
+/* On mobile keep readable and car visibly framed in the lower part of viewport. */
+@media (max-width:1024px) {.curve-banner{height:225px;}.interlude-title{font-size:clamp(50px,10vw,105px);}}
+@media (max-width:760px){
+  .cinema {height:480vh;height:480svh;}
+  .hero-arch {bottom:9%;width:145%;left:-20%;height:155px;transform:rotate(-4deg);}
+  .hero-arch .arch-band {stroke-width:78;}
+  .hero-arch text {font-size:26px;}
+  .scene-copy,.scene-copy.copy-right,.scene-copy.copy-center {top:13.5%;}
+  .scene-copy h1 {font-size:clamp(47px,12vw,80px);}
+  .scene-copy h2 {font-size:clamp(42px,10vw,75px);}
+  .scene-copy .lead {max-width:320px;line-height:1.6;font-size:12px;}
+  .scene-rail {display:none;}
+  .cinema-corner-index {top:85px;right:20px;font-size:7px;}
+  .arc-orbit {width:90vw;height:90vw;right:-40vw;top:35%;}
+  .curve-banner {height:160px;}
+  .curve-banner .band{stroke-width:98;}
+  .curve-banner text{font-size:31px;}
+  .drive-interlude {height:133vh;height:133svh;}
+  .interlude-sticky {padding:105px 22px 70px;}
+  .interlude-title {font-size:clamp(52px,13.5vw,83px);}
+  .interlude-foot {font-size:10px;max-width:200px;}
+  .interlude-swoosh {bottom:14%;width:155%;left:-24%;height:150px;}
+  .interlude-swoosh .band {stroke-width:93;}
+  .interlude-swoosh text{font-size:27px;}
+  #featured,#about,#benefits,.finance,.contact {min-height:unset;}
+  #featured {background:linear-gradient(180deg,rgba(248,252,255,.8),rgba(234,246,255,.24));}
+  #benefits {background:rgba(8,30,61,.89);}
+  .motion-hud {bottom:14px;right:15px;max-width:55vw;}
+  .motion-hud span {font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .drift-caption {bottom:19px;left:19px;}
+  .drift-caption strong {font-size:9px;}
+  .routed-cursor {display:none;}
+}
+@media (prefers-reduced-motion:reduce){.ribbon-inner{animation:none!important}.hero-arch,.interlude-swoosh,.curve-banner{filter:none}.routed-cursor{display:none}}
+
+</style>
 </head>
 <body>
+  <div class="world-backdrop" aria-hidden="true"></div>
   <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
     <div class="loading-wheel" aria-hidden="true"></div>
     <p>Preparing your drive</p>
@@ -347,16 +479,18 @@
   <div class="world-speed" id="world-speed" aria-hidden="true"></div>
   <div class="global-ground" aria-hidden="true"></div>
   <div class="drift-smoke" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="motion-hud" aria-hidden="true"><i></i><span id="motion-chapter">DRIFT / FULL 360°</span><span class="motion-degree" id="motion-degree">000°</span></div>
-  <div class="drift-caption" aria-hidden="true"><small>3D / scroll-controlled</small><strong id="drift-caption-text">FULL 360° EXPERIENCE</strong></div>
+  <div class="motion-hud" aria-hidden="true"><i></i><span id="motion-chapter">CINEMATIC / CAMERA TRACKING</span></div>
+  <div class="drift-caption" aria-hidden="true"><small>3D / scroll-controlled</small><strong id="drift-caption-text">CINEMATIC CAMERA DIRECTION</strong></div>
 
-  <!-- Existing hero position and zoom sequence preserved. The model now drifts and spins 360° while scrolling. -->
+  <!-- The car keeps a natural heading; the CAMERA makes cinematic tracking / overhead / cross-angle shots. -->
   <div class="cinema" id="home" aria-label="Cinematic 3D car showcase">
     <div class="cinema-sticky" id="cinema-stage">
       <div class="cinema-noise" aria-hidden="true"></div>
       <div class="cinema-orb orb-one" aria-hidden="true"></div>
       <div class="cinema-orb orb-two" aria-hidden="true"></div>
       <div class="cinema-grid" aria-hidden="true"></div>
+      <div class="arc-orbit" aria-hidden="true"></div>
+      <div class="cinema-corner-index" aria-hidden="true"><i></i> SCROLL / DIRECT THE CAMERA</div>
       <div class="ambient-spot" aria-hidden="true"></div>
       <div class="car-shadow" aria-hidden="true"></div>
       <div class="speed-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -406,6 +540,13 @@
         <div class="scroll-invite"><span class="scroll-mouse"></span> Scroll to drive the story</div>
         <div class="frame-count"><strong id="chapter-count">01</strong> <span>/ 05</span></div>
       </div>
+
+      <svg class="hero-arch" viewBox="0 0 1600 320" preserveAspectRatio="none" aria-hidden="true">
+        <defs><path id="hero-arch-path" d="M -220 180 C 150 40 510 300 810 165 S 1300 55 1850 173" /></defs>
+        <use href="#hero-arch-path" class="arch-band" />
+        <use href="#hero-arch-path" class="arch-stripe" />
+        <text dy="7"><textPath class="moving-path" href="#hero-arch-path" startOffset="-5%">AUTOELITE  ✳  THE ART OF THE DRIVE  ✳  CAMERA IN MOTION  ✳  ALL ANGLES. ONE FEELING.  ✳  AUTOELITE  ✳  THE ART OF THE DRIVE  ✳  CAMERA IN MOTION  ✳  ALL ANGLES. ONE FEELING.  ✳  </textPath></text>
+      </svg>
       <div class="cinema-bottom-line" aria-hidden="true"></div>
     </div>
   </div>
@@ -444,6 +585,29 @@
       </div>
     </section>
 
+
+    <div class="curve-banner" aria-hidden="true">
+      <svg viewBox="0 0 1600 390" preserveAspectRatio="none">
+        <defs><path id="path-wave-a" d="M -200 237 C 160 27 415 350 795 210 S 1360 60 1810 234" /></defs>
+        <use href="#path-wave-a" class="band" /><use href="#path-wave-a" class="hairline" />
+        <text dy="7"><textPath class="moving-path" href="#path-wave-a">EVERY ANGLE IS A STORY  ✳  AUTOELITE  ✳  MORE THAN A MACHINE  ✳  YOUR NEXT CHAPTER STARTS HERE  ✳  EVERY ANGLE IS A STORY  ✳  AUTOELITE  ✳  MORE THAN A MACHINE  ✳  </textPath></text>
+      </svg>
+    </div>
+    <section class="drive-interlude " id="angle-01" aria-label="Cinematic camera chapter 1">
+      <div class="interlude-sticky">
+        <div><div class="interlude-index">CAMERA STUDY / 01 · HIGH ANGLE</div><h2 class="interlude-title">Above <em>the</em><br><span class="outline">ordinary.</span></h2></div>
+        <div class="interlude-foot">Overhead sweep / aerial arc / cross-angle reveal</div>
+        <div class="big-ghost-number">01</div>
+        <div class="interlude-swoosh" aria-hidden="true">
+          <svg viewBox="0 0 1600 360" preserveAspectRatio="none">
+            <defs><path id="curve-1" d="M -230 160 C 140 300 450 55 790 164 S 1410 280 1830 135" /></defs>
+            <use class="band" href="#curve-1" />
+            <text dy="7"><textPath href="#curve-1" class="moving-path">THE ROAD LOOKS DIFFERENT FROM HERE  ✳  THE ROAD LOOKS DIFFERENT FROM HERE  ✳  THE ROAD LOOKS DIFFERENT FROM HERE  ✳  </textPath></text>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <div class="ribbon ribbon-lime" aria-label="Moving AutoElite ribbon"><div class="ribbon-inner" aria-hidden="true"><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span><span>CAMERA ON THE MOVE <b>✳</b> DRIVEN BY DETAIL <b>✳</b> FIND YOUR NEXT DRIVE <b>✳</b></span></div></div>
     <section id="benefits" class="section-shell benefit-section">
       <span class="section-label reveal">Why AutoElite</span>
       <h2 class="section-h reveal">Confidence is the<br />real luxury.</h2>
@@ -454,6 +618,22 @@
       </div>
     </section>
 
+
+    <section class="drive-interlude interlude-night" id="angle-02" aria-label="Cinematic camera chapter 2">
+      <div class="interlude-sticky">
+        <div><div class="interlude-index">CAMERA STUDY / 02 · LOW TRACKING</div><h2 class="interlude-title">Feel the<br><em>momentum.</em></h2></div>
+        <div class="interlude-foot">Low camera / dynamic slide / three-quarter perspective</div>
+        <div class="big-ghost-number">02</div>
+        <div class="interlude-swoosh" aria-hidden="true">
+          <svg viewBox="0 0 1600 360" preserveAspectRatio="none">
+            <defs><path id="curve-2" d="M -230 160 C 140 300 450 55 790 164 S 1410 280 1830 135" /></defs>
+            <use class="band" href="#curve-2" />
+            <text dy="7"><textPath href="#curve-2" class="moving-path">CLOSE TO THE ROAD  /  CLOSE TO THE DETAILS  ✳  CLOSE TO THE ROAD  /  CLOSE TO THE DETAILS  ✳  CLOSE TO THE ROAD  /  CLOSE TO THE DETAILS  ✳  </textPath></text>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <div class="ribbon ribbon-blue" aria-label="Moving AutoElite ribbon"><div class="ribbon-inner" aria-hidden="true"><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span><span>EVERY CURVE MATTERS <b>✳</b> MADE FOR THE JOURNEY <b>✳</b> AUTOELITE <b>✳</b></span></div></div>
     <section id="about" class="section-shell">
       <div class="quality-row">
         <div class="reveal">
@@ -467,6 +647,29 @@
       </div>
     </section>
 
+
+    <div class="curve-banner curve-light" aria-hidden="true">
+      <svg viewBox="0 0 1600 390" preserveAspectRatio="none">
+        <defs><path id="path-wave-b" d="M -200 237 C 160 27 415 350 795 210 S 1360 60 1810 234" /></defs>
+        <use href="#path-wave-b" class="band" /><use href="#path-wave-b" class="hairline" />
+        <text dy="7"><textPath class="moving-path" href="#path-wave-b">INSPECTED WITH INTENTION  ✳  DESIGNED TO MOVE YOU  ✳  DISCOVER EVERY DETAIL  ✳  AUTOELITE  ✳  INSPECTED WITH INTENTION  ✳  DESIGNED TO MOVE YOU  ✳  DISCOVER EVERY DETAIL  ✳  </textPath></text>
+      </svg>
+    </div>
+    <section class="drive-interlude " id="angle-03" aria-label="Cinematic camera chapter 3">
+      <div class="interlude-sticky">
+        <div><div class="interlude-index">CAMERA STUDY / 03 · CONTROLLED DRIFT</div><h2 class="interlude-title">Every turn.<br><em>A story.</em></h2></div>
+        <div class="interlude-foot">High-angle entry / controlled drift / camera chase</div>
+        <div class="big-ghost-number">03</div>
+        <div class="interlude-swoosh" aria-hidden="true">
+          <svg viewBox="0 0 1600 360" preserveAspectRatio="none">
+            <defs><path id="curve-3" d="M -230 160 C 140 300 450 55 790 164 S 1410 280 1830 135" /></defs>
+            <use class="band" href="#curve-3" />
+            <text dy="7"><textPath href="#curve-3" class="moving-path">A NEW ANGLE ON THE DRIVE  ✳  A NEW ANGLE ON THE DRIVE  ✳  A NEW ANGLE ON THE DRIVE  ✳  </textPath></text>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <div class="ribbon ribbon-mini" aria-label="Moving AutoElite ribbon"><div class="ribbon-inner" aria-hidden="true"><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span><span>MOVE WITH CONFIDENCE <b>✳</b> FINANCE THAT FITS <b>✳</b> YOUR JOURNEY <b>✳</b></span></div></div>
     <section id="finance" class="finance">
       <div class="finance-inner">
         <div class="reveal"><span class="section-label">03 / Flexible financing</span><h2 class="section-h">A premium drive.<br />A practical plan.</h2>
@@ -478,6 +681,21 @@
       </div>
     </section>
 
+
+    <section class="drive-interlude interlude-night" id="angle-04" aria-label="Cinematic camera chapter 4">
+      <div class="interlude-sticky">
+        <div><div class="interlude-index">CAMERA STUDY / 04 · FINAL TAKE</div><h2 class="interlude-title">One last<br><span class="outline">look.</span></h2></div>
+        <div class="interlude-foot">Studio push-in / three-quarter hero / final pull-back</div>
+        <div class="big-ghost-number">04</div>
+        <div class="interlude-swoosh" aria-hidden="true">
+          <svg viewBox="0 0 1600 360" preserveAspectRatio="none">
+            <defs><path id="curve-4" d="M -230 160 C 140 300 450 55 790 164 S 1410 280 1830 135" /></defs>
+            <use class="band" href="#curve-4" />
+            <text dy="7"><textPath href="#curve-4" class="moving-path">THE ART OF THE REVEAL  ✳  THE ART OF THE REVEAL  ✳  THE ART OF THE REVEAL  ✳  </textPath></text>
+          </svg>
+        </div>
+      </div>
+    </section>
     <section id="contact" class="contact">
       <div class="contact-orbit reveal" aria-hidden="true">↗</div>
       <span class="section-label reveal">04 / Get started</span>
@@ -492,7 +710,7 @@
     <div class="footer-bottom"><span>© 2026 AutoElite. Designed for the journey ahead.</span><span>Premium pre-owned experiences</span></div>
   </footer>
 
-  <!-- THREE.js is the only external JavaScript dependency. Place your real car.glb beside this HTML. -->
+  <!-- THREE.js is the only external JavaScript dependency. Keep original car.glb beside this HTML. -->
   <script type="importmap">{
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
@@ -511,6 +729,8 @@
         finished = true;
         splash.classList.add('done');
         if (message) {
+          const firstScene = document.querySelector('.scene-copy[data-scene="0"]');
+          if (firstScene) { firstScene.style.opacity = '1'; firstScene.style.transform = 'none'; firstScene.classList.add('active'); }
           notice.textContent = message;
           notice.classList.add('show');
           setTimeout(() => notice.classList.remove('show'), 12000);
@@ -539,325 +759,300 @@
   </script>
 
   <script type="module">
-    import * as THREE from 'three';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const hero = document.getElementById('home');
-    const stage = document.getElementById('cinema-stage');
-    const holder = document.getElementById('canvas-container');
-    const copies = [...document.querySelectorAll('[data-scene]')];
-    const chapterCount = document.getElementById('chapter-count');
-    const rootStyle = stage.style;
-    const globalStyle = document.documentElement.style;
-    const motionChapter = document.getElementById('motion-chapter');
-    const motionDegree = document.getElementById('motion-degree');
-    const driftCaption = document.getElementById('drift-caption-text');
-    const pageSections = ['featured','benefits','about','finance','contact'].map(id => document.getElementById(id));
-    const footer = document.querySelector('footer');
-    let motionKeys = [];
-    let lastScroll = window.scrollY;
-    let scrollVelocity = 0;
-    let scene, camera, renderer, rig, glbObject;
-    let carWidth = 0, modelHeight = 1, visible = true;
-    let aspect = 1, worldW = 9, worldH = 6.4, modelReady = false;
-    let actual = 0, target = 0, lastTime = 0, lastWidth = 0, lastHeight = 0;
-    let smoothedX = 0, smoothedY = 0, mouseX = 0, mouseY = 0;
-    let smoothScroll = window.scrollY;
+/* AutoElite Director's Cut — a perspective CAMERA path, not model spinning.
+   The actual GLB turns only a few degrees for controlled sliding. */
+const $ = id => document.getElementById(id);
+const hero = $('home'), stage = $('cinema-stage'), holder = $('canvas-container');
+const captions = [...document.querySelectorAll('[data-scene]')];
+const pageSections = ['featured','angle-01','benefits','angle-02','about','angle-03','finance','angle-04','contact'];
+const anchors = pageSections.map($).filter(Boolean);
+const reducedMotion = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const S = document.documentElement.style;
+const heroStyle = stage.style;
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+const mix = (a,b,t) => a+(b-a)*t;
+const ease = t => t*t*(3-2*t);
+const interpolate = (a,b,t) => {
+  const o = {};for(const k of Object.keys(a)) if(k !== 'p' && k !== 'at') o[k] = mix(a[k],b[k],t);
+  return o;
+};
+const smoothRange = (a,b,v) => b<=a ? Number(v>=b) : ease(clamp((v-a)/(b-a),0,1));
+const pulse = (a,b,c,d,v) => smoothRange(a,b,v)*(1-smoothRange(c,d,v));
+const id = (p,x,cy,cz,d,fov,tilt,yaw,energy=0) => ({p,x,cy,cz,d,fov,tilt,yaw,energy});
+/* Camera states: cameraX (cy=height, cz=depth), distance multiplier and framing.
+   Wide and overhead shots are done by the camera, not by spinning the GLB. */
+const HERO = [
+  id(0,   -10.4,1.35,10.8,1.0,35,0,-.13,.8),
+  id(.09,  -6.2,1.45,10.3,1.0,35,-.05,-.16,.92),
+  id(.22,   2.15,1.7,9.9,1.0,34,.02,0,.56),
+  id(.31,   2.05,2.15,8.8,1.0,33,.01,.025,.12),
+  id(.44,    .45,3.0,7.7,1.0,34,-.04,.10,.25),
+  id(.55,    .05,5.5,7.7,.95,34,.0,.045,.16),
+  id(.65,    .0,9.4,6.0,1.0,35,.0,0,.05),
+  id(.76,   1.0,3.9,8.4,1.0,36,.035,-.07,.32),
+  id(.88,   2.2,1.7,10.5,1.0,35,.06,-.13,.6),
+  id(1,     11.2,1.45,11.2,1.0,35,0,-.04,.8)
+];
+// Orbit cameraX is sampled from a separate artist-authored curve. Positive is front 3/4,
+// negative is rear 3/4. This is a camera move, not a car yaw rotation.
+const HERO_CAMERA_X = [
+  {p:0,v:0},{p:.22,v:.4},{p:.31,v:2.2},{p:.44,v:4.7},
+  {p:.55,v:4.2},{p:.65,v:-.3},{p:.76,v:-4.6},{p:.88,v:-.6},{p:1,v:0}
+];
+const shot = (at,x,cx,cy,cz,fov,tilt,yaw,energy=0) => ({at,x,cx,cy,cz,d:1,fov,tilt,yaw,energy});
+let whole = [];
+const select = (keys,p,axis='p') => {
+  if (p<=keys[0][axis]) return {...keys[0]};
+  for(let i=1;i<keys.length;i++) if(p<=keys[i][axis]) {
+    const a=keys[i-1],b=keys[i],t=ease(clamp((p-a[axis])/(b[axis]-a[axis]||1),0,1));
+    return interpolate(a,b,t);
+  }
+  return {...keys[keys.length-1]};
+};
+const topOf = el => el.getBoundingClientRect().top+window.scrollY;
+function buildTimeline() {
+  const h = innerHeight, heroEnd = Math.max(0,topOf(hero)+hero.offsetHeight-h);
+  // Each chapter contains different camera placements, not 360° spins.
+  const A = (key,fraction=.5) => {
+    const el=$(key);return el ? topOf(el) + el.offsetHeight*fraction-h*.52 : heroEnd;
+  };
+  whole = [
+    shot(heroEnd, 11.2,0,1.45,11.2,35,0,-.04,.55),
+    shot(A('featured',.05),5.3,1.8,2.5,10.7,36,-.02,-.09,.6),
+    shot(A('featured',.40),2.7,4.1,2.6,9.8,36,-.055,-.17,.6),
+    shot(A('featured',.78),2.3,2.0,2.0,9.8,36,.02,.04,.3),
+    // INTERLUDE 01: overhead drone-like swoop, car crosses diagonally.
+    shot(A('angle-01',.04),-2.5,-3.3,4.1,10.5,36,.08,-.13,.83),
+    shot(A('angle-01',.28),-.5,-2.9,8.7,6.6,38,.055,.12,.45),
+    shot(A('angle-01',.52),.8,4.9,5.6,6.6,34,-.04,-.10,.67),
+    shot(A('angle-01',.74),1.6,5.4,2.2,7.6,34,-.07,-.18,.95),
+    shot(A('angle-01',.97),3.6,2.7,2.2,10.3,37,0,.01,.4),
+    // Benefits: three-quarter static beauty shot behind the content.
+    shot(A('benefits',.03),2.7,-3.5,3.0,10.4,36,.015,-.05,.25),
+    shot(A('benefits',.45),3.05,-4.0,4.3,9.5,36,-.015,.08,.35),
+    shot(A('benefits',.92),-3.8,-.3,2.0,10.4,36,.04,.14,.55),
+    // INTERLUDE 02: close-up low tracking -> front quarter -> rear quarter.
+    shot(A('angle-02',.07),-4.9,5.2,1.1,8.7,34,.09,.16,.9),
+    shot(A('angle-02',.30),-1.0,5.2,.72,6.9,38,.015,.07,.8),
+    shot(A('angle-02',.53),.6,0,1.15,6.8,35,-.03,0,.55),
+    shot(A('angle-02',.76),2.0,-5.8,2.0,7.8,36,-.08,-.16,.95),
+    shot(A('angle-02',.97),4.4,-2.1,2.5,10.1,35,.0,0,.28),
+    // Inspection section: car goes to side, camera rises above its roofline.
+    shot(A('about',.08),3.1,-3.0,4.1,10.8,37,.015,.07,.22),
+    shot(A('about',.46),2.75,.8,7.0,9.0,36,.0,0,.08),
+    shot(A('about',.91),-4.6,3.8,2.1,10.1,36,.04,-.12,.65),
+    // INTERLUDE 03: dramatic overhead roll-in, controlled slide, camera chase.
+    shot(A('angle-03',.03),-5.0,-5.1,7.3,9.4,36,.07,.17,.8),
+    shot(A('angle-03',.31),-.7,-4.0,10.8,5.8,35,.015,-.05,.4),
+    shot(A('angle-03',.57),.6,4.2,4.6,6.8,34,-.085,-.21,.95),
+    shot(A('angle-03',.81),1.6,5.7,1.4,7.3,34,.08,.17,1),
+    shot(A('angle-03',.97),4.7,0,1.8,11.0,36,0,.0,.36),
+    // Financing: steady sweep, the vehicle stays behind the cards.
+    shot(A('finance',.05),2.8,4.3,3.2,10.3,36,.015,.03,.28),
+    shot(A('finance',.48),2.95,1.2,4.6,9.0,36,-.02,-.06,.2),
+    shot(A('finance',.90),-4.5,-3.9,2.3,10.1,36,.05,.09,.45),
+    // INTERLUDE 04: grand finale front 3/4 zoom + diagonal high-angle exit.
+    shot(A('angle-04',.03),-4.7,-5.3,2.8,10.0,36,.055,.14,.66),
+    shot(A('angle-04',.26),-1.0,-5.8,3.2,7.9,35,.035,-.1,.75),
+    shot(A('angle-04',.52),.6,5.0,5.8,6.7,35,-.03,.08,.50),
+    shot(A('angle-04',.79),1.4,2.8,2.2,8.0,35,-.045,-.14,.6),
+    shot(A('angle-04',.97),4.5,1.4,2.0,10.8,37,0,0,.35),
+    // Final contact: hold elegant framing, then exit gently.
+    shot(A('contact',.07),2.4,4.8,3.5,10.0,36,0,.06,.2),
+    shot(A('contact',.55),2.65,-3.3,3.8,8.9,37,.0,-.07,.2),
+    shot(A('contact',.95),7.7,.2,2.6,11.4,37,0,0,.5)
+  ].sort((a,b)=>a.at-b.at);
+}
 
-    // The source GLB is the ONLY vehicle model. Change this if your vehicle uses a special axis.
-    // auto: detects whether its longest horizontal side is X or Z, then presents that side to camera.
-    const MODEL_ORIENTATION = 'auto'; // options: 'auto', 'x', 'z'
-    const MODEL_EXTRA_YAW = 0;       // set to Math.PI if you need to reverse nose direction
+let scene,camera,renderer,rig,carPivot,ready=false;
+let fitting=1, pixelRatio=1, width=0,height=0;
+let smoothScroll=window.scrollY, previous=window.scrollY, velocity=0,lastTick=0,px=0,py=0;
+let targetScroll=window.scrollY, shotState=null;
+const mobile = () => innerWidth<760;
+const qualityLow = () => matchMedia('(max-width: 580px)').matches;
+const carScaleFactor = () => mobile()?clamp(innerWidth/780,.42,.76):1;
+const shade = (v)=>String(clamp(v,0,1).toFixed(3));
+const buildBounds = obj => new THREE.Box3().setFromObject(obj);
+function resize(force=false) {
+  if(!renderer)return;
+  const w=holder.clientWidth||innerWidth, h=holder.clientHeight||innerHeight;
+  if(!force && width===w && height===h)return;
+  width=w;height=h;
+  camera.aspect=w/h;
+  camera.updateProjectionMatrix();
+  pixelRatio=Math.min(devicePixelRatio||1,qualityLow()?1.35:1.8);
+  renderer.setPixelRatio(pixelRatio); renderer.setSize(w,h,false);
+  buildTimeline();
+}
+function heroProgress(scroll) {
+  const end=Math.max(1,hero.offsetHeight-innerHeight);
+  return clamp((scroll-topOf(hero))/end,0,1);
+}
+const windows = [[0,0,.07,.20],[.14,.22,.30,.39],[.35,.43,.53,.64],[.61,.68,.77,.86],[.81,.90,.98,1.06]];
+function ui(p, inHero, chapterText) {
+  heroStyle.setProperty('--progress',p.toFixed(4));
+  heroStyle.setProperty('--arch-alpha',shade(1-smoothRange(.80,.96,p)));
+  heroStyle.setProperty('--scroll-invite-opacity',shade(1-smoothRange(.04,.16,p)));
+  heroStyle.setProperty('--spec-opacity',shade(pulse(.16,.25,.45,.56,p)));
+  heroStyle.setProperty('--orb-rotation',`${(p*126).toFixed(1)}deg`);
+  heroStyle.setProperty('--speed',shade(pulse(.045,.09,.17,.28,p)*.7 + pulse(.78,.84,.94,1,p)*.54));
+  heroStyle.setProperty('--line-shift',`${((p-.5)*120).toFixed(0)}`);
+  let best=-1,besti=0;
+  captions.forEach((el,i)=>{
+    const op=pulse(...windows[i],p);
+    if(op>best){best=op;besti=i;}
+    el.style.opacity=shade(op);
+    const shift=(1-op)*24;
+    el.style.transform=el.classList.contains('copy-center') && innerWidth>760 ? `translate(-50%,${shift}px)` : `translateY(${shift}px)`;
+    el.classList.toggle('active',op>.56 && inHero);
+    el.setAttribute('aria-hidden',String(op<.56 || !inHero));
+  });
+  $('chapter-count').textContent=String(besti+1).padStart(2,'0');
+  const stageIsVisible=hero.getBoundingClientRect().bottom>0;
+  stage.style.visibility=stageIsVisible?'visible':'hidden';
+  const hudAlpha=(!inHero && ready)?1:0;
+  S.setProperty('--motion-hud-opacity',String(hudAlpha));
+  S.setProperty('--drift-caption-opacity',shade(!inHero && ready?.85:0));
+  $('motion-chapter').textContent=chapterText;
+  $('drift-caption-text').textContent=chapterText;
+}
+function chapterFor(scroll) {
+  const at=scroll+innerHeight*.48;
+  let current=null;
+  for(const el of anchors) if(topOf(el)<=at) current=el;
+  if(!current)return 'CINEMATIC / SIDE PROFILE';
+  const titles={
+    featured:'TRACKING SHOT', 'angle-01':'DRONE / HIGH ANGLE',
+    benefits:'THREE-QUARTER REVEAL', 'angle-02':'LOW / CROSS ANGLE',
+    about:'OVERHEAD / DETAIL', 'angle-03':'DRIFT / CAMERA CHASE',
+    finance:'ELEVATED TRACKING','angle-04':'CINEMATIC / FINALE',contact:'BEAUTY / CLOSE-UP'
+  };
+  return titles[current.id] || 'DIRECTOR / CAMERA PATH';
+}
+const textPaths=[...document.querySelectorAll('.moving-path')];
+function ribbons(time,scroll) {
+  if(reducedMotion)return;
+  // Continual letter travel along genuinely curved SVG strokes.
+  textPaths.forEach((node,i)=>{
+    const direction = i%2?1:-1;
+    const cycle=48;
+    const t=(time*.0035+(scroll*.006)*(i%2?1.2:.8)+i*11)%cycle;
+    node.setAttribute('startOffset',`${(direction===1?-53+t:-5-t).toFixed(2)}%`);
+  });
+}
+function positionFromShot(k,dt,scroll) {
+  if(!ready)return;
+  const aspect=width/height;
+  const mobileFactor=carScaleFactor();
+  const modelScale=fitting*mobileFactor;
+  // mobile composition uses the lower half of screen; desktop can take the full stage.
+  const mobileY=mobile()?-.72:0;
+  const mobileOffset=mobile()?-.5:1;
+  // Perspective orbit: cx controls front/rear angle, cy a rising drone angle.
+  // Rig does not spin: yaw never exceeds +-0.21 rad (~12°).
+  rig.position.set(k.x*(mobile()? .63:1), mobileY,0);
+  rig.rotation.set(k.tilt*.08,k.yaw,k.tilt);
+  carPivot.scale.setScalar(modelScale);
+  const orbitX=k.cx*(mobile()? .73:1);
+  const cameraY=k.cy+(mobile()?2.0:0);
+  const cameraZ=k.cz+(mobile()?4.2:0);
+  camera.position.set(orbitX,cameraY,cameraZ);
+  camera.fov=k.fov;
+  camera.lookAt(mobile()?0:-.16,mobile()?1.65:.05,0);
+  camera.updateProjectionMatrix();
+  // Shadows, smoke and streaks follow the vehicle; never replace its materials.
+  const energized=clamp(k.energy*.67+Math.abs(velocity)*.000032,0,.86);
+  S.setProperty('--world-speed',shade(reducedMotion?0:energized*.48));
+  S.setProperty('--streak-x',`${(-scroll*.3%240).toFixed(1)}px`);
+  const shotY=(height*.63+(mobile()?65:0));
+  S.setProperty('--ground-x',`${(k.x*width*.08).toFixed(1)}px`);
+  S.setProperty('--ground-scale',`${(modelScale*.95).toFixed(3)}`);
+  S.setProperty('--ground-visible',shade(clamp(.33+(1-k.cy/11)*.2,0,.55)));
+  S.setProperty('--smoke-x',`${(width*.5 + k.x*width*.09-60).toFixed(0)}px`);
+  S.setProperty('--smoke-y',`${shotY.toFixed(0)}px`);
+  S.setProperty('--smoke-scale',`${clamp(modelScale,.45,1.3)}`);
+  S.setProperty('--smoke-alpha',shade(reducedMotion?0:Math.max(0,k.energy-.65)*.66));
+  S.setProperty('--smoke-shift',`${(Math.sin(scroll*.012)*33).toFixed(0)}px`);
+}
+try {
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(35,innerWidth/innerHeight,.1,200);
+  renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
+  renderer.setClearColor(0xffffff,0);
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.27;
+  holder.appendChild(renderer.domElement);
+  // Neutral studio lighting keeps the original yellow / source car paint intact.
+  scene.add(new THREE.AmbientLight(0xffffff,1.65));
+  scene.add(new THREE.HemisphereLight(0xf5faff,0xb8cad9,2.15));
+  const key=new THREE.DirectionalLight(0xffffff,3.0);key.position.set(-5,11,9);scene.add(key);
+  const fill=new THREE.DirectionalLight(0xffffff,1.6);fill.position.set(7,4,5);scene.add(fill);
+  const back=new THREE.DirectionalLight(0xe8f5ff,1.35);back.position.set(0,7,-9);scene.add(back);
+  rig=new THREE.Group();scene.add(rig);
+  resize(true);
+  new GLTFLoader().load('car.glb',(gltf)=>{
+    const car=gltf.scene;
+    const raw=buildBounds(car), dims=raw.getSize(new THREE.Vector3());
+    if(!Number.isFinite(dims.x)||Math.max(dims.x,dims.y,dims.z)<.00001)throw new Error('Invalid GLB geometry bounds');
+    // Detect which horizontal axis is car length, and fix its SIDE PROFILE once.
+    const SIDE_PROFILE_AXIS='auto'; // 'auto' | 'x' | 'z'
+    const SIDE_PROFILE_REVERSE=false; // flip nose direction if needed
+    const shouldYaw=SIDE_PROFILE_AXIS==='z' || (SIDE_PROFILE_AXIS==='auto' && dims.z>dims.x);
+    car.rotation.y=(shouldYaw?Math.PI/2:0)+(SIDE_PROFILE_REVERSE?Math.PI:0);
+    car.updateMatrixWorld(true);
+    const center=buildBounds(car).getCenter(new THREE.Vector3());
+    car.position.sub(center);
+    const pivot=new THREE.Group();pivot.add(car);rig.add(pivot);carPivot=pivot;
+    const proper=buildBounds(pivot).getSize(new THREE.Vector3());
+    fitting=4.75 / Math.max(proper.x,proper.z,.001);
+    carPivot.scale.setScalar(fitting*carScaleFactor());
+    car.traverse(n=>{if(n.isMesh)n.frustumCulled=false;});
+    ready=true;
+    window.finishLoading();
+  },undefined,error=>{
+    console.error('car.glb did not load',error);
+    window.finishLoading('Original car.glb not found. Keep car.glb beside this HTML, and open using VS Code Live Server.');
+  });
+} catch(error){
+  console.error('Three.js initialization:',error);
+  window.finishLoading('3D preview is unavailable. Website content remains accessible.');
+}
+function animate(time) {
+  requestAnimationFrame(animate);
+  const dt=Math.min(.05,(time-lastTick)/1000||.016);lastTick=time;
+  targetScroll=window.scrollY;
+  smoothScroll+= (targetScroll-smoothScroll)*(reducedMotion?1:1-Math.exp(-dt*9));
+  velocity+=( ((targetScroll-previous)/Math.max(dt,.001))-velocity)*Math.min(1,dt*6);
+  previous=targetScroll;
+  const hP=heroProgress(smoothScroll);
+  const heroEnd=topOf(hero)+hero.offsetHeight-innerHeight;
+  const isHero=smoothScroll<=heroEnd;
+  const state=isHero?select(HERO,hP):select(whole,smoothScroll,'at');
+  if(isHero)state.cx=select(HERO_CAMERA_X,hP).v;
+  // Ease individual camera quantities to eliminate tracking jitter without scroll lag.
+  if(!shotState)shotState={...state};
+  const factor=reducedMotion?1:1-Math.exp(-dt*8.8);
+  for(const k of ['x','cx','cy','cz','d','fov','tilt','yaw','energy'])shotState[k]=mix(shotState[k],state[k],factor);
+  ui(hP,isHero,chapterFor(smoothScroll));
+  positionFromShot(shotState,dt,smoothScroll);
+  ribbons(time,smoothScroll);
+  S.setProperty('--atmo-x',`${(Math.sin(smoothScroll*.0005)*35).toFixed(0)}px`);
+  S.setProperty('--atmo-y',`${(Math.cos(smoothScroll*.0004)*32).toFixed(0)}px`);
+  S.setProperty('--ambient-x',`${(px*27).toFixed(1)}px`);
+  S.setProperty('--ambient-y',`${(py*24).toFixed(1)}px`);
+  if(renderer && scene)renderer.render(scene,camera);
+}
+addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){px=e.clientX/innerWidth-.5;py=e.clientY/innerHeight-.5;}},{passive:true});
+addEventListener('resize',()=>resize(true),{passive:true});
+addEventListener('load',buildTimeline,{once:true});
+if(document.fonts?.ready)document.fonts.ready.then(buildTimeline);
+buildTimeline();
+requestAnimationFrame(animate);
 
-    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-    const mix = (a, b, t) => a + (b-a)*t;
-    const ease = t => t*t*(3-2*t);
-    const smoothRange = (a,b,x) => b <= a ? Number(x >= b) : ease(clamp((x-a)/(b-a),0,1));
-    const triangleWindow = (a,b,c,d,x) => smoothRange(a,b,x)*(1-smoothRange(c,d,x));
-
-    // Original hero X/Y/zoom positions are retained. Only the car's heading changes.
-    // - entry: front three-quarter drift settles to straight side profile
-    // - zoom: front -> rear -> side, completing one FULL 360° by hero end.
-    // Angles are cumulative radians (do not normalise modulo 2π while interpolating).
-    const TAU = Math.PI * 2;
-    const KEYS = [
-      {p:0,    x:-1.25, y:-.77, z:.83, yaw: -.62},
-      {p:.065, x:-1.00, y:-.77, z:.85, yaw: -.84},
-      {p:.23,  x: .02,  y:-.88, z:1.00, yaw:  .25},
-      {p:.355, x: .04,  y:-.93, z:1.12, yaw: 0},
-      {p:.49,  x: 0,    y:-.94, z:1.48, yaw: -1.5},
-      {p:.60,  x: .01,  y:-.90, z:1.58, yaw: -Math.PI},
-      {p:.72,  x: .28,  y:-.87, z:1.22, yaw: -4.4},
-      {p:.84,  x: .69,  y:-.78, z:.98, yaw: -5.7},
-      {p:1,    x:1.30, y:-.77, z:.78, yaw: -TAU}
-    ];
-    function sample(p) {
-      for(let i=1;i<KEYS.length;i++) {
-        const A=KEYS[i-1],B=KEYS[i];
-        if(p<=B.p) {
-          const t=ease(clamp((p-A.p)/(B.p-A.p),0,1));
-          return {x:mix(A.x,B.x,t), y:mix(A.y,B.y,t), z:mix(A.z,B.z,t), yaw:mix(A.yaw,B.yaw,t)};
-        }
-      }
-      return KEYS[KEYS.length-1];
-    }
-    // Choreography below the hero. Angle continues seamlessly after -2π:
-    // collection = a FULL 360° rotation; benefits = slide/drift and counter-steer;
-    // inspection = 180° rear detail then front hero angle;
-    // finance = another 360° spin; contact = slower three-quarter beauty reveal.
-    // Entire choreography is deterministic and fully reversible by scrolling backwards.
-    const postKey = (at, x, y, z, yaw=0, roll=0, speed=0, drift=0) => ({at,x,y,z,yaw,roll,speed,drift});
-    function buildWholePageTimeline() {
-      const viewport=innerHeight;
-      const heroEnd=hero.offsetTop + hero.offsetHeight - viewport;
-      const rectTop = el => el ? el.getBoundingClientRect().top + window.scrollY : heroEnd;
-      const point=(el,fraction)=>rectTop(el) + el.offsetHeight*fraction - viewport*.47;
-      const [featured,benefits,about,finance,contact]=pageSections;
-      motionKeys=[
-        // Seamless transition from last hero frame; no rotation or size snap.
-        postKey(heroEnd,            1.30,-.77,.78, -TAU,          0,0,0),
-        // FEATURED: controlled tyre-smoking lateral slide -> complete 360-degree orbit.
-        postKey(point(featured,.03), .78,-.92,.80, -TAU-.42,      -.065,.62,.66),
-        postKey(point(featured,.18), .16,-1.10,1.03,-TAU-1.50,     -.11,1,.95),
-        postKey(point(featured,.38),-.23,-1.17,1.15,-TAU-Math.PI,  .07,.9,.85),
-        postKey(point(featured,.57), .12,-1.23,1.45,-TAU-4.72,    -.08,.86,.75),
-        postKey(point(featured,.82), .28,-1.17, .96,-TAU*2,        0,.3,.18),
-        // BENEFITS: drift from right to left, 90° rear swing, counter-steer recovery.
-        postKey(point(benefits,.04), .58,-1.06,.73,-TAU*2-.12,     0,.32,.3),
-        postKey(point(benefits,.23),-.14,-1.18,1.15,-TAU*2-1.22, -.13,1,1),
-        postKey(point(benefits,.43),-.32,-1.25,1.47,-TAU*2-2.28,  .09,.95,.95),
-        postKey(point(benefits,.66), .28,-1.17,1.21,-TAU*2-4.55, -.06,.85,.8),
-        postKey(point(benefits,.94), .46,-1.03,.77,-TAU*3,        0,.3,.2),
-        // INSPECTION: long exposure detail, move from rear, to front and side.
-        postKey(point(about,.08),  -.40,-1.03,.78,-TAU*3-.25,    -.03,.50,.4),
-        postKey(point(about,.34),  -.19,-1.22,1.46,-TAU*3-1.57,  -.02,.45,.25),
-        postKey(point(about,.57),   .25,-1.21,1.57,-TAU*3-3.14,   .035,.42,.3),
-        postKey(point(about,.83),   .44,-1.16, .98,-TAU*3-5.30, -.07,.64,.5),
-        postKey(point(about,.97),   .55,-1.01, .79,-TAU*4,        0,.25,.2),
-        // FINANCE: second tire-smoke slide + 360 orbit with pronounced push-in.
-        postKey(point(finance,.07),  .58,-.99,.77,-TAU*4-.2,       0,.45,.4),
-        postKey(point(finance,.27), -.35,-1.22,1.16,-TAU*4-1.35, -.13,1,1),
-        postKey(point(finance,.52), -.20,-1.24,1.52,-TAU*4-3.65,  .11,1,1),
-        postKey(point(finance,.77),  .29,-1.14,1.05,-TAU*4-5.52, -.06,.75,.65),
-        postKey(point(finance,.97),  .57,-1.03,.78,-TAU*5,        0,.25,.18),
-        // CONTACT: slow final beauty orbit, striking nose angle and cinematic exit.
-        postKey(point(contact,.11), -.37,-1.08,.79,-TAU*5-.50,   -.05,.53,.55),
-        postKey(point(contact,.37),  .09,-1.37,1.56,-TAU*5-1.55,  .04,.7,.53),
-        postKey(point(contact,.66),  .22,-1.39,1.44,-TAU*5-3.15, -.03,.45,.32),
-        postKey(point(contact,.84),  .47,-1.16, .93,-TAU*5-5.35,  .02,.37,.18),
-        postKey(point(contact,.98),  .96,-.95, .75,-TAU*6,        0,.4,.25),
-        postKey(point(footer,.8),   1.36,-.96,.69,-TAU*6,        0,0,0)
-      ].sort((a,b)=>a.at-b.at);
-    }
-    function sampleWholePage(scroll) {
-      if(!motionKeys.length) return {x:1.3,y:-.77,z:.78,yaw:-TAU,roll:0,speed:0,drift:0};
-      if(scroll<=motionKeys[0].at) return motionKeys[0];
-      for(let i=1;i<motionKeys.length;i++){
-        const a=motionKeys[i-1],b=motionKeys[i];
-        if(scroll<=b.at){
-          const t=ease(clamp((scroll-a.at)/Math.max(1,b.at-a.at),0,1));
-          return {x:mix(a.x,b.x,t),y:mix(a.y,b.y,t),z:mix(a.z,b.z,t),yaw:mix(a.yaw,b.yaw,t),roll:mix(a.roll,b.roll,t),speed:mix(a.speed,b.speed,t),drift:mix(a.drift,b.drift,t)};
-        }
-      }
-      return motionKeys[motionKeys.length-1];
-    }
-    function activeChapter() {
-      const yy=window.scrollY+innerHeight*.43;
-      for(let i=pageSections.length-1;i>=0;i--){
-        const el=pageSections[i];
-        if(yy>=el.getBoundingClientRect().top+window.scrollY)return i+1;
-      }
-      return 0;
-    }
-    function resize() {
-      const w=holder.clientWidth || innerWidth, h=holder.clientHeight || innerHeight;
-      if(!renderer || (w===lastWidth && h===lastHeight)) return;
-      lastWidth=w;lastHeight=h; aspect=w/h;
-      // On mobile use a wider effective camera height so the zoom has breathing room.
-      worldH=aspect < .78 ? 7.4 : 6.4;
-      worldW=worldH*aspect;
-      camera.left=-worldW/2;camera.right=worldW/2;camera.top=worldH/2;camera.bottom=-worldH/2;
-      camera.updateProjectionMatrix();
-      renderer.setPixelRatio(Math.min(devicePixelRatio || 1,1.75));
-      renderer.setSize(w,h,false);
-      if(glbObject) fitCarToScreen();
-      buildWholePageTimeline();
-    }
-    function fitCarToScreen() {
-      if(!glbObject) return;
-      const intrinsicWidth=Math.max(glbObject.userData.intrinsicWidth || 1,.001);
-      const fraction=aspect<.78?.84:.65;
-      const fit=(worldW*fraction)/intrinsicWidth;
-      glbObject.userData.fitScale=fit;
-      glbObject.scale.setScalar(fit);
-    }
-    function progressFromScroll() {
-      const rect=hero.getBoundingClientRect();
-      return clamp(-rect.top / Math.max(1,hero.offsetHeight-innerHeight),0,1);
-    }
-    const textWindows=[
-      [0,0,.045,.18],
-      [.13,.205,.285,.39],
-      [.35,.42,.53,.66],
-      [.60,.675,.755,.855],
-      [.82,.895,.985,1.06]
-    ];
-    function updateUI(p) {
-      rootStyle.setProperty('--progress',p.toFixed(4));
-      rootStyle.setProperty('--spec-opacity',triangleWindow(.19,.27,.49,.60,p).toFixed(3));
-      rootStyle.setProperty('--scroll-invite-opacity',(1-smoothRange(.035,.16,p)).toFixed(3));
-      const speed=Math.max(triangleWindow(.045,.09,.18,.27,p),triangleWindow(.77,.83,.94,1,p))*.78;
-      rootStyle.setProperty('--speed',speed.toFixed(3));
-      rootStyle.setProperty('--line-shift',((p-.5)*110).toFixed(1));
-      let active=0, best=0;
-      copies.forEach((el,i)=>{
-        const [a,b,c,d]=textWindows[i];
-        const alpha=triangleWindow(a,b,c,d,p);
-        if(alpha>best){best=alpha;active=i;}
-        el.style.opacity=alpha.toFixed(3);
-        const offset=(1-alpha)*25;
-        el.style.transform=el.classList.contains('copy-center') && innerWidth>760
-          ? `translate(-50%, ${offset.toFixed(1)}px)` : `translateY(${offset.toFixed(1)}px)`;
-        el.classList.toggle('active',alpha>.55);
-        el.setAttribute('aria-hidden',String(alpha<.55));
-      });
-      chapterCount.textContent=String(active+1).padStart(2,'0');
-    }
-    function updateModel(p,dt,fullScroll) {
-      if(!modelReady || !rig) return;
-      const heroEnd=hero.offsetTop+hero.offsetHeight-innerHeight;
-      const inHero=fullScroll<=heroEnd;
-      const k = reducedMotion ? {x:0,y:-1.13,z:.9,yaw:0,roll:0,speed:0,drift:0}
-                 : inHero ? {...sample(p),roll:0,speed:0,drift:0} : sampleWholePage(fullScroll);
-      const base=glbObject.userData.fitScale||1;
-      rig.position.set(k.x*worldW,k.y,0);
-      glbObject.scale.setScalar(base*k.z);
-      // True model rotation: every 2π is a complete 360-degree turn, not a flat side-only slide.
-      // Drift adds counter-steering + a mild body roll. Never rotate the *camera* through the model.
-      const dynamicYaw = k.yaw + (!inHero && !reducedMotion ? clamp(scrollVelocity*.000085,-.10,.10)*(k.drift||0) : 0);
-      rig.rotation.set(0,dynamicYaw,inHero ? Math.sin(p*26)*.012*triangleWindow(.035,.12,.3,.4,p) : k.roll);
-      const macro=inHero ? triangleWindow(.37,.45,.59,.68,p) : (k.drift||0)*.25;
-      camera.position.x=macro*worldW*.055;
-      camera.position.y=macro*.20;
-      camera.lookAt(macro*worldW*.038,macro*.10,0);
-      const shadowX=k.x*holder.clientWidth;
-      rootStyle.setProperty('--car-shadow-x',`${shadowX.toFixed(1)}px`);
-      rootStyle.setProperty('--shadow-opacity',inHero?String(clamp((p-.02)*9,0,.68)):'0');
-      rootStyle.setProperty('--shadow-scale',(k.z*.85).toFixed(3));
-      globalStyle.setProperty('--ground-x',`${shadowX.toFixed(1)}px`);
-      globalStyle.setProperty('--ground-scale',(k.z*.85).toFixed(3));
-      globalStyle.setProperty('--ground-visible',inHero?'0':'.43');
-      const heroDrift=triangleWindow(.045,.13,.24,.37,p)*.48;
-      const driftAmount = reducedMotion ? 0 : inHero ? heroDrift : (k.drift||0);
-      const effectStrength=reducedMotion ? 0 : clamp((k.speed||0)*.57 + driftAmount*.26 + Math.abs(scrollVelocity)*.000035,0,.86);
-      globalStyle.setProperty('--world-speed',effectStrength.toFixed(3));
-      globalStyle.setProperty('--streak-x',`${(-fullScroll*.22%260).toFixed(1)}px`);
-      globalStyle.setProperty('--motion-hud-opacity',inHero?'0':'.94');
-      const viewportHeight=holder.clientHeight||innerHeight;
-      globalStyle.setProperty('--smoke-x',`${(holder.clientWidth*.5 + k.x*holder.clientWidth*.98 - Math.sign(Math.cos(dynamicYaw)||1)*viewportHeight*.08).toFixed(1)}px`);
-      globalStyle.setProperty('--smoke-y',`${(viewportHeight*(.5-(k.y-.39)/worldH)).toFixed(1)}px`);
-      globalStyle.setProperty('--smoke-scale',(k.z*1.2).toFixed(3));
-      globalStyle.setProperty('--smoke-shift',`${Math.sin(dynamicYaw)*31+Math.max(-30,Math.min(30,scrollVelocity*.015))}px`);
-      globalStyle.setProperty('--smoke-alpha',String(Math.min(.85,driftAmount*.77).toFixed(3)));
-      globalStyle.setProperty('--drift-caption-opacity',inHero?'0':'.92');
-      // Display the absolute rotation through the whole experience. User can verify 360°.
-      const degrees=(((-k.yaw/TAU)%1+1)%1)*360;
-      motionDegree.textContent=`${String(Math.round(degrees)).padStart(3,'0')}°`;
-      if(!inHero){
-        const chapter=activeChapter();
-        const chapters=['360° DRIFT / FEATURED','CONTROLLED SLIDE / QUALITY','360° ORBIT / INSPECTION','FULL SPIN / FINANCE','BEAUTY ANGLES / FINALE'];
-        const subtitles=['FULL 360° ROTATION','DRIFT • COUNTER-STEER','FRONT • REAR • SIDE','ZOOM IN • SPIN • ZOOM OUT','THE FINAL REVEAL'];
-        motionChapter.textContent=chapters[chapter-1]||'CINEMATIC DRIVE';
-        driftCaption.textContent=subtitles[chapter-1]||'360° DRIFT EXPERIENCE';
-      }
-    }
-    try {
-      scene=new THREE.Scene();
-      camera=new THREE.OrthographicCamera(-5,5,3,-3,.1,150);
-      camera.position.set(0,0,25);camera.lookAt(0,0,0);
-      renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
-      renderer.setClearColor(0xffffff,0);
-      renderer.outputColorSpace=THREE.SRGBColorSpace;
-      renderer.toneMapping=THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure=1.16;
-      holder.appendChild(renderer.domElement);
-      // Balanced lights: preserve the yellow/real source color instead of darkening it.
-      scene.add(new THREE.AmbientLight(0xffffff,1.55));
-      scene.add(new THREE.HemisphereLight(0xe7f7ff,0xb5c9df,2));
-      const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(-5,10,10);scene.add(key);
-      const fill=new THREE.DirectionalLight(0xffffff,1.6);fill.position.set(9,4,4);scene.add(fill);
-      const rim=new THREE.DirectionalLight(0xd0e9ff,1.1);rim.position.set(2,5,-10);scene.add(rim);
-      rig=new THREE.Group();scene.add(rig);
-      resize();
-      const gltfLoader=new GLTFLoader();
-      gltfLoader.load('car.glb', (gltf)=>{
-        const car=gltf.scene;
-        const rawBox=new THREE.Box3().setFromObject(car);
-        const rawSize=rawBox.getSize(new THREE.Vector3());
-        if(!Number.isFinite(rawSize.x)||Math.max(rawSize.x,rawSize.y,rawSize.z)<.000001) throw new Error('GLB has invalid bounds');
-        let sideYaw=0;
-        if(MODEL_ORIENTATION==='z' || (MODEL_ORIENTATION==='auto' && rawSize.z>rawSize.x)) sideYaw=Math.PI/2;
-        sideYaw+=MODEL_EXTRA_YAW;
-        car.rotation.y=sideYaw;
-        // Frame car so its real geometry (not its GLB's arbitrary pivot) is centered.
-        car.updateMatrixWorld(true);
-        const oriented=new THREE.Box3().setFromObject(car);
-        const center=oriented.getCenter(new THREE.Vector3());
-        const pivot=new THREE.Group();
-        pivot.add(car);
-        car.position.sub(center);
-        car.traverse(node => {
-          if(node.isMesh){
-            node.frustumCulled=false;
-            // Leave original GLB materials/textures unchanged.
-          }
-        });
-        rig.add(pivot);
-        glbObject=pivot;
-        const sizedBox=new THREE.Box3().setFromObject(pivot);
-        const sized=sizedBox.getSize(new THREE.Vector3());
-        const fraction=aspect<.78?.84:.65;
-        const fit=(worldW*fraction)/Math.max(sized.x,.001);
-        glbObject.userData.intrinsicWidth=Math.max(sized.x,.001);
-        glbObject.userData.fitScale=fit;
-        glbObject.userData.sideYaw=0;
-        glbObject.scale.setScalar(fit);
-        modelReady=true;
-        window.finishLoading();
-      }, undefined, (error)=>{
-        console.error('Original GLB failed to load:',error);
-        window.finishLoading('Unable to load car.glb. Keep it beside this HTML and run the folder using VS Code Live Server.');
-      });
-    } catch(error) {
-      console.error('3D initialization failed:',error);
-      window.finishLoading('3D is unavailable in this browser. The rest of the website remains accessible.');
-    }
-    function tick(t) {
-      requestAnimationFrame(tick);
-      const dt=Math.min(.05,(t-lastTime)/1000||.016);lastTime=t;
-      target=progressFromScroll();
-      actual += (target-actual)*(reducedMotion?1:1-Math.exp(-dt*8.5));
-      const currentScroll=window.scrollY;
-      smoothScroll += (currentScroll-smoothScroll)*(reducedMotion?1:1-Math.exp(-dt*9));
-      scrollVelocity += (((currentScroll-lastScroll)/Math.max(dt,.001))-scrollVelocity)*Math.min(1,dt*6);
-      lastScroll=currentScroll;
-      updateUI(actual);
-      if(!renderer || !scene) return;
-      resize();
-      smoothedX+=(mouseX-smoothedX)*Math.min(1,dt*2.5);
-      smoothedY+=(mouseY-smoothedY)*Math.min(1,dt*2.5);
-      rootStyle.setProperty('--mouse-x',(smoothedX*16).toFixed(1));
-      rootStyle.setProperty('--mouse-y',(smoothedY*16).toFixed(1));
-      updateModel(actual,dt,smoothScroll);
-      renderer.render(scene,camera);
-    }
-    window.addEventListener('pointermove',e=>{if(e.pointerType==='mouse') {mouseX=e.clientX/innerWidth-.5;mouseY=e.clientY/innerHeight-.5;}},{passive:true});
-    window.addEventListener('resize',resize,{passive:true});
-    buildWholePageTimeline();
-    if(document.fonts?.ready) document.fonts.ready.then(buildWholePageTimeline);
-    window.addEventListener('load',buildWholePageTimeline,{once:true});
-    updateUI(0);requestAnimationFrame(tick);
   </script>
 </body>
 </html>
