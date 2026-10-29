@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#dbeeff" />
   <meta name="description" content="AutoElite — premium pre-owned cars and a new perspective on the way you drive." />
-  <title>AutoElite — The Art of the Drive | Cinematic 3D Experience</title>
+  <title>AutoElite — 360° Drift Cinematic | Premium Pre-Owned Cars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -215,6 +215,22 @@
     .global-ground {position:fixed;z-index:5;pointer-events:none;left:50%;top:73%;width:min(60vw,850px);height:38px;border-radius:50%;opacity:var(--ground-visible,0);transform:translateX(calc(-50% + var(--ground-x,0px))) scale(var(--ground-scale,.8));background:radial-gradient(ellipse,rgba(6,30,65,.32),rgba(10,65,116,.11) 51%,transparent 75%);filter:blur(15px);}
     .motion-hud {position:fixed;z-index:11;right:var(--page-pad);bottom:24px;display:flex;align-items:center;gap:14px;pointer-events:none;opacity:var(--motion-hud-opacity,0);transition:opacity .4s;color:#0d3969;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 1px 12px rgba(255,255,255,.85);}
     .motion-hud i {display:block;width:36px;height:2px;background:#2562dd;box-shadow:0 0 10px rgba(37,98,221,.4);}
+
+    /* Cinematic drift extras: ground-level tyre smoke, lateral skid energy and live 360° dial. */
+    .motion-degree {display:inline-flex;align-items:center;justify-content:center;min-width:64px;padding:9px 10px;border:1px solid rgba(35,91,237,.3);border-radius:8px;background:rgba(249,253,255,.83);backdrop-filter:blur(10px);font:800 12px 'Manrope',sans-serif;letter-spacing:.02em;color:#1859c8;}
+    .drift-smoke {position:fixed;z-index:5;left:var(--smoke-x,50%);top:var(--smoke-y,70%);width:clamp(130px,24vw,340px);height:clamp(65px,11vw,140px);transform:translate(-50%,-45%) scale(var(--smoke-scale,1));opacity:var(--smoke-alpha,0);pointer-events:none;filter:blur(6px);will-change:transform,opacity,left,top;}
+    .drift-smoke span {position:absolute;display:block;width:44%;height:65%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.76),rgba(200,228,255,.45) 53%,transparent 74%);box-shadow:0 0 25px rgba(255,255,255,.3);}
+    .drift-smoke span:nth-child(1) {left:5%;top:15%;transform:translateX(calc(var(--smoke-shift,0px)*-.65)) scale(1.05);}
+    .drift-smoke span:nth-child(2) {left:27%;top:2%;transform:translateX(calc(var(--smoke-shift,0px)*-.36)) scale(.8);}
+    .drift-smoke span:nth-child(3) {left:51%;top:23%;transform:translateX(var(--smoke-shift,0px)) scale(1.12);}
+    .drift-smoke span:nth-child(4) {left:66%;top:0%;transform:translateX(calc(var(--smoke-shift,0px)*.45)) scale(.58);}
+    .drift-smoke span:nth-child(5) {left:13%;top:48%;transform:translateX(calc(var(--smoke-shift,0px)*-.25)) scale(.72);}
+    .drift-caption {position:fixed;z-index:11;left:var(--page-pad);bottom:25px;opacity:var(--drift-caption-opacity,0);pointer-events:none;display:grid;gap:5px;color:#17457a;text-shadow:0 1px 10px rgba(255,255,255,.85);}
+    .drift-caption small {font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;}
+    .drift-caption strong {font:800 clamp(14px,1.5vw,19px) 'Manrope',sans-serif;letter-spacing:-.03em;}
+    @media(max-width:760px) {.drift-caption{bottom:12px;left:20px;}.drift-caption strong{font-size:12px;}.motion-degree{min-width:46px;padding:6px;font-size:10px;}.drift-smoke{width:145px;height:70px;}}
+    @media(prefers-reduced-motion:reduce){.drift-smoke,.drift-caption{display:none;}}
+
     .backdrop-section {overflow:clip;}
     .benefit-section {background:linear-gradient(127deg,rgba(9,34,63,.93),rgba(10,37,73,.90));}
     #featured,#about {background:rgba(248,251,255,.78);}
@@ -330,9 +346,11 @@
   <div id="canvas-container" aria-label="3D vehicle following the scroll"></div>
   <div class="world-speed" id="world-speed" aria-hidden="true"></div>
   <div class="global-ground" aria-hidden="true"></div>
-  <div class="motion-hud" aria-hidden="true"><i></i><span id="motion-chapter">CINEMATIC DRIVE / 01</span></div>
+  <div class="drift-smoke" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="motion-hud" aria-hidden="true"><i></i><span id="motion-chapter">DRIFT / FULL 360°</span><span class="motion-degree" id="motion-degree">000°</span></div>
+  <div class="drift-caption" aria-hidden="true"><small>3D / scroll-controlled</small><strong id="drift-caption-text">FULL 360° EXPERIENCE</strong></div>
 
-  <!-- Existing hero entrance and zoom sequence preserved. Scroll onward for drifts and zooms. -->
+  <!-- Existing hero position and zoom sequence preserved. The model now drifts and spins 360° while scrolling. -->
   <div class="cinema" id="home" aria-label="Cinematic 3D car showcase">
     <div class="cinema-sticky" id="cinema-stage">
       <div class="cinema-noise" aria-hidden="true"></div>
@@ -533,6 +551,8 @@
     const rootStyle = stage.style;
     const globalStyle = document.documentElement.style;
     const motionChapter = document.getElementById('motion-chapter');
+    const motionDegree = document.getElementById('motion-degree');
+    const driftCaption = document.getElementById('drift-caption-text');
     const pageSections = ['featured','benefits','about','finance','contact'].map(id => document.getElementById(id));
     const footer = document.querySelector('footer');
     let motionKeys = [];
@@ -543,6 +563,7 @@
     let aspect = 1, worldW = 9, worldH = 6.4, modelReady = false;
     let actual = 0, target = 0, lastTime = 0, lastWidth = 0, lastHeight = 0;
     let smoothedX = 0, smoothedY = 0, mouseX = 0, mouseY = 0;
+    let smoothScroll = window.scrollY;
 
     // The source GLB is the ONLY vehicle model. Change this if your vehicle uses a special axis.
     // auto: detects whether its longest horizontal side is X or Z, then presents that side to camera.
@@ -555,18 +576,21 @@
     const smoothRange = (a,b,x) => b <= a ? Number(x >= b) : ease(clamp((x-a)/(b-a),0,1));
     const triangleWindow = (a,b,c,d,x) => smoothRange(a,b,x)*(1-smoothRange(c,d,x));
 
-    // Positions are fractions of the viewport width. Camera has no orbit: car stays straight.
-    // Timeline: outside LEFT → arrives CENTRE → zoom IN → zoom OUT + slide → outside RIGHT.
+    // Original hero X/Y/zoom positions are retained. Only the car's heading changes.
+    // - entry: front three-quarter drift settles to straight side profile
+    // - zoom: front -> rear -> side, completing one FULL 360° by hero end.
+    // Angles are cumulative radians (do not normalise modulo 2π while interpolating).
+    const TAU = Math.PI * 2;
     const KEYS = [
-      {p:0,    x:-1.25, y:-.77, z:.83, yaw: 0},
-      {p:.065, x:-1.00, y:-.77, z:.85, yaw: 0},
-      {p:.23,  x: .02,  y:-.88, z:1.00, yaw: 0},
+      {p:0,    x:-1.25, y:-.77, z:.83, yaw: -.62},
+      {p:.065, x:-1.00, y:-.77, z:.85, yaw: -.84},
+      {p:.23,  x: .02,  y:-.88, z:1.00, yaw:  .25},
       {p:.355, x: .04,  y:-.93, z:1.12, yaw: 0},
-      {p:.49,  x: 0,    y:-.94, z:1.48, yaw: -.018},
-      {p:.60,  x: .01,  y:-.90, z:1.58, yaw: -.018},
-      {p:.72,  x: .28,  y:-.87, z:1.22, yaw: 0},
-      {p:.84,  x: .69,  y:-.78, z:.98, yaw: 0},
-      {p:1,    x:1.30, y:-.77, z:.78, yaw: 0}
+      {p:.49,  x: 0,    y:-.94, z:1.48, yaw: -1.5},
+      {p:.60,  x: .01,  y:-.90, z:1.58, yaw: -Math.PI},
+      {p:.72,  x: .28,  y:-.87, z:1.22, yaw: -4.4},
+      {p:.84,  x: .69,  y:-.78, z:.98, yaw: -5.7},
+      {p:1,    x:1.30, y:-.77, z:.78, yaw: -TAU}
     ];
     function sample(p) {
       for(let i=1;i<KEYS.length;i++) {
@@ -578,9 +602,12 @@
       }
       return KEYS[KEYS.length-1];
     }
-    // Separate scene directions after the original pinned hero. Each uses real document
-    // positions, so drift / zoom remain scroll-scrubbable on short and long screens.
-    const postKey = (at, x, y, z, yaw=0, roll=0, speed=0) => ({at,x,y,z,yaw,roll,speed});
+    // Choreography below the hero. Angle continues seamlessly after -2π:
+    // collection = a FULL 360° rotation; benefits = slide/drift and counter-steer;
+    // inspection = 180° rear detail then front hero angle;
+    // finance = another 360° spin; contact = slower three-quarter beauty reveal.
+    // Entire choreography is deterministic and fully reversible by scrolling backwards.
+    const postKey = (at, x, y, z, yaw=0, roll=0, speed=0, drift=0) => ({at,x,y,z,yaw,roll,speed,drift});
     function buildWholePageTimeline() {
       const viewport=innerHeight;
       const heroEnd=hero.offsetTop + hero.offsetHeight - viewport;
@@ -588,39 +615,49 @@
       const point=(el,fraction)=>rectTop(el) + el.offsetHeight*fraction - viewport*.47;
       const [featured,benefits,about,finance,contact]=pageSections;
       motionKeys=[
-        postKey(heroEnd,1.30,-.77,.78,0,0,0),
-        postKey(point(featured, .03),1.12,-.88,.75,-.05,0,.25),
-        postKey(point(featured, .22),-.55,-1.02,.74,-.38,-.045,.95),
-        postKey(point(featured, .49),.28,-1.15,1.16,.21,.025,.38),
-        postKey(point(featured, .85),.32,-1.15,.86,.03,0,.1),
-        postKey(point(benefits, .08),.88,-1.02,.71,.02,0,.52),
-        postKey(point(benefits, .37),-.29,-1.1,1.30,-.46,-.055,1),
-        postKey(point(benefits, .69),-.24,-1.25,1.45,.33,.048,.75),
-        postKey(point(benefits, .95),-.70,-1.04,.71,.04,0,.35),
-        postKey(point(about, .11),-.84,-1.00,.72,.04,0,.48),
-        postKey(point(about, .39),.28,-1.16,1.43,.35,.035,.87),
-        postKey(point(about, .69),.32,-1.20,1.00,-.16,-.025,.24),
-        postKey(point(about, .95),.88,-1.04,.7,.01,0,.60),
-        postKey(point(finance, .14),.89,-1.01,.71,.01,0,.70),
-        postKey(point(finance, .46),-.32,-1.23,1.42,-.50,-.06,1),
-        postKey(point(finance, .78),-.25,-1.16,1.12,.23,.035,.35),
-        postKey(point(finance, .97),-.82,-1.02,.72,0,0,.55),
-        postKey(point(contact, .12),-.85,-1.02,.70,.03,0,.5),
-        postKey(point(contact, .42),.18,-1.46,1.50,.23,.035,.75),
-        postKey(point(contact, .73),.30,-1.46,1.15,-.15,-.018,.19),
-        postKey(point(contact, .95),.95,-1.11,.73,.03,0,.62),
-        postKey(point(footer, .8),1.36,-.96,.69,0,0,0)
+        // Seamless transition from last hero frame; no rotation or size snap.
+        postKey(heroEnd,            1.30,-.77,.78, -TAU,          0,0,0),
+        // FEATURED: controlled tyre-smoking lateral slide -> complete 360-degree orbit.
+        postKey(point(featured,.03), .78,-.92,.80, -TAU-.42,      -.065,.62,.66),
+        postKey(point(featured,.18), .16,-1.10,1.03,-TAU-1.50,     -.11,1,.95),
+        postKey(point(featured,.38),-.23,-1.17,1.15,-TAU-Math.PI,  .07,.9,.85),
+        postKey(point(featured,.57), .12,-1.23,1.45,-TAU-4.72,    -.08,.86,.75),
+        postKey(point(featured,.82), .28,-1.17, .96,-TAU*2,        0,.3,.18),
+        // BENEFITS: drift from right to left, 90° rear swing, counter-steer recovery.
+        postKey(point(benefits,.04), .58,-1.06,.73,-TAU*2-.12,     0,.32,.3),
+        postKey(point(benefits,.23),-.14,-1.18,1.15,-TAU*2-1.22, -.13,1,1),
+        postKey(point(benefits,.43),-.32,-1.25,1.47,-TAU*2-2.28,  .09,.95,.95),
+        postKey(point(benefits,.66), .28,-1.17,1.21,-TAU*2-4.55, -.06,.85,.8),
+        postKey(point(benefits,.94), .46,-1.03,.77,-TAU*3,        0,.3,.2),
+        // INSPECTION: long exposure detail, move from rear, to front and side.
+        postKey(point(about,.08),  -.40,-1.03,.78,-TAU*3-.25,    -.03,.50,.4),
+        postKey(point(about,.34),  -.19,-1.22,1.46,-TAU*3-1.57,  -.02,.45,.25),
+        postKey(point(about,.57),   .25,-1.21,1.57,-TAU*3-3.14,   .035,.42,.3),
+        postKey(point(about,.83),   .44,-1.16, .98,-TAU*3-5.30, -.07,.64,.5),
+        postKey(point(about,.97),   .55,-1.01, .79,-TAU*4,        0,.25,.2),
+        // FINANCE: second tire-smoke slide + 360 orbit with pronounced push-in.
+        postKey(point(finance,.07),  .58,-.99,.77,-TAU*4-.2,       0,.45,.4),
+        postKey(point(finance,.27), -.35,-1.22,1.16,-TAU*4-1.35, -.13,1,1),
+        postKey(point(finance,.52), -.20,-1.24,1.52,-TAU*4-3.65,  .11,1,1),
+        postKey(point(finance,.77),  .29,-1.14,1.05,-TAU*4-5.52, -.06,.75,.65),
+        postKey(point(finance,.97),  .57,-1.03,.78,-TAU*5,        0,.25,.18),
+        // CONTACT: slow final beauty orbit, striking nose angle and cinematic exit.
+        postKey(point(contact,.11), -.37,-1.08,.79,-TAU*5-.50,   -.05,.53,.55),
+        postKey(point(contact,.37),  .09,-1.37,1.56,-TAU*5-1.55,  .04,.7,.53),
+        postKey(point(contact,.66),  .22,-1.39,1.44,-TAU*5-3.15, -.03,.45,.32),
+        postKey(point(contact,.84),  .47,-1.16, .93,-TAU*5-5.35,  .02,.37,.18),
+        postKey(point(contact,.98),  .96,-.95, .75,-TAU*6,        0,.4,.25),
+        postKey(point(footer,.8),   1.36,-.96,.69,-TAU*6,        0,0,0)
       ].sort((a,b)=>a.at-b.at);
-      // The first post-hero key must be the true last frame of the hero animation.
     }
     function sampleWholePage(scroll) {
-      if(!motionKeys.length) return {x:1.3,y:-.77,z:.78,yaw:0,roll:0,speed:0};
+      if(!motionKeys.length) return {x:1.3,y:-.77,z:.78,yaw:-TAU,roll:0,speed:0,drift:0};
       if(scroll<=motionKeys[0].at) return motionKeys[0];
       for(let i=1;i<motionKeys.length;i++){
         const a=motionKeys[i-1],b=motionKeys[i];
         if(scroll<=b.at){
           const t=ease(clamp((scroll-a.at)/Math.max(1,b.at-a.at),0,1));
-          return {x:mix(a.x,b.x,t),y:mix(a.y,b.y,t),z:mix(a.z,b.z,t),yaw:mix(a.yaw,b.yaw,t),roll:mix(a.roll,b.roll,t),speed:mix(a.speed,b.speed,t)};
+          return {x:mix(a.x,b.x,t),y:mix(a.y,b.y,t),z:mix(a.z,b.z,t),yaw:mix(a.yaw,b.yaw,t),roll:mix(a.roll,b.roll,t),speed:mix(a.speed,b.speed,t),drift:mix(a.drift,b.drift,t)};
         }
       }
       return motionKeys[motionKeys.length-1];
@@ -691,34 +728,49 @@
       if(!modelReady || !rig) return;
       const heroEnd=hero.offsetTop+hero.offsetHeight-innerHeight;
       const inHero=fullScroll<=heroEnd;
-      // Do not alter the entrance choreography. The whole-page scenes take over
-      // only after the hero has fully finished.
-      const k = reducedMotion ? {x:0,y:-1.13,z:.9,yaw:0,roll:0,speed:0}
-                 : inHero ? {...sample(p),roll:0,speed:0} : sampleWholePage(fullScroll);
-      rig.position.set(k.x*worldW,k.y,0);
+      const k = reducedMotion ? {x:0,y:-1.13,z:.9,yaw:0,roll:0,speed:0,drift:0}
+                 : inHero ? {...sample(p),roll:0,speed:0,drift:0} : sampleWholePage(fullScroll);
       const base=glbObject.userData.fitScale||1;
+      rig.position.set(k.x*worldW,k.y,0);
       glbObject.scale.setScalar(base*k.z);
-      // Hero: keep original side-on angle. Subsequent chapters add controlled
-      // front/rear drifts; never spin the whole car multiple revolutions.
-      const dynamicYaw=inHero?k.yaw:k.yaw + clamp(scrollVelocity*0.00005,-.045,.045);
-      rig.rotation.y=dynamicYaw;
-      rig.rotation.z=inHero?0:k.roll;
-      const macro=inHero?triangleWindow(.37,.45,.59,.68,p):0;
-      camera.position.x=macro*worldW*.018;
-      camera.position.y=macro*.12;
-      camera.lookAt(macro*worldW*.018,macro*.12,0);
+      // True model rotation: every 2π is a complete 360-degree turn, not a flat side-only slide.
+      // Drift adds counter-steering + a mild body roll. Never rotate the *camera* through the model.
+      const dynamicYaw = k.yaw + (!inHero && !reducedMotion ? clamp(scrollVelocity*.000085,-.10,.10)*(k.drift||0) : 0);
+      rig.rotation.set(0,dynamicYaw,inHero ? Math.sin(p*26)*.012*triangleWindow(.035,.12,.3,.4,p) : k.roll);
+      const macro=inHero ? triangleWindow(.37,.45,.59,.68,p) : (k.drift||0)*.25;
+      camera.position.x=macro*worldW*.055;
+      camera.position.y=macro*.20;
+      camera.lookAt(macro*worldW*.038,macro*.10,0);
       const shadowX=k.x*holder.clientWidth;
       rootStyle.setProperty('--car-shadow-x',`${shadowX.toFixed(1)}px`);
       rootStyle.setProperty('--shadow-opacity',inHero?String(clamp((p-.02)*9,0,.68)):'0');
       rootStyle.setProperty('--shadow-scale',(k.z*.85).toFixed(3));
       globalStyle.setProperty('--ground-x',`${shadowX.toFixed(1)}px`);
       globalStyle.setProperty('--ground-scale',(k.z*.85).toFixed(3));
-      globalStyle.setProperty('--ground-visible',inHero?'0':'.45');
-      const effectStrength=inHero?0:clamp((k.speed||0)*.52 + Math.abs(scrollVelocity)*.00011,0,.74);
-      globalStyle.setProperty('--world-speed',reducedMotion?'0':effectStrength.toFixed(3));
+      globalStyle.setProperty('--ground-visible',inHero?'0':'.43');
+      const heroDrift=triangleWindow(.045,.13,.24,.37,p)*.48;
+      const driftAmount = reducedMotion ? 0 : inHero ? heroDrift : (k.drift||0);
+      const effectStrength=reducedMotion ? 0 : clamp((k.speed||0)*.57 + driftAmount*.26 + Math.abs(scrollVelocity)*.000035,0,.86);
+      globalStyle.setProperty('--world-speed',effectStrength.toFixed(3));
       globalStyle.setProperty('--streak-x',`${(-fullScroll*.22%260).toFixed(1)}px`);
-      globalStyle.setProperty('--motion-hud-opacity',inHero?'0':'.85');
-      if(!inHero)motionChapter.textContent=['COLLECTION / CRUISE','QUALITY / DRIFT','INSPECTION / DETAIL','FINANCE / ZOOM','YOUR DRIVE / FINALE'][activeChapter()-1]||'THE DRIVE / CONTINUES';
+      globalStyle.setProperty('--motion-hud-opacity',inHero?'0':'.94');
+      const viewportHeight=holder.clientHeight||innerHeight;
+      globalStyle.setProperty('--smoke-x',`${(holder.clientWidth*.5 + k.x*holder.clientWidth*.98 - Math.sign(Math.cos(dynamicYaw)||1)*viewportHeight*.08).toFixed(1)}px`);
+      globalStyle.setProperty('--smoke-y',`${(viewportHeight*(.5-(k.y-.39)/worldH)).toFixed(1)}px`);
+      globalStyle.setProperty('--smoke-scale',(k.z*1.2).toFixed(3));
+      globalStyle.setProperty('--smoke-shift',`${Math.sin(dynamicYaw)*31+Math.max(-30,Math.min(30,scrollVelocity*.015))}px`);
+      globalStyle.setProperty('--smoke-alpha',String(Math.min(.85,driftAmount*.77).toFixed(3)));
+      globalStyle.setProperty('--drift-caption-opacity',inHero?'0':'.92');
+      // Display the absolute rotation through the whole experience. User can verify 360°.
+      const degrees=(((-k.yaw/TAU)%1+1)%1)*360;
+      motionDegree.textContent=`${String(Math.round(degrees)).padStart(3,'0')}°`;
+      if(!inHero){
+        const chapter=activeChapter();
+        const chapters=['360° DRIFT / FEATURED','CONTROLLED SLIDE / QUALITY','360° ORBIT / INSPECTION','FULL SPIN / FINANCE','BEAUTY ANGLES / FINALE'];
+        const subtitles=['FULL 360° ROTATION','DRIFT • COUNTER-STEER','FRONT • REAR • SIDE','ZOOM IN • SPIN • ZOOM OUT','THE FINAL REVEAL'];
+        motionChapter.textContent=chapters[chapter-1]||'CINEMATIC DRIVE';
+        driftCaption.textContent=subtitles[chapter-1]||'360° DRIFT EXPERIENCE';
+      }
     }
     try {
       scene=new THREE.Scene();
@@ -787,6 +839,7 @@
       target=progressFromScroll();
       actual += (target-actual)*(reducedMotion?1:1-Math.exp(-dt*8.5));
       const currentScroll=window.scrollY;
+      smoothScroll += (currentScroll-smoothScroll)*(reducedMotion?1:1-Math.exp(-dt*9));
       scrollVelocity += (((currentScroll-lastScroll)/Math.max(dt,.001))-scrollVelocity)*Math.min(1,dt*6);
       lastScroll=currentScroll;
       updateUI(actual);
@@ -796,7 +849,7 @@
       smoothedY+=(mouseY-smoothedY)*Math.min(1,dt*2.5);
       rootStyle.setProperty('--mouse-x',(smoothedX*16).toFixed(1));
       rootStyle.setProperty('--mouse-y',(smoothedY*16).toFixed(1));
-      updateModel(actual,dt,currentScroll);
+      updateModel(actual,dt,smoothScroll);
       renderer.render(scene,camera);
     }
     window.addEventListener('pointermove',e=>{if(e.pointerType==='mouse') {mouseX=e.clientX/innerWidth-.5;mouseY=e.clientY/innerHeight-.5;}},{passive:true});
