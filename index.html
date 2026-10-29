@@ -24,17 +24,17 @@
     }
     *,*::before,*::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; overflow-x: hidden; font-family: 'DM Sans',sans-serif; color: var(--ink); background: #f8fbff; -webkit-font-smoothing: antialiased; }
+    body { margin: 0; overflow-x: hidden; background: radial-gradient(ellipse at 70% 42%, #f1fbff 0%, transparent 43%), linear-gradient(117deg, #e7f5ff 2%, #b7dcff 50%, #68aef0 100%); background-attachment: fixed; font-family: 'DM Sans',sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
     button,a { -webkit-tap-highlight-color: transparent; }
     button { font: inherit; }
     a { color: inherit; }
     ::selection { background: #b3d1ff; color: #09223f; }
     :focus-visible { outline: 3px solid #2762ec; outline-offset: 4px; }
 
-    /* The GLB is rendered only in this sticky cinematic scene, not a substitute image. */
-    .cinema { position: relative; height: 510vh; height: 510svh; isolation: isolate; }
-    .cinema-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; width: 100%; overflow: hidden;
-      background: radial-gradient(ellipse at 70% 42%, #f1fbff 0%, transparent 43%), linear-gradient(117deg, #e7f5ff 2%, #b7dcff 50%, #68aef0 100%); }
+    /* Original GLB: continuous fixed cinematic layer across the entire website. */
+    .cinema { position: relative; height: 510vh; height: 510svh; }
+    .cinema-sticky { z-index:7; position: sticky; top: 0; height: 100vh; height: 100svh; width: 100%; overflow: hidden;
+      background: transparent; }
     .cinema-sticky::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 8;
       background: linear-gradient(180deg, rgba(255,255,255,.42) 0%, transparent 22%, transparent 72%, rgba(5,44,91,.11) 100%); }
     .cinema-noise { position: absolute; z-index: 1; inset: 0; pointer-events: none; opacity: .25;
@@ -50,7 +50,7 @@
     .car-shadow { position: absolute; z-index: 2; width: min(54vw,810px); height: clamp(24px,3.8vh,60px); border-radius: 50%; left: 50%; top: 78%;
       background: radial-gradient(ellipse,rgba(5,38,78,.28) 0%,rgba(16,77,137,.1) 53%,transparent 75%); filter: blur(13px); opacity: var(--shadow-opacity,.1);
       transform: translateX(calc(-50% + var(--car-shadow-x,0px))) scale(var(--shadow-scale,.7)); pointer-events:none; }
-    #canvas-container { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    #canvas-container { position: fixed; z-index: 6; inset: 0; width: 100%; height: 100vh; height: 100svh; pointer-events: none; overflow: hidden; }
     #canvas-container canvas { display:block; width: 100%; height:100%; }
     .speed-lines { z-index: 3; position: absolute; inset: 39% 0 11%; pointer-events: none; opacity: var(--speed,.0); overflow: hidden; }
     .speed-lines i { display:block; position:absolute; height: 1px; background: linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent); transform: translateX(calc(var(--line-shift,0)*1px)); }
@@ -121,7 +121,10 @@
     .menu-toggle { display:none; width:43px; height:43px; border:1px solid var(--line); border-radius:13px; background:rgba(255,255,255,.7); cursor:pointer; color:var(--ink); font-size:23px; }
 
     /* Below-fold content */
-    main { position:relative; z-index:15; background:#f8fbff; }
+    main { position:relative; z-index:auto; background:transparent; }
+    main > section > *, .ribbon-inner { position:relative; z-index:9; }
+    footer { position:relative; z-index:auto; }
+    footer > * { position:relative; z-index:9; }
     .ribbon { background:var(--ink); color:#f3f8ff; overflow:hidden; display:flex; align-items:center; min-height:65px; white-space:nowrap; }
     .ribbon-inner {display:flex; gap:36px; width:max-content; animation:marquee 23s linear infinite; font-size:11px; font-weight:800; letter-spacing:.21em; text-transform:uppercase;}
     .ribbon-inner b {color:#b5e5fd; font-size:18px; vertical-align:middle; margin-left:36px;}
@@ -203,6 +206,31 @@
     .model-notice {position:fixed;z-index:160;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);max-width:min(570px,calc(100vw - 26px));padding:13px 18px;border-radius:15px;
       background:#102d4e;color:white;font-size:12px;line-height:1.5;box-shadow:0 15px 35px rgba(9,34,63,.23);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;}
     .model-notice.show {opacity:1;transform:translateX(-50%) translateY(0);}
+
+
+    /* Cinematic motion layer stays on-screen beyond the hero and behind all content. */
+    .world-speed {position:fixed; z-index:5; inset:0; pointer-events:none; opacity:var(--world-speed,0); overflow:hidden; transition:opacity .12s;}
+    .world-speed::before,.world-speed::after {content:"";position:absolute;inset:22% -38%;background:repeating-linear-gradient(165deg, transparent 0 26px,rgba(255,255,255,.28) 27px 28px,transparent 29px 72px);filter:blur(1px);transform:translateX(var(--streak-x,0px)) skewX(-13deg);mask-image:linear-gradient(90deg,transparent 0%,#000 25%,transparent 85%);}
+    .world-speed::after {opacity:.5;transform:scaleY(-1) translateX(calc(var(--streak-x,0px)*-.65));}
+    .global-ground {position:fixed;z-index:5;pointer-events:none;left:50%;top:73%;width:min(60vw,850px);height:38px;border-radius:50%;opacity:var(--ground-visible,0);transform:translateX(calc(-50% + var(--ground-x,0px))) scale(var(--ground-scale,.8));background:radial-gradient(ellipse,rgba(6,30,65,.32),rgba(10,65,116,.11) 51%,transparent 75%);filter:blur(15px);}
+    .motion-hud {position:fixed;z-index:11;right:var(--page-pad);bottom:24px;display:flex;align-items:center;gap:14px;pointer-events:none;opacity:var(--motion-hud-opacity,0);transition:opacity .4s;color:#0d3969;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 1px 12px rgba(255,255,255,.85);}
+    .motion-hud i {display:block;width:36px;height:2px;background:#2562dd;box-shadow:0 0 10px rgba(37,98,221,.4);}
+    .backdrop-section {overflow:clip;}
+    .benefit-section {background:linear-gradient(127deg,rgba(9,34,63,.93),rgba(10,37,73,.90));}
+    #featured,#about {background:rgba(248,251,255,.78);}
+    #featured {min-height:100vh;}
+    #about {min-height:95vh;}
+    .finance {background:linear-gradient(125deg,rgba(217,237,255,.86),rgba(234,246,255,.84));min-height:95vh;}
+    .contact {background:rgba(248,251,255,.79);min-height:92vh;}
+    @media(max-width:760px) {
+      #canvas-container {height:100svh;}
+      .global-ground {width:85vw;top:77%;}
+      .motion-hud {bottom:12px;right:20px;font-size:8px;gap:8px;}
+      .motion-hud i {width:20px;}
+      .featured-card {background:linear-gradient(145deg,rgba(195,232,255,.96),rgba(84,143,237,.95));}
+      .benefit-section {background:rgba(9,34,63,.91);}
+    }
+    @media(prefers-reduced-motion:reduce) {.world-speed,.motion-hud {display:none;}}
 
     @media (max-width:1024px) {
       .scene-copy { top:18%; width:min(510px,68vw); }
@@ -298,7 +326,13 @@
     </nav>
   </header>
 
-  <!-- 510vh scroll track, 100svh sticky camera: scrolling controls every frame. -->
+  <!-- One transparent WebGL layer renders the original car.glb throughout every section. -->
+  <div id="canvas-container" aria-label="3D vehicle following the scroll"></div>
+  <div class="world-speed" id="world-speed" aria-hidden="true"></div>
+  <div class="global-ground" aria-hidden="true"></div>
+  <div class="motion-hud" aria-hidden="true"><i></i><span id="motion-chapter">CINEMATIC DRIVE / 01</span></div>
+
+  <!-- Existing hero entrance and zoom sequence preserved. Scroll onward for drifts and zooms. -->
   <div class="cinema" id="home" aria-label="Cinematic 3D car showcase">
     <div class="cinema-sticky" id="cinema-stage">
       <div class="cinema-noise" aria-hidden="true"></div>
@@ -308,7 +342,7 @@
       <div class="ambient-spot" aria-hidden="true"></div>
       <div class="car-shadow" aria-hidden="true"></div>
       <div class="speed-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <div id="canvas-container" aria-label="3D model of vehicle"></div>
+
 
       <div class="corner-label">AUTOELITE / MOTION STUDIO / 001</div>
       <div class="cinema-copy">
@@ -392,7 +426,7 @@
       </div>
     </section>
 
-    <section class="section-shell benefit-section">
+    <section id="benefits" class="section-shell benefit-section">
       <span class="section-label reveal">Why AutoElite</span>
       <h2 class="section-h reveal">Confidence is the<br />real luxury.</h2>
       <div class="benefit-grid">
@@ -497,6 +531,13 @@
     const copies = [...document.querySelectorAll('[data-scene]')];
     const chapterCount = document.getElementById('chapter-count');
     const rootStyle = stage.style;
+    const globalStyle = document.documentElement.style;
+    const motionChapter = document.getElementById('motion-chapter');
+    const pageSections = ['featured','benefits','about','finance','contact'].map(id => document.getElementById(id));
+    const footer = document.querySelector('footer');
+    let motionKeys = [];
+    let lastScroll = window.scrollY;
+    let scrollVelocity = 0;
     let scene, camera, renderer, rig, glbObject;
     let carWidth = 0, modelHeight = 1, visible = true;
     let aspect = 1, worldW = 9, worldH = 6.4, modelReady = false;
@@ -537,6 +578,61 @@
       }
       return KEYS[KEYS.length-1];
     }
+    // Separate scene directions after the original pinned hero. Each uses real document
+    // positions, so drift / zoom remain scroll-scrubbable on short and long screens.
+    const postKey = (at, x, y, z, yaw=0, roll=0, speed=0) => ({at,x,y,z,yaw,roll,speed});
+    function buildWholePageTimeline() {
+      const viewport=innerHeight;
+      const heroEnd=hero.offsetTop + hero.offsetHeight - viewport;
+      const rectTop = el => el ? el.getBoundingClientRect().top + window.scrollY : heroEnd;
+      const point=(el,fraction)=>rectTop(el) + el.offsetHeight*fraction - viewport*.47;
+      const [featured,benefits,about,finance,contact]=pageSections;
+      motionKeys=[
+        postKey(heroEnd,1.30,-.77,.78,0,0,0),
+        postKey(point(featured, .03),1.12,-.88,.75,-.05,0,.25),
+        postKey(point(featured, .22),-.55,-1.02,.74,-.38,-.045,.95),
+        postKey(point(featured, .49),.28,-1.15,1.16,.21,.025,.38),
+        postKey(point(featured, .85),.32,-1.15,.86,.03,0,.1),
+        postKey(point(benefits, .08),.88,-1.02,.71,.02,0,.52),
+        postKey(point(benefits, .37),-.29,-1.1,1.30,-.46,-.055,1),
+        postKey(point(benefits, .69),-.24,-1.25,1.45,.33,.048,.75),
+        postKey(point(benefits, .95),-.70,-1.04,.71,.04,0,.35),
+        postKey(point(about, .11),-.84,-1.00,.72,.04,0,.48),
+        postKey(point(about, .39),.28,-1.16,1.43,.35,.035,.87),
+        postKey(point(about, .69),.32,-1.20,1.00,-.16,-.025,.24),
+        postKey(point(about, .95),.88,-1.04,.7,.01,0,.60),
+        postKey(point(finance, .14),.89,-1.01,.71,.01,0,.70),
+        postKey(point(finance, .46),-.32,-1.23,1.42,-.50,-.06,1),
+        postKey(point(finance, .78),-.25,-1.16,1.12,.23,.035,.35),
+        postKey(point(finance, .97),-.82,-1.02,.72,0,0,.55),
+        postKey(point(contact, .12),-.85,-1.02,.70,.03,0,.5),
+        postKey(point(contact, .42),.18,-1.46,1.50,.23,.035,.75),
+        postKey(point(contact, .73),.30,-1.46,1.15,-.15,-.018,.19),
+        postKey(point(contact, .95),.95,-1.11,.73,.03,0,.62),
+        postKey(point(footer, .8),1.36,-.96,.69,0,0,0)
+      ].sort((a,b)=>a.at-b.at);
+      // The first post-hero key must be the true last frame of the hero animation.
+    }
+    function sampleWholePage(scroll) {
+      if(!motionKeys.length) return {x:1.3,y:-.77,z:.78,yaw:0,roll:0,speed:0};
+      if(scroll<=motionKeys[0].at) return motionKeys[0];
+      for(let i=1;i<motionKeys.length;i++){
+        const a=motionKeys[i-1],b=motionKeys[i];
+        if(scroll<=b.at){
+          const t=ease(clamp((scroll-a.at)/Math.max(1,b.at-a.at),0,1));
+          return {x:mix(a.x,b.x,t),y:mix(a.y,b.y,t),z:mix(a.z,b.z,t),yaw:mix(a.yaw,b.yaw,t),roll:mix(a.roll,b.roll,t),speed:mix(a.speed,b.speed,t)};
+        }
+      }
+      return motionKeys[motionKeys.length-1];
+    }
+    function activeChapter() {
+      const yy=window.scrollY+innerHeight*.43;
+      for(let i=pageSections.length-1;i>=0;i--){
+        const el=pageSections[i];
+        if(yy>=el.getBoundingClientRect().top+window.scrollY)return i+1;
+      }
+      return 0;
+    }
     function resize() {
       const w=holder.clientWidth || innerWidth, h=holder.clientHeight || innerHeight;
       if(!renderer || (w===lastWidth && h===lastHeight)) return;
@@ -549,6 +645,7 @@
       renderer.setPixelRatio(Math.min(devicePixelRatio || 1,1.75));
       renderer.setSize(w,h,false);
       if(glbObject) fitCarToScreen();
+      buildWholePageTimeline();
     }
     function fitCarToScreen() {
       if(!glbObject) return;
@@ -590,24 +687,38 @@
       });
       chapterCount.textContent=String(active+1).padStart(2,'0');
     }
-    function updateModel(p,dt) {
+    function updateModel(p,dt,fullScroll) {
       if(!modelReady || !rig) return;
-      const k=reducedMotion ? {x:0,y:-.92,z:1,yaw:0} : sample(p);
+      const heroEnd=hero.offsetTop+hero.offsetHeight-innerHeight;
+      const inHero=fullScroll<=heroEnd;
+      // Do not alter the entrance choreography. The whole-page scenes take over
+      // only after the hero has fully finished.
+      const k = reducedMotion ? {x:0,y:-1.13,z:.9,yaw:0,roll:0,speed:0}
+                 : inHero ? {...sample(p),roll:0,speed:0} : sampleWholePage(fullScroll);
       rig.position.set(k.x*worldW,k.y,0);
-      const targetSize = glbObject.userData.fitScale || 1;
-      // Whole GLB moves together; only tiny yaw (<1.1°) at macro shot for reflection.
-      glbObject.scale.setScalar(targetSize*k.z);
-      glbObject.rotation.y=(glbObject.userData.sideYaw || 0)+k.yaw;
-      // Subtle camera translation during macro shot, never a car-spinning orbit.
-      const macro=triangleWindow(.37,.45,.59,.68,p);
+      const base=glbObject.userData.fitScale||1;
+      glbObject.scale.setScalar(base*k.z);
+      // Hero: keep original side-on angle. Subsequent chapters add controlled
+      // front/rear drifts; never spin the whole car multiple revolutions.
+      const dynamicYaw=inHero?k.yaw:k.yaw + clamp(scrollVelocity*0.00005,-.045,.045);
+      rig.rotation.y=dynamicYaw;
+      rig.rotation.z=inHero?0:k.roll;
+      const macro=inHero?triangleWindow(.37,.45,.59,.68,p):0;
       camera.position.x=macro*worldW*.018;
       camera.position.y=macro*.12;
       camera.lookAt(macro*worldW*.018,macro*.12,0);
-      // Shadow is CSS so the colorful backdrop remains transparent.
       const shadowX=k.x*holder.clientWidth;
-      rootStyle.setProperty('--car-shadow-x', `${shadowX.toFixed(1)}px`);
-      rootStyle.setProperty('--shadow-opacity',String(clamp((p-.02)*9,0,.68)));
+      rootStyle.setProperty('--car-shadow-x',`${shadowX.toFixed(1)}px`);
+      rootStyle.setProperty('--shadow-opacity',inHero?String(clamp((p-.02)*9,0,.68)):'0');
       rootStyle.setProperty('--shadow-scale',(k.z*.85).toFixed(3));
+      globalStyle.setProperty('--ground-x',`${shadowX.toFixed(1)}px`);
+      globalStyle.setProperty('--ground-scale',(k.z*.85).toFixed(3));
+      globalStyle.setProperty('--ground-visible',inHero?'0':'.45');
+      const effectStrength=inHero?0:clamp((k.speed||0)*.52 + Math.abs(scrollVelocity)*.00011,0,.74);
+      globalStyle.setProperty('--world-speed',reducedMotion?'0':effectStrength.toFixed(3));
+      globalStyle.setProperty('--streak-x',`${(-fullScroll*.22%260).toFixed(1)}px`);
+      globalStyle.setProperty('--motion-hud-opacity',inHero?'0':'.85');
+      if(!inHero)motionChapter.textContent=['COLLECTION / CRUISE','QUALITY / DRIFT','INSPECTION / DETAIL','FINANCE / ZOOM','YOUR DRIVE / FINALE'][activeChapter()-1]||'THE DRIVE / CONTINUES';
     }
     try {
       scene=new THREE.Scene();
@@ -675,22 +786,24 @@
       const dt=Math.min(.05,(t-lastTime)/1000||.016);lastTime=t;
       target=progressFromScroll();
       actual += (target-actual)*(reducedMotion?1:1-Math.exp(-dt*8.5));
+      const currentScroll=window.scrollY;
+      scrollVelocity += (((currentScroll-lastScroll)/Math.max(dt,.001))-scrollVelocity)*Math.min(1,dt*6);
+      lastScroll=currentScroll;
       updateUI(actual);
       if(!renderer || !scene) return;
-      // Render only while the sticky scene can be seen.
-      const r=hero.getBoundingClientRect();
-      const show=r.bottom>0 && r.top<innerHeight;
-      if(!show) return;
       resize();
       smoothedX+=(mouseX-smoothedX)*Math.min(1,dt*2.5);
       smoothedY+=(mouseY-smoothedY)*Math.min(1,dt*2.5);
       rootStyle.setProperty('--mouse-x',(smoothedX*16).toFixed(1));
       rootStyle.setProperty('--mouse-y',(smoothedY*16).toFixed(1));
-      updateModel(actual,dt);
+      updateModel(actual,dt,currentScroll);
       renderer.render(scene,camera);
     }
     window.addEventListener('pointermove',e=>{if(e.pointerType==='mouse') {mouseX=e.clientX/innerWidth-.5;mouseY=e.clientY/innerHeight-.5;}},{passive:true});
     window.addEventListener('resize',resize,{passive:true});
+    buildWholePageTimeline();
+    if(document.fonts?.ready) document.fonts.ready.then(buildWholePageTimeline);
+    window.addEventListener('load',buildWholePageTimeline,{once:true});
     updateUI(0);requestAnimationFrame(tick);
   </script>
 </body>
