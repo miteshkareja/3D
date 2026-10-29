@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#dbeeff" />
   <meta name="description" content="AutoElite — premium pre-owned cars and a new perspective on the way you drive." />
-  <title>AutoElite — Director’s Cut | Cinematic Pre-Owned Cars</title>
+  <title>AutoElite — Every Angle | Cinematic 3D Scroll Experience</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -31,8 +31,8 @@
     ::selection { background: #b3d1ff; color: #09223f; }
     :focus-visible { outline: 3px solid #2762ec; outline-offset: 4px; }
 
-    /* Original GLB: continuous fixed cinematic layer across the entire website. */
-    .cinema { position: relative; height: 510vh; height: 510svh; }
+    /* Original GLB: continuously rendered throughout the website; the CAMERA visits every side. */
+    .cinema { position: relative; height: 650vh; height: 650svh; }
     .cinema-sticky { z-index:7; position: sticky; top: 0; height: 100vh; height: 100svh; width: 100%; overflow: hidden;
       background: transparent; }
     .cinema-sticky::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 8;
@@ -490,7 +490,8 @@ footer {z-index:13;background:#082545;}
       <div class="cinema-orb orb-two" aria-hidden="true"></div>
       <div class="cinema-grid" aria-hidden="true"></div>
       <div class="arc-orbit" aria-hidden="true"></div>
-      <div class="cinema-corner-index" aria-hidden="true"><i></i> SCROLL / DIRECT THE CAMERA</div>
+      <div class="cinema-corner-index" aria-hidden="true"><i></i> SCROLL / EXPLORE EVERY ANGLE</div>
+      <div class="live-view-pill" aria-live="off"><span class="view-dot"></span><span id="live-camera-view">SIDE ENTRANCE</span></div>
       <div class="ambient-spot" aria-hidden="true"></div>
       <div class="car-shadow" aria-hidden="true"></div>
       <div class="speed-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -513,39 +514,49 @@ footer {z-index:13;background:#082545;}
           <p class="lead">One beautiful drive can change how you see the road. Explore every detail, from a new perspective.</p>
         </div>
         <div class="scene-copy copy-center" data-scene="2">
-          <div class="eyebrow">02 / The closer look</div>
-          <h2>Every curve.<br /><em>In focus.</em></h2>
-          <p class="lead">Get closer. See the design, the finish, and the things that make a car worth choosing.</p>
+          <div class="eyebrow">02 / Head-on close-up</div>
+          <h2>Face the<br /><em>feeling.</em></h2>
+          <p class="lead">A real front-angle push-in. The camera moves to the nose, not the car spinning on a platform.</p>
         </div>
         <div class="scene-copy copy-right" data-scene="3">
-          <div class="eyebrow">03 / Total confidence</div>
-          <h2>Quality you<br /><em>can feel.</em></h2>
-          <p class="lead">Thoughtfully selected cars. Transparent histories. A buying journey built around you.</p>
+          <div class="eyebrow">03 / Above it all</div>
+          <h2>A new<br /><em>perspective.</em></h2>
+          <p class="lead">Lift over the bonnet, across the roofline and into a dramatic drone-style overhead view.</p>
         </div>
         <div class="scene-copy" data-scene="4">
-          <div class="eyebrow">04 / Your move</div>
+          <div class="eyebrow">04 / Opposite side</div>
+          <h2>The other<br /><em>side.</em></h2>
+          <p class="lead">Cross behind the roof and reveal the full passenger-side profile.</p>
+        </div>
+        <div class="scene-copy copy-center" data-scene="5">
+          <div class="eyebrow">05 / Rear reveal</div>
+          <h2>From every<br /><em>angle.</em></h2>
+          <p class="lead">A dedicated back view, with a close-up of the rear design followed by a cinematic pullback.</p>
+        </div>
+        <div class="scene-copy" data-scene="6">
+          <div class="eyebrow">06 / On to the next</div>
           <h2>Make the<br /><em>next move.</em></h2>
-          <p class="lead">The road is calling. Discover your next car with AutoElite.</p>
-          <div class="cta-row"><a class="button button-dark" href="#contact">Book a test drive <span class="arrow">↗</span></a></div>
+          <p class="lead">Explore the collection as the camera widens and the car drives out of frame.</p>
+          <div class="cta-row"><a class="button button-dark" href="#featured">Explore the cars <span class="arrow">↗</span></a></div>
         </div>
       </div>
 
       <div class="floating-spec" id="floating-spec" aria-hidden="true">
-        <div><small>Perspective</small><strong>Side profile</strong></div>
+        <div><small>Perspective</small><strong id="angle-indicator">SIDE PROFILE</strong></div>
         <div><small>Experience</small><strong>3D / Realtime</strong></div>
         <div><small>Control</small><strong>Scroll to explore</strong></div>
       </div>
       <div class="scene-rail" aria-hidden="true"><span class="rail-track"><span class="rail-fill"></span></span><span class="rail-text">The journey</span></div>
       <div class="cinema-edge" aria-hidden="true">
         <div class="scroll-invite"><span class="scroll-mouse"></span> Scroll to drive the story</div>
-        <div class="frame-count"><strong id="chapter-count">01</strong> <span>/ 05</span></div>
+        <div class="frame-count"><strong id="chapter-count">01</strong> <span>/ 07</span></div>
       </div>
 
       <svg class="hero-arch" viewBox="0 0 1600 320" preserveAspectRatio="none" aria-hidden="true">
         <defs><path id="hero-arch-path" d="M -220 180 C 150 40 510 300 810 165 S 1300 55 1850 173" /></defs>
         <use href="#hero-arch-path" class="arch-band" />
         <use href="#hero-arch-path" class="arch-stripe" />
-        <text dy="7"><textPath class="moving-path" href="#hero-arch-path" startOffset="-5%">AUTOELITE  ✳  THE ART OF THE DRIVE  ✳  CAMERA IN MOTION  ✳  ALL ANGLES. ONE FEELING.  ✳  AUTOELITE  ✳  THE ART OF THE DRIVE  ✳  CAMERA IN MOTION  ✳  ALL ANGLES. ONE FEELING.  ✳  </textPath></text>
+        <text dy="7"><textPath class="moving-path" href="#hero-arch-path" startOffset="-5%">AUTOELITE  ✳  THE ART OF THE DRIVE  ✳  FRONT · REAR · BOTH SIDES  ✳  ALL ANGLES. ONE FEELING.  ✳  AUTOELITE  ✳  THE ART OF THE DRIVE  ✳  FRONT · REAR · BOTH SIDES  ✳  ALL ANGLES. ONE FEELING.  ✳  </textPath></text>
       </svg>
       <div class="cinema-bottom-line" aria-hidden="true"></div>
     </div>
@@ -622,7 +633,7 @@ footer {z-index:13;background:#082545;}
     <section class="drive-interlude interlude-night" id="angle-02" aria-label="Cinematic camera chapter 2">
       <div class="interlude-sticky">
         <div><div class="interlude-index">CAMERA STUDY / 02 · LOW TRACKING</div><h2 class="interlude-title">Feel the<br><em>momentum.</em></h2></div>
-        <div class="interlude-foot">Low camera / dynamic slide / three-quarter perspective</div>
+        <div class="interlude-foot">Rear bumper close-up / ground-level tracking / opposite-quarter reveal</div>
         <div class="big-ghost-number">02</div>
         <div class="interlude-swoosh" aria-hidden="true">
           <svg viewBox="0 0 1600 360" preserveAspectRatio="none">
@@ -658,7 +669,7 @@ footer {z-index:13;background:#082545;}
     <section class="drive-interlude " id="angle-03" aria-label="Cinematic camera chapter 3">
       <div class="interlude-sticky">
         <div><div class="interlude-index">CAMERA STUDY / 03 · CONTROLLED DRIFT</div><h2 class="interlude-title">Every turn.<br><em>A story.</em></h2></div>
-        <div class="interlude-foot">High-angle entry / controlled drift / camera chase</div>
+        <div class="interlude-foot">Front-end push-in / elevated drone crossing / opposite-side drift</div>
         <div class="big-ghost-number">03</div>
         <div class="interlude-swoosh" aria-hidden="true">
           <svg viewBox="0 0 1600 360" preserveAspectRatio="none">
@@ -685,7 +696,7 @@ footer {z-index:13;background:#082545;}
     <section class="drive-interlude interlude-night" id="angle-04" aria-label="Cinematic camera chapter 4">
       <div class="interlude-sticky">
         <div><div class="interlude-index">CAMERA STUDY / 04 · FINAL TAKE</div><h2 class="interlude-title">One last<br><span class="outline">look.</span></h2></div>
-        <div class="interlude-foot">Studio push-in / three-quarter hero / final pull-back</div>
+        <div class="interlude-foot">Aerial roof sweep / real front view / final pull-back</div>
         <div class="big-ghost-number">04</div>
         <div class="interlude-swoosh" aria-hidden="true">
           <svg viewBox="0 0 1600 360" preserveAspectRatio="none">
@@ -762,8 +773,11 @@ footer {z-index:13;background:#082545;}
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-/* AutoElite Director's Cut — a perspective CAMERA path, not model spinning.
-   The actual GLB turns only a few degrees for controlled sliding. */
+/* AUTOELITE / EVERY ANGLE DIRECTOR'S CUT.
+   The real 3D camera travels around the actual GLB centre.
+   Hero has separate holds for SIDE, FRONT, ROOF, OTHER SIDE and REAR.
+   The original model has almost no yaw (just restrained drift motion).
+   No automatic spinning or camera animation independent of scroll. */
 const $ = id => document.getElementById(id);
 const hero = $('home'), stage = $('cinema-stage'), holder = $('canvas-container');
 const captions = [...document.querySelectorAll('[data-scene]')];
@@ -781,28 +795,39 @@ const interpolate = (a,b,t) => {
 };
 const smoothRange = (a,b,v) => b<=a ? Number(v>=b) : ease(clamp((v-a)/(b-a),0,1));
 const pulse = (a,b,c,d,v) => smoothRange(a,b,v)*(1-smoothRange(c,d,v));
-const id = (p,x,cy,cz,d,fov,tilt,yaw,energy=0) => ({p,x,cy,cz,d,fov,tilt,yaw,energy});
-/* Camera states: cameraX (cy=height, cz=depth), distance multiplier and framing.
-   Wide and overhead shots are done by the camera, not by spinning the GLB. */
+// All angles are in degrees for readable, art-directed keyframes.
+// 0 = visible side (+Z); 90 = nose (+X); 180 = opposite side (-Z);
+// 270 = rear (-X); 360 = return to the original side.
+// If your GLB's actual nose points left, set FRONT_IS_POSITIVE_X=false.
+const FRONT_IS_POSITIVE_X = true;
+const deg = v => v * Math.PI / 180;
+const facing = FRONT_IS_POSITIVE_X ? 1 : -1;
+const id = (p,x,az,el,dist,fov,tilt,yaw,energy=0) => ({p,x,az,el,dist,fov,tilt,yaw,energy});
+const shot = (at,x,az,el,dist,fov,tilt,yaw,energy=0) => ({at,x,az,el,dist,fov,tilt,yaw,energy});
+
+// 6.5 screen-heights: an ENTER shot, side beauty shot, FRONT close-up,
+// aerial ROOF reveal, reverse-side profile, REAR close-up and departure.
+// Duplicated positions create deliberate scroll "holds" at each clear angle.
 const HERO = [
-  id(0,   -10.4,1.35,10.8,1.0,35,0,-.13,.8),
-  id(.09,  -6.2,1.45,10.3,1.0,35,-.05,-.16,.92),
-  id(.22,   2.15,1.7,9.9,1.0,34,.02,0,.56),
-  id(.31,   2.05,2.15,8.8,1.0,33,.01,.025,.12),
-  id(.44,    .45,3.0,7.7,1.0,34,-.04,.10,.25),
-  id(.55,    .05,5.5,7.7,.95,34,.0,.045,.16),
-  id(.65,    .0,9.4,6.0,1.0,35,.0,0,.05),
-  id(.76,   1.0,3.9,8.4,1.0,36,.035,-.07,.32),
-  id(.88,   2.2,1.7,10.5,1.0,35,.06,-.13,.6),
-  id(1,     11.2,1.45,11.2,1.0,35,0,-.04,.8)
+  id(0.00,-11.2,   0,  6,11.0,37, 0,    0,.78),
+  id(0.09, -7.3,   0,  6,10.8,37,-.02,-.06,.93),
+  id(0.17,  1.85,  0,  6, 9.7,36, .015,0,.52),
+  id(0.245, 1.85,  0,  7, 9.0,35, 0,    0,.08), // side view HOLD
+  id(0.30,  0.80, 48,  8, 7.7,36,-.03,-.07,.40), // front quarter
+  id(0.355, 0.00, 90,  5, 5.1,39,-.01, 0,.22), // genuine front-on
+  id(0.435, 0.00, 90,  6, 4.7,39, 0,    0,.08), // front CLOSE-UP HOLD
+  id(0.49,  0.00,112, 22, 6.6,36, 0,    0,.16),
+  id(0.565, 0.00,151, 74, 7.6,36, 0,    0,.05), // over roof
+  id(0.615, 0.00,173, 69, 7.8,36, 0,    0,.07), // roof HOLD
+  id(0.685, 0.20,180,  9, 8.9,36, 0,    0,.19), // opposite-side profile
+  id(0.745, 0.20,180,  7, 8.4,36, 0,    0,.10), // opposite-side HOLD
+  id(0.79, -0.30,227,  9, 7.1,36, .02, .06,.40), // rear quarter
+  id(0.835, 0.00,270,  5, 5.4,39, 0,    0,.24), // rear-on
+  id(0.89,  0.00,270,  5, 5.0,40, 0,    0,.09), // rear close-up HOLD
+  id(0.94,  2.30,305,  9, 8.6,35, .012,-.035,.65),
+  id(1.00, 11.2,360,  6,11.1,37, 0,    0,.77)
 ];
-// Orbit cameraX is sampled from a separate artist-authored curve. Positive is front 3/4,
-// negative is rear 3/4. This is a camera move, not a car yaw rotation.
-const HERO_CAMERA_X = [
-  {p:0,v:0},{p:.22,v:.4},{p:.31,v:2.2},{p:.44,v:4.7},
-  {p:.55,v:4.2},{p:.65,v:-.3},{p:.76,v:-4.6},{p:.88,v:-.6},{p:1,v:0}
-];
-const shot = (at,x,cx,cy,cz,fov,tilt,yaw,energy=0) => ({at,x,cx,cy,cz,d:1,fov,tilt,yaw,energy});
+
 let whole = [];
 const select = (keys,p,axis='p') => {
   if (p<=keys[0][axis]) return {...keys[0]};
@@ -814,56 +839,55 @@ const select = (keys,p,axis='p') => {
 };
 const topOf = el => el.getBoundingClientRect().top+window.scrollY;
 function buildTimeline() {
-  const h = innerHeight, heroEnd = Math.max(0,topOf(hero)+hero.offsetHeight-h);
-  // Each chapter contains different camera placements, not 360° spins.
-  const A = (key,fraction=.5) => {
-    const el=$(key);return el ? topOf(el) + el.offsetHeight*fraction-h*.52 : heroEnd;
-  };
+  const h=innerHeight, heroEnd=Math.max(0,topOf(hero)+hero.offsetHeight-h);
+  const A=(key,fraction=.5)=>{const el=$(key);return el?topOf(el)+el.offsetHeight*fraction-h*.52:heroEnd;};
+  // Continue orbital travel beyond the sticky hero: front/rear/opposite/roof
+  // poses recur through the site's real content and curved ribbon interludes.
+  // Angles are UNWRAPPED so interpolation never suddenly takes the short way.
   whole = [
-    shot(heroEnd, 11.2,0,1.45,11.2,35,0,-.04,.55),
-    shot(A('featured',.05),5.3,1.8,2.5,10.7,36,-.02,-.09,.6),
-    shot(A('featured',.40),2.7,4.1,2.6,9.8,36,-.055,-.17,.6),
-    shot(A('featured',.78),2.3,2.0,2.0,9.8,36,.02,.04,.3),
-    // INTERLUDE 01: overhead drone-like swoop, car crosses diagonally.
-    shot(A('angle-01',.04),-2.5,-3.3,4.1,10.5,36,.08,-.13,.83),
-    shot(A('angle-01',.28),-.5,-2.9,8.7,6.6,38,.055,.12,.45),
-    shot(A('angle-01',.52),.8,4.9,5.6,6.6,34,-.04,-.10,.67),
-    shot(A('angle-01',.74),1.6,5.4,2.2,7.6,34,-.07,-.18,.95),
-    shot(A('angle-01',.97),3.6,2.7,2.2,10.3,37,0,.01,.4),
-    // Benefits: three-quarter static beauty shot behind the content.
-    shot(A('benefits',.03),2.7,-3.5,3.0,10.4,36,.015,-.05,.25),
-    shot(A('benefits',.45),3.05,-4.0,4.3,9.5,36,-.015,.08,.35),
-    shot(A('benefits',.92),-3.8,-.3,2.0,10.4,36,.04,.14,.55),
-    // INTERLUDE 02: close-up low tracking -> front quarter -> rear quarter.
-    shot(A('angle-02',.07),-4.9,5.2,1.1,8.7,34,.09,.16,.9),
-    shot(A('angle-02',.30),-1.0,5.2,.72,6.9,38,.015,.07,.8),
-    shot(A('angle-02',.53),.6,0,1.15,6.8,35,-.03,0,.55),
-    shot(A('angle-02',.76),2.0,-5.8,2.0,7.8,36,-.08,-.16,.95),
-    shot(A('angle-02',.97),4.4,-2.1,2.5,10.1,35,.0,0,.28),
-    // Inspection section: car goes to side, camera rises above its roofline.
-    shot(A('about',.08),3.1,-3.0,4.1,10.8,37,.015,.07,.22),
-    shot(A('about',.46),2.75,.8,7.0,9.0,36,.0,0,.08),
-    shot(A('about',.91),-4.6,3.8,2.1,10.1,36,.04,-.12,.65),
-    // INTERLUDE 03: dramatic overhead roll-in, controlled slide, camera chase.
-    shot(A('angle-03',.03),-5.0,-5.1,7.3,9.4,36,.07,.17,.8),
-    shot(A('angle-03',.31),-.7,-4.0,10.8,5.8,35,.015,-.05,.4),
-    shot(A('angle-03',.57),.6,4.2,4.6,6.8,34,-.085,-.21,.95),
-    shot(A('angle-03',.81),1.6,5.7,1.4,7.3,34,.08,.17,1),
-    shot(A('angle-03',.97),4.7,0,1.8,11.0,36,0,.0,.36),
-    // Financing: steady sweep, the vehicle stays behind the cards.
-    shot(A('finance',.05),2.8,4.3,3.2,10.3,36,.015,.03,.28),
-    shot(A('finance',.48),2.95,1.2,4.6,9.0,36,-.02,-.06,.2),
-    shot(A('finance',.90),-4.5,-3.9,2.3,10.1,36,.05,.09,.45),
-    // INTERLUDE 04: grand finale front 3/4 zoom + diagonal high-angle exit.
-    shot(A('angle-04',.03),-4.7,-5.3,2.8,10.0,36,.055,.14,.66),
-    shot(A('angle-04',.26),-1.0,-5.8,3.2,7.9,35,.035,-.1,.75),
-    shot(A('angle-04',.52),.6,5.0,5.8,6.7,35,-.03,.08,.50),
-    shot(A('angle-04',.79),1.4,2.8,2.2,8.0,35,-.045,-.14,.6),
-    shot(A('angle-04',.97),4.5,1.4,2.0,10.8,37,0,0,.35),
-    // Final contact: hold elegant framing, then exit gently.
-    shot(A('contact',.07),2.4,4.8,3.5,10.0,36,0,.06,.2),
-    shot(A('contact',.55),2.65,-3.3,3.8,8.9,37,.0,-.07,.2),
-    shot(A('contact',.95),7.7,.2,2.6,11.4,37,0,0,.5)
+    shot(heroEnd,11.2,360,6,11.1,37,0,0,.77),
+    shot(A('featured',.05), 3.5, 360,9,10.5,36,0,0,.44),
+    shot(A('featured',.43), 2.0, 407,12, 8.2,37,-.02,-.045,.22),
+    shot(A('featured',.85), 2.2, 450, 6, 6.3,39,0,0,.16), // FRONT
+
+    shot(A('angle-01',.04),-2.1, 463,13, 7.9,37,0,.035,.55),
+    shot(A('angle-01',.32),-0.7, 510,69, 7.5,35,0,.015,.14), // ROOF
+    shot(A('angle-01',.58), 0.0, 540,81, 7.0,36,0,0,.08),
+    shot(A('angle-01',.81), 1.1, 548,32, 7.8,37,-.02,-.04,.38),
+    shot(A('angle-01',.98), 2.0, 540,11, 9.6,36,0,0,.21), // OTHER SIDE
+
+    shot(A('benefits',.15), 2.0, 540, 8,10.0,36,0,0,.08),
+    shot(A('benefits',.61), 2.2, 577,10, 8.9,37,0,-.035,.28),
+    shot(A('benefits',.97),-1.9, 630, 6, 6.9,39,0,.02,.4), // REAR
+
+    shot(A('angle-02',.08),-2.8, 630, 5, 6.8,40,.01,.065,.57),
+    shot(A('angle-02',.32),-0.5, 632, 4, 4.8,41,0,0,.25), // REAR CLOSE
+    shot(A('angle-02',.55), 0.0, 677, 7, 7.1,37,-.02,-.045,.47),
+    shot(A('angle-02',.81), 1.9, 720, 8, 8.7,35,.015,.04,.72),
+
+    shot(A('about',.06), 2.3, 721, 8, 9.8,36,0,0,.16),
+    shot(A('about',.53), 1.9, 755,54, 7.9,36,0,0,.09),
+    shot(A('about',.93),-2.4, 810, 9, 7.8,36,.02,.06,.44), // FRONT
+
+    shot(A('angle-03',.03),-2.2, 805,15, 8.5,36,.07,.08,.66),
+    shot(A('angle-03',.30),-0.8, 840,67, 6.8,36,.02,.035,.42),
+    shot(A('angle-03',.54), 0.2, 895,26, 6.7,38,-.065,-.14,.85),
+    shot(A('angle-03',.80), 2.0, 900, 7, 7.7,37,.07,.11,.84), // OTHER SIDE
+    shot(A('angle-03',.97), 3.0, 900,10,10.2,36,0,0,.36),
+
+    shot(A('finance',.05), 2.0, 900, 8,10.0,36,0,0,.13),
+    shot(A('finance',.52), 2.0, 950,15, 8.7,36,-.015,.03,.23),
+    shot(A('finance',.94),-2.3, 990, 6, 7.2,38,.015,-.03,.48), // REAR
+
+    shot(A('angle-04',.03),-2.0, 990, 7, 8.7,37,.04,.07,.58),
+    shot(A('angle-04',.27), 0.0,1035, 9, 6.9,37,.01,.025,.45),
+    shot(A('angle-04',.53), 0.0,1080,69, 7.1,36,0,0,.15), // overhead
+    shot(A('angle-04',.79), 1.1,1125, 7, 6.6,39,-.03,-.06,.55), // FRONT
+    shot(A('angle-04',.98), 3.0,1140, 8, 9.8,36,0,0,.30),
+
+    shot(A('contact',.08), 2.1,1140, 8, 9.6,36,0,0,.14),
+    shot(A('contact',.57), 2.1,1214,12, 8.4,37,0,.03,.23),
+    shot(A('contact',.96), 8.3,1260, 8,11.2,37,0,0,.46)
   ].sort((a,b)=>a.at-b.at);
 }
 
@@ -891,7 +915,9 @@ function heroProgress(scroll) {
   const end=Math.max(1,hero.offsetHeight-innerHeight);
   return clamp((scroll-topOf(hero))/end,0,1);
 }
-const windows = [[0,0,.07,.20],[.14,.22,.30,.39],[.35,.43,.53,.64],[.61,.68,.77,.86],[.81,.90,.98,1.06]];
+// Each of the seven scroll chapters has a hold interval with full readable view.
+const windows = [[0,0,.08,.235],[.18,.25,.29,.355],[.30,.355,.44,.515],[.47,.535,.62,.69],[.64,.69,.745,.81],[.765,.82,.89,.94],[.90,.95,1,1.07]];
+const heroViews = ['SIDE ENTRANCE','SIDE PROFILE','FRONT / CLOSE-UP','AERIAL / ROOFLINE','OPPOSITE SIDE','REAR / CLOSE-UP','DEPARTURE'];
 function ui(p, inHero, chapterText) {
   heroStyle.setProperty('--progress',p.toFixed(4));
   heroStyle.setProperty('--arch-alpha',shade(1-smoothRange(.80,.96,p)));
@@ -911,6 +937,8 @@ function ui(p, inHero, chapterText) {
     el.setAttribute('aria-hidden',String(op<.56 || !inHero));
   });
   $('chapter-count').textContent=String(besti+1).padStart(2,'0');
+  $('angle-indicator').textContent=heroViews[besti];
+  $('live-camera-view').textContent=heroViews[besti];
   const stageIsVisible=hero.getBoundingClientRect().bottom>0;
   stage.style.visibility=stageIsVisible?'visible':'hidden';
   const hudAlpha=(!inHero && ready)?1:0;
@@ -925,10 +953,10 @@ function chapterFor(scroll) {
   for(const el of anchors) if(topOf(el)<=at) current=el;
   if(!current)return 'CINEMATIC / SIDE PROFILE';
   const titles={
-    featured:'TRACKING SHOT', 'angle-01':'DRONE / HIGH ANGLE',
-    benefits:'THREE-QUARTER REVEAL', 'angle-02':'LOW / CROSS ANGLE',
-    about:'OVERHEAD / DETAIL', 'angle-03':'DRIFT / CAMERA CHASE',
-    finance:'ELEVATED TRACKING','angle-04':'CINEMATIC / FINALE',contact:'BEAUTY / CLOSE-UP'
+    featured:'FRONT / TRACKING SHOT', 'angle-01':'DRONE / ROOF REVEAL',
+    benefits:'OPPOSITE SIDE / REAR', 'angle-02':'REAR / LOW ANGLE',
+    about:'AERIAL / FRONT CLOSE-UP', 'angle-03':'DRIFT / OPPOSITE SIDE',
+    finance:'THREE-QUARTER / REAR','angle-04':'AERIAL / FRONT FINALE',contact:'BEAUTY / CROSS-ANGLE'
   };
   return titles[current.id] || 'DIRECTOR / CAMERA PATH';
 }
@@ -945,38 +973,53 @@ function ribbons(time,scroll) {
 }
 function positionFromShot(k,dt,scroll) {
   if(!ready)return;
-  const aspect=width/height;
-  const mobileFactor=carScaleFactor();
-  const modelScale=fitting*mobileFactor;
-  // mobile composition uses the lower half of screen; desktop can take the full stage.
-  const mobileY=mobile()?-.72:0;
-  const mobileOffset=mobile()?-.5:1;
-  // Perspective orbit: cx controls front/rear angle, cy a rising drone angle.
-  // Rig does not spin: yaw never exceeds +-0.21 rad (~12°).
-  rig.position.set(k.x*(mobile()? .63:1), mobileY,0);
-  rig.rotation.set(k.tilt*.08,k.yaw,k.tilt);
+  const modelScale=fitting*carScaleFactor();
+  const mobileView=mobile();
+  const carX=k.x*(mobileView?.62:1);
+  const carY=mobileView?-.76:0;
+  rig.position.set(carX,carY,0);
+  // Only small body lean (<= about 7 degrees) for believable drift.
+  // This does NOT rotate the car in a showroom spin.
+  rig.rotation.set(k.tilt*.10,k.yaw,k.tilt);
   carPivot.scale.setScalar(modelScale);
-  const orbitX=k.cx*(mobile()? .73:1);
-  const cameraY=k.cy+(mobile()?2.0:0);
-  const cameraZ=k.cz+(mobile()?4.2:0);
-  camera.position.set(orbitX,cameraY,cameraZ);
-  camera.fov=k.fov;
-  camera.lookAt(mobile()?0:-.16,mobile()?1.65:.05,0);
+
+  // Orbit position is really calculated around the GLB, including its backside.
+  // az=90deg FRONT, az=180deg FAR SIDE, az=270deg REAR.
+  // Distance and elevation are keyed independently for dramatic zoom/top shots.
+  const az=deg(k.az*facing);
+  const elev=deg(k.el);
+  const distance=k.dist*(mobileView?1.18:1);
+  const horizontal=Math.cos(elev)*distance;
+  const ox=Math.sin(az)*horizontal;
+  const oy=Math.sin(elev)*distance;
+  const oz=Math.cos(az)*horizontal;
+  // Track the car so it stays visible during the orbit, while retaining
+  // some deliberate horizontal offset to leave room for editorial copy.
+  // Do not follow the car off-screen at the beginning/end of each sequence.
+  const trackAmount=mix(.57,.10,smoothRange(3,9,Math.abs(carX)));
+  const trackedX=carX*trackAmount;
+  const frameY=mobileView?-.15:0;
+  const lookX=trackedX;
+  const lookY=frameY+(mobileView?.55:0);
+  camera.position.set(trackedX+ox,oy+carY+(mobileView?1.0:0),oz);
+  camera.fov=k.fov+(mobileView?5:0);
+  camera.lookAt(lookX,lookY,0);
   camera.updateProjectionMatrix();
-  // Shadows, smoke and streaks follow the vehicle; never replace its materials.
+
   const energized=clamp(k.energy*.67+Math.abs(velocity)*.000032,0,.86);
   S.setProperty('--world-speed',shade(reducedMotion?0:energized*.48));
   S.setProperty('--streak-x',`${(-scroll*.3%240).toFixed(1)}px`);
-  const shotY=(height*.63+(mobile()?65:0));
-  S.setProperty('--ground-x',`${(k.x*width*.08).toFixed(1)}px`);
+  const shotY=(height*.64+(mobileView?70:0));
+  S.setProperty('--ground-x',`${(carX*width*.085).toFixed(1)}px`);
   S.setProperty('--ground-scale',`${(modelScale*.95).toFixed(3)}`);
-  S.setProperty('--ground-visible',shade(clamp(.33+(1-k.cy/11)*.2,0,.55)));
-  S.setProperty('--smoke-x',`${(width*.5 + k.x*width*.09-60).toFixed(0)}px`);
+  S.setProperty('--ground-visible',shade(clamp(.33+(1-k.el/85)*.2,0,.55)));
+  S.setProperty('--smoke-x',`${(width*.5 + carX*width*.085-60).toFixed(0)}px`);
   S.setProperty('--smoke-y',`${shotY.toFixed(0)}px`);
   S.setProperty('--smoke-scale',`${clamp(modelScale,.45,1.3)}`);
   S.setProperty('--smoke-alpha',shade(reducedMotion?0:Math.max(0,k.energy-.65)*.66));
   S.setProperty('--smoke-shift',`${(Math.sin(scroll*.012)*33).toFixed(0)}px`);
 }
+
 try {
   scene=new THREE.Scene();
   camera=new THREE.PerspectiveCamera(35,innerWidth/innerHeight,.1,200);
@@ -998,7 +1041,7 @@ try {
     const car=gltf.scene;
     const raw=buildBounds(car), dims=raw.getSize(new THREE.Vector3());
     if(!Number.isFinite(dims.x)||Math.max(dims.x,dims.y,dims.z)<.00001)throw new Error('Invalid GLB geometry bounds');
-    // Detect which horizontal axis is car length, and fix its SIDE PROFILE once.
+    // Determine the original side axis once, then travel with the CAMERA around all four sides.
     const SIDE_PROFILE_AXIS='auto'; // 'auto' | 'x' | 'z'
     const SIDE_PROFILE_REVERSE=false; // flip nose direction if needed
     const shouldYaw=SIDE_PROFILE_AXIS==='z' || (SIDE_PROFILE_AXIS==='auto' && dims.z>dims.x);
@@ -1032,11 +1075,10 @@ function animate(time) {
   const heroEnd=topOf(hero)+hero.offsetHeight-innerHeight;
   const isHero=smoothScroll<=heroEnd;
   const state=isHero?select(HERO,hP):select(whole,smoothScroll,'at');
-  if(isHero)state.cx=select(HERO_CAMERA_X,hP).v;
-  // Ease individual camera quantities to eliminate tracking jitter without scroll lag.
+  // Ease camera angle, elevation, zoom and model position separately to avoid jumps.
   if(!shotState)shotState={...state};
   const factor=reducedMotion?1:1-Math.exp(-dt*8.8);
-  for(const k of ['x','cx','cy','cz','d','fov','tilt','yaw','energy'])shotState[k]=mix(shotState[k],state[k],factor);
+  for(const k of ['x','az','el','dist','fov','tilt','yaw','energy'])shotState[k]=mix(shotState[k],state[k],factor);
   ui(hP,isHero,chapterFor(smoothScroll));
   positionFromShot(shotState,dt,smoothScroll);
   ribbons(time,smoothScroll);
