@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#dbeeff" />
   <meta name="description" content="AutoElite — premium pre-owned cars and a new perspective on the way you drive." />
-  <title>AutoElite — Every Angle | Cinematic 3D Scroll Experience</title>
+  <title>AutoElite — Supra GT300 | Every Angle Cinematic Experience</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -206,6 +206,7 @@
     .model-notice {position:fixed;z-index:160;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);max-width:min(570px,calc(100vw - 26px));padding:13px 18px;border-radius:15px;
       background:#102d4e;color:white;font-size:12px;line-height:1.5;box-shadow:0 15px 35px rgba(9,34,63,.23);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;}
     .model-notice.show {opacity:1;transform:translateX(-50%) translateY(0);}
+    .model-notice {overflow-wrap:anywhere; white-space:pre-line; box-shadow:0 12px 30px rgba(12,32,61,.16); max-height:40vh;overflow-y:auto;pointer-events:none;}
 
 
     /* Cinematic motion layer stays on-screen beyond the hero and behind all content. */
@@ -456,7 +457,7 @@ footer {z-index:13;background:#082545;}
   <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
     <div class="loading-wheel" aria-hidden="true"></div>
     <p>Preparing your drive</p>
-    <span class="loading-sub">Loading original 3D car</span>
+    <span class="loading-sub">Preparing the Toyota Supra 3D experience</span>
   </div>
   <div id="model-notice" class="model-notice" role="status" aria-live="polite"></div>
 
@@ -735,19 +736,23 @@ footer {z-index:13;background:#082545;}
       const splash = document.getElementById('loading-screen');
       const notice = document.getElementById('model-notice');
       let finished = false;
-      window.finishLoading = function (message) {
-        if (finished) return;
-        finished = true;
-        splash.classList.add('done');
-        if (message) {
-          const firstScene = document.querySelector('.scene-copy[data-scene="0"]');
-          if (firstScene) { firstScene.style.opacity = '1'; firstScene.style.transform = 'none'; firstScene.classList.add('active'); }
-          notice.textContent = message;
-          notice.classList.add('show');
-          setTimeout(() => notice.classList.remove('show'), 12000);
-        }
+      const subtitle = document.querySelector('.loading-sub');
+      window.setModelStatus = function (message) { if (subtitle) subtitle.textContent = message; };
+      // Clear any stale warning once a large model finishes downloading.
+      window.finishLoading = function (message = '') {
+        if (!finished) { finished = true; splash.classList.add('done'); }
+        if (!message) { notice.textContent = ''; notice.classList.remove('show'); return; }
+        const firstScene = document.querySelector('.scene-copy[data-scene="0"]');
+        if (firstScene) { firstScene.style.opacity = '1'; firstScene.style.transform = 'none'; firstScene.classList.add('active'); }
+        notice.textContent = message;
+        notice.classList.add('show');
       };
-      setTimeout(() => window.finishLoading('3D preview could not load. Check that car.glb is in the same folder and open the site through Live Server.'), 9000);
+      // A large 22 MB car may take longer to load on mobile. Never block the website.
+      setTimeout(() => {
+        if (!window.__AUTOELITE_MODEL__?.ready && !window.__AUTOELITE_MODEL__?.error) {
+          window.finishLoading('3D Supra is still loading (the model is about 22 MB). If it never appears, open the exact car.glb URL shown in Developer Tools → Network.');
+        }
+      }, 18000);
       const toggle = document.getElementById('menu-toggle');
       const links = document.getElementById('nav-links');
       toggle.addEventListener('click', () => {
@@ -1037,32 +1042,84 @@ try {
   const back=new THREE.DirectionalLight(0xe8f5ff,1.35);back.position.set(0,7,-9);scene.add(back);
   rig=new THREE.Group();scene.add(rig);
   resize(true);
-  new GLTFLoader().load('car.glb',(gltf)=>{
-    const car=gltf.scene;
-    const raw=buildBounds(car), dims=raw.getSize(new THREE.Vector3());
-    if(!Number.isFinite(dims.x)||Math.max(dims.x,dims.y,dims.z)<.00001)throw new Error('Invalid GLB geometry bounds');
-    // Determine the original side axis once, then travel with the CAMERA around all four sides.
-    const SIDE_PROFILE_AXIS='auto'; // 'auto' | 'x' | 'z'
-    const SIDE_PROFILE_REVERSE=false; // flip nose direction if needed
-    const shouldYaw=SIDE_PROFILE_AXIS==='z' || (SIDE_PROFILE_AXIS==='auto' && dims.z>dims.x);
+  // The model MUST be served from the same published directory as this HTML.
+  // On GitHub Pages, relative URLs include the repository subpath automatically.
+  // Change MODEL_PATH only if your car.glb is kept in another folder.
+  const MODEL_PATH = './car.glb';
+  const modelURL = new URL(MODEL_PATH, document.baseURI);
+  // New upload with same name: bypass a stale CDN/browser-cached older model.
+  modelURL.searchParams.set('v', 'supra-gt300-20261029-1');
+  window.__AUTOELITE_MODEL__ = { url: modelURL.href, ready: false, error: null };
+
+  function setupSupra(gltf) {
+    const car = gltf.scene;
+    const raw = buildBounds(car), dims = raw.getSize(new THREE.Vector3());
+    if (!Number.isFinite(dims.x) || Math.max(dims.x,dims.y,dims.z)<.00001) throw new Error('GLB has no usable geometry bounds');
+
+    // Auto-detect length direction: this Supra is longest along its local Z axis.
+    const SIDE_PROFILE_AXIS = 'auto'; // 'auto' | 'x' | 'z'
+    const SIDE_PROFILE_REVERSE = false;
+    const shouldYaw = SIDE_PROFILE_AXIS==='z' || (SIDE_PROFILE_AXIS==='auto' && dims.z>dims.x);
     car.rotation.y=(shouldYaw?Math.PI/2:0)+(SIDE_PROFILE_REVERSE?Math.PI:0);
     car.updateMatrixWorld(true);
     const center=buildBounds(car).getCenter(new THREE.Vector3());
     car.position.sub(center);
-    const pivot=new THREE.Group();pivot.add(car);rig.add(pivot);carPivot=pivot;
+    const pivot = new THREE.Group(); pivot.add(car); rig.add(pivot); carPivot=pivot;
     const proper=buildBounds(pivot).getSize(new THREE.Vector3());
     fitting=4.75 / Math.max(proper.x,proper.z,.001);
     carPivot.scale.setScalar(fitting*carScaleFactor());
-    car.traverse(n=>{if(n.isMesh)n.frustumCulled=false;});
+    car.traverse(n => {
+      if(n.isMesh){
+        n.frustumCulled=false;
+        // Source materials/textures remain intact (no recolouring).
+      }
+    });
     ready=true;
+    window.__AUTOELITE_MODEL__.ready = true;
+    window.setModelStatus('Toyota Supra ready');
     window.finishLoading();
-  },undefined,error=>{
-    console.error('car.glb did not load',error);
-    window.finishLoading('Original car.glb not found. Keep car.glb beside this HTML, and open using VS Code Live Server.');
-  });
+    console.info('[AutoElite] Toyota Supra loaded', { modelURL: modelURL.href, originalBounds: dims, fit: fitting });
+  }
+
+  async function loadSupra() {
+    // Explicit HTTP and header checks replace GLTFLoader's opaque 404 error.
+    // A GitHub LFS pointer or a Pages 404 HTML document is NOT a valid GLB.
+    try {
+      window.setModelStatus('Connecting to car.glb…');
+      const response = await fetch(modelURL.href, { cache:'no-store' });
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status + ' ' + response.statusText +
+          ' — upload car.glb next to the published HTML, not just anywhere in the repository.');
+      }
+      const length=Number(response.headers.get('Content-Length'))||0;
+      if(length && length < 1024) throw new Error('The server returned a tiny file, not the actual 3D car. Check Git LFS and the upload.');
+      window.setModelStatus('Downloading Toyota Supra' + (length ? ' ('+(length/1048576).toFixed(1)+' MB)' : '') + '…');
+      const bytes=await response.arrayBuffer();
+      const signature=new Uint8Array(bytes,0,Math.min(bytes.byteLength,40));
+      if(bytes.byteLength < 20 || signature[0]!==103 || signature[1]!==108 || signature[2]!==84 || signature[3]!==70) {
+        const str=new TextDecoder().decode(signature);
+        if(str.includes('git-lfs.github.com')) throw new Error('Git LFS pointer returned instead of 3D binary. GitHub Pages is not serving the GLB bytes.');
+        if(str.includes('<!DOCTYPE') || str.startsWith('<html')) throw new Error('Received an HTML page instead of car.glb. Verify the GitHub Pages path and filename.');
+        throw new Error('Invalid GLB file content. The response did not start with the glTF binary signature.');
+      }
+      window.setModelStatus('Decoding 3D geometry and textures…');
+      const baseURL=new URL('.',modelURL).href;
+      const gltf=await new Promise((resolve,reject)=>{
+        new GLTFLoader().parse(bytes,baseURL,resolve,reject);
+      });
+      setupSupra(gltf);
+    } catch(error) {
+      const msg=error?.message||String(error);
+      console.error('[AutoElite] Supra GLB load failed:',error,'Requested:',modelURL.href);
+      window.__AUTOELITE_MODEL__.error=msg;
+      window.finishLoading('3D CAR COULD NOT LOAD\n' + msg + '\nModel URL: ' + modelURL.href +
+        '\nFix: Commit the actual 22 MB car.glb in the same folder as this HTML on the GitHub Pages publishing branch.');
+    }
+  }
+  loadSupra();
 } catch(error){
   console.error('Three.js initialization:',error);
-  window.finishLoading('3D preview is unavailable. Website content remains accessible.');
+  window.finishLoading('3D renderer failed to initialize: ' + (error?.message||String(error)));
 }
 function animate(time) {
   requestAnimationFrame(animate);
